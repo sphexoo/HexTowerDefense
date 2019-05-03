@@ -9,11 +9,11 @@
 #include "VertexAttributes.h"
 #include "Renderer.h"
 #include "Texture.h"
-#include "glm.hpp"
-#include "gtc/matrix_transform.hpp"
 #include "MyImGui.h"
 #include "Input.h"
 //#include "Gui.h"
+
+#include "Hexagon.h"
 
 #ifdef RELEASE
 	float fWidth = 1920.0f;
@@ -75,7 +75,7 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1); // vsync off --> 0
+	glfwSwapInterval(0); // vsync off --> 0
 
 	/* Log current OpenGL version */
 	logger.log((const char*)glGetString(GL_VERSION), logger.Info);
@@ -100,8 +100,11 @@ int main()
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
 
 	/* Create Shader specified in Shader.h */
-	Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
+	//Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
+	Shader shader("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
 	shader.Bind();
+
+	Hexagon hex;
 
 	const double maxFps = 144;
 	const double maxPeriod = 1 / maxFps;
@@ -111,18 +114,19 @@ int main()
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
-		//time = glfwGetTime();
-		//deltaTime = time - lastTime;
-		//if (deltaTime > maxPeriod)
-		//{
-		//	lastTime = time;
-		//	/* Update game state */
-		//
-		//}
+		time = glfwGetTime();
+		deltaTime = time - lastTime;
+		if (deltaTime > maxPeriod)
+		{
+			lastTime = time;
+			/* Update game state */
+			hex.Rotate();
+		}
 
 		renderer.Clear();
 
 		/* Render new frame */
+		hex.Draw(renderer, shader);
 		//gui.Draw(renderer, shader);
 		debugWindow.Draw();
 		

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 
+#include "glm.hpp"
 #include "Shader.h"
 #include "Logger.h"
 

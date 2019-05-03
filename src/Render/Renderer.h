@@ -1,5 +1,8 @@
 #pragma once
 
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp"
+
 class Shader;
 class VertexBuffer;
 class IndexBuffer;

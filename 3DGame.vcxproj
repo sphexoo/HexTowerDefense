@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -106,7 +106,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;RELEASE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -124,7 +124,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;RELEASE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -142,6 +142,7 @@
     <ClCompile Include="res\external\imgui\MyImGui.cpp" />
     <ClCompile Include="res\external\stb\stb_image.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Objects\Hexagon.cpp" />
     <ClCompile Include="src\Others\Input.cpp" />
     <ClCompile Include="src\Others\Logger.cpp" />
     <ClCompile Include="src\Render\IndexBuffer.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="res\external\glm\gtc\matrix_transform.hpp" />
     <ClInclude Include="res\external\imgui\MyImGui.h" />
     <ClInclude Include="res\external\stb\stb_image.h" />
+    <ClInclude Include="src\Objects\Hexagon.h" />
     <ClInclude Include="src\Others\Input.h" />
     <ClInclude Include="src\Others\Logger.h" />
     <ClInclude Include="src\Render\IndexBuffer.h" />

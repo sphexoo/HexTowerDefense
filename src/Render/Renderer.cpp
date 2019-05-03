@@ -16,13 +16,13 @@ Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float 
 {
 	/* initialize projection matrices */
 	projMatrix3D = glm::perspective(RAD(fFov), fWidth / fHeight, fZnear, fZfar);
-	projMatrix2D = glm::ortho(0.0f, fWidth, 0.0f, fHeight, -0.5f, 0.5f);
+	projMatrix2D = glm::ortho(-fWidth * 0.5f, fWidth * 0.5f, -fHeight * 0.5f, fHeight * 0.5f, -0.5f, 0.5f);
 	MVP = glm::mat4(1.0f);
 
 	/* initial OpenGl settings */
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
@@ -41,7 +41,7 @@ void Renderer::Draw3D(const VertexBuffer& vb, const VertexAttributes& va, const 
 	
 	sd.Bind();
 	sd.SetUniformMatrix4f("u_MVP", MVP);
-	sd.SetUniform1i("u_Texture", 0);
+	//sd.SetUniform1i("u_Texture", 0);
 
 	vb.Bind();
 	va.Bind();
@@ -57,7 +57,7 @@ void Renderer::Draw2D(const VertexBuffer& vb, const VertexAttributes& va, const 
 
 	sd.Bind();
 	sd.SetUniformMatrix4f("u_MVP", MVP);
-	sd.SetUniform1i("u_Texture", 0);
+	//sd.SetUniform1i("u_Texture", 0);
 
 	vb.Bind();
 	va.Bind();

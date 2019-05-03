@@ -111,14 +111,14 @@ int main()
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
-		time = glfwGetTime();
-		deltaTime = time - lastTime;
-		if (deltaTime > maxPeriod)
-		{
-			lastTime = time;
-			/* Update game state */
-
-		}
+		//time = glfwGetTime();
+		//deltaTime = time - lastTime;
+		//if (deltaTime > maxPeriod)
+		//{
+		//	lastTime = time;
+		//	/* Update game state */
+		//
+		//}
 
 		renderer.Clear();
 

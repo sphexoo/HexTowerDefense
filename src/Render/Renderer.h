@@ -7,6 +7,7 @@ class Shader;
 class VertexBuffer;
 class IndexBuffer;
 class VertexAttributes;
+class Texture;
 
 class Renderer
 {

@@ -75,7 +75,7 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(0); // vsync off --> 0
+	glfwSwapInterval(1); // vsync off --> 0
 
 	/* Log current OpenGL version */
 	logger.log((const char*)glGetString(GL_VERSION), logger.Info);
@@ -100,8 +100,7 @@ int main()
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
 
 	/* Create Shader specified in Shader.h */
-	//Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
-	Shader shader("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
+	Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
 	shader.Bind();
 
 	Hexagon hex;

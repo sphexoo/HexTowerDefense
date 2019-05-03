@@ -41,7 +41,7 @@ void Renderer::Draw3D(const VertexBuffer& vb, const VertexAttributes& va, const 
 	
 	sd.Bind();
 	sd.SetUniformMatrix4f("u_MVP", MVP);
-	//sd.SetUniform1i("u_Texture", 0);
+	sd.SetUniform1i("u_Texture", 0);
 
 	vb.Bind();
 	va.Bind();
@@ -57,7 +57,7 @@ void Renderer::Draw2D(const VertexBuffer& vb, const VertexAttributes& va, const 
 
 	sd.Bind();
 	sd.SetUniformMatrix4f("u_MVP", MVP);
-	//sd.SetUniform1i("u_Texture", 0);
+	sd.SetUniform1i("u_Texture", 0);
 
 	vb.Bind();
 	va.Bind();

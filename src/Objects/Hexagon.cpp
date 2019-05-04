@@ -3,11 +3,14 @@
 #include "VertexBuffer.h"
 #include "VertexAttributes.h"
 #include "IndexBuffer.h"
+#include "Shader.h"
 #include "Texture.h"
 
-Hexagon::Hexagon()
+Hexagon::Hexagon(float x, float y, float color)
+	: color(color)
 {
-	modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(100.0f, 100.0f, 100.0f));
+	pos = glm::vec3(x, y, 0.0f);
+	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 
 	vb = new VertexBuffer(vertices, sizeof(float) * 21);
 	ib = new IndexBuffer(indices, 18);
@@ -25,11 +28,7 @@ Hexagon::~Hexagon()
 
 void Hexagon::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	texture->Bind();
+	//texture->Bind();
+	shader.SetUniform4f("u_Color", color, color, color, 1.0f);
 	renderer.Draw3D(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
-}
-
-void Hexagon::Rotate()
-{
-	modelMatrix = glm::rotate(modelMatrix, 0.01f, glm::vec3(0.0f, 0.0f, 1.0f));
 }

@@ -8,19 +8,14 @@
 class Hexagon
 {
 private:
+	glm::vec3 pos;
+
+	float color;
+
 	float fRadius;
 	float fHeight;
-	glm::mat4 modelMatrix;
-	/*
-	float vertices[35] = { 0.0f,  0.0f, 0.0f,						 0.5f, 0.5f,
-							-0.5f, -cos((float)M_PI / 6.0f), 0.0f,	 sin((float)M_PI / 6.0f), 0.0f,
-							 0.5f, -cos((float)M_PI / 6.0f), 0.0f,   0.5f + sin((float)M_PI / 6.0f), 0.0f,
-							 1.0f,  0.0f, 0.0f,						 1.0f, 0.5f,
-							 0.5f,  cos((float)M_PI / 6.0f), 0.0f,   sin((float)M_PI / 6.0f), 1.0f,
-							-0.5f,  cos((float)M_PI / 6.0f), 0.0f,	 0.5f + sin((float)M_PI / 6.0f), 1.0f,
-							-1.0f,  0.0f, 0.0f,						 0.0f, 0.5f };
-							*/
 
+	glm::mat4 modelMatrix;
 
 	float vertices[21] = {   0.0f,  0.0f,					 0.0f,
 							 1.0f,  0.0f,					 0.0f,
@@ -37,16 +32,14 @@ private:
 								 0, 5, 6,
 								 0, 6, 1 };
 
-
 	VertexBuffer* vb;
 	IndexBuffer* ib;
 	VertexAttributes* va; 
 	Texture* texture;
 
 public:
-	Hexagon();
+	Hexagon(float x, float y, float color);
 	~Hexagon();
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
-	void Rotate();
 };

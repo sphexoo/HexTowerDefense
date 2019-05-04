@@ -5,7 +5,7 @@
 class Camera
 {
 private:
-	float fSpeed = 3.0f;
+	float fSpeed = 0.25f;
 	float fAngSpeed = 0.005f;
 
 	glm::vec3 pos;
@@ -14,7 +14,7 @@ private:
 
 	glm::vec3 vel;
 
-	float fMaxHeight = 1000.0f;
+	float fMaxHeight = 20.0f;
 	float fZoom = 0.5f;
 	float fAngle = 0.0f;
 

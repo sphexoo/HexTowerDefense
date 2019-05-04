@@ -12,6 +12,7 @@
 #include "MyImGui.h"
 #include "Input.h"
 #include "Camera.h"
+#include "Playfield.h"
 //#include "Gui.h"
 
 #include "Hexagon.h"
@@ -107,7 +108,7 @@ int main()
 	Shader shader("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
 	shader.Bind();
 
-	Hexagon hex;
+	Playfield playfield;
 
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
@@ -127,15 +128,11 @@ int main()
 		//}
 
 		camera.Update();
-		if (input.IsPressed(Input::KEY_SPACE))
-		{
-			hex.Rotate();
-		}
 
 		renderer.Clear();
 
 		/* Render new frame */
-		hex.Draw(renderer, shader, camera.viewMatrix);
+		playfield.Draw(renderer, shader, camera.viewMatrix);
 		//gui.Draw(renderer, shader);
 		debugWindow.Draw();
 		

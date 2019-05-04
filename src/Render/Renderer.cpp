@@ -47,7 +47,7 @@ void Renderer::Draw3D(const VertexBuffer& vb, const VertexAttributes& va, const 
 	va.Bind();
 	ib.Bind();
 
-	sd.SetUniform4f("u_Color", 1.0f, 0.0f, 0.0f, 1.0f);
+	//sd.SetUniform4f("u_Color", color, color, color, 1.0f);
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
@@ -64,11 +64,6 @@ void Renderer::Draw2D(const VertexBuffer& vb, const VertexAttributes& va, const 
 	vb.Bind();
 	va.Bind();
 	ib.Bind();
-
-	
-	
-	sd.SetUniform4f("u_Color", 0.0f, 1.0f, 0.0f, 1.0f);
-	glDrawElements(GL_LINE_STRIP, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 
 	sd.SetUniform4f("u_Color", 1.0f, 0.0f, 0.0f, 1.0f);
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);

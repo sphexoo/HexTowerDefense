@@ -9,9 +9,9 @@ Hexagon::Hexagon()
 {
 	modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(100.0f, 100.0f, 100.0f));
 
-	vb = new VertexBuffer(vertices, sizeof(float) * 35);
+	vb = new VertexBuffer(vertices, sizeof(float) * 21);
 	ib = new IndexBuffer(indices, 18);
-	va = new VertexAttributes(true, 3, true, 2);
+	va = new VertexAttributes(true, 3, false, 0);
 
 	texture = new Texture("res/textures/hex.png");
 }
@@ -23,10 +23,10 @@ Hexagon::~Hexagon()
 	delete ib;
 }
 
-void Hexagon::Draw(Renderer& renderer, Shader& shader)
+void Hexagon::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
 	texture->Bind();
-	renderer.Draw2D(*vb, *va, *ib, shader, modelMatrix);
+	renderer.Draw3D(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
 }
 
 void Hexagon::Rotate()

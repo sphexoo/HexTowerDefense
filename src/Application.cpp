@@ -11,6 +11,7 @@
 #include "Texture.h"
 #include "MyImGui.h"
 #include "Input.h"
+#include "Camera.h"
 //#include "Gui.h"
 
 #include "Hexagon.h"
@@ -26,6 +27,7 @@
 
 /* Creating instance of Logger class and setting its log level */
 Logger logger(Logger::Info);
+Input input;
 
 void GLAPIENTRY
 MessageCallback(GLenum source,
@@ -71,7 +73,7 @@ int main()
 	}
 
 	MyImGui debugWindow(window);
-	Input input(window);
+	input.SetWindowCallback(window);
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
@@ -98,9 +100,11 @@ int main()
 	//gui.AddImageBox(100.0f, 100.0f, 1.0f, "res/textures/texture.png");
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
+	Camera camera(glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	/* Create Shader specified in Shader.h */
-	Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
+	//Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
+	Shader shader("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
 	shader.Bind();
 
 	Hexagon hex;
@@ -119,13 +123,17 @@ int main()
 		{
 			lastTime = time;
 			/* Update game state */
-			hex.Rotate();
+			camera.Update();
+			if (input.IsPressed(Input::KEY_SPACE))
+			{
+				hex.Rotate();
+			}
 		}
 
 		renderer.Clear();
 
 		/* Render new frame */
-		hex.Draw(renderer, shader);
+		hex.Draw(renderer, shader, camera.viewMatrix);
 		//gui.Draw(renderer, shader);
 		debugWindow.Draw();
 		

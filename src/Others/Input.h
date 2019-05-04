@@ -1,4 +1,5 @@
 #pragma once
+#include <GLFW/glfw3.h>
 
 class Input
 {
@@ -7,6 +8,7 @@ class Input
 	*/
 private:
 	static bool mouseLock;
+	static bool keyPressed[10];
 
 private:
 	static void cursor_pos_callback(GLFWwindow* window, double x, double y);
@@ -29,13 +31,13 @@ public:
 		KEY_T	  = 9
 	};
 
-	static bool keyPressed[10];
 
 	static float mouseX;
 	static float mouseY;
 	static int scroll;
 
-	Input(GLFWwindow* window);
+	Input();
 
 	bool IsPressed(KeyName key);
+	void SetWindowCallback(GLFWwindow* window);
 };

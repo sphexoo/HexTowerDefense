@@ -142,6 +142,7 @@
     <ClCompile Include="res\external\imgui\MyImGui.cpp" />
     <ClCompile Include="res\external\stb\stb_image.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Others\Camera.cpp" />
     <ClCompile Include="src\Objects\Hexagon.cpp" />
     <ClCompile Include="src\Others\Input.cpp" />
     <ClCompile Include="src\Others\Logger.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="res\external\glm\gtc\matrix_transform.hpp" />
     <ClInclude Include="res\external\imgui\MyImGui.h" />
     <ClInclude Include="res\external\stb\stb_image.h" />
+    <ClInclude Include="src\Others\Camera.h" />
     <ClInclude Include="src\Objects\Hexagon.h" />
     <ClInclude Include="src\Others\Input.h" />
     <ClInclude Include="src\Others\Logger.h" />

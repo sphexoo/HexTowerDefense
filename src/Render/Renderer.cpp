@@ -41,12 +41,13 @@ void Renderer::Draw3D(const VertexBuffer& vb, const VertexAttributes& va, const 
 	
 	sd.Bind();
 	sd.SetUniformMatrix4f("u_MVP", MVP);
-	sd.SetUniform1i("u_Texture", 0);
+	//sd.SetUniform1i("u_Texture", 0);
 
 	vb.Bind();
 	va.Bind();
 	ib.Bind();
 
+	sd.SetUniform4f("u_Color", 0.0f, 1.0f, 0.0f, 1.0f);
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
@@ -57,11 +58,18 @@ void Renderer::Draw2D(const VertexBuffer& vb, const VertexAttributes& va, const 
 
 	sd.Bind();
 	sd.SetUniformMatrix4f("u_MVP", MVP);
-	sd.SetUniform1i("u_Texture", 0);
+	//sd.SetUniform1i("u_Texture", 0);
+	
 
 	vb.Bind();
 	va.Bind();
 	ib.Bind();
 
+	
+	
+	sd.SetUniform4f("u_Color", 0.0f, 1.0f, 0.0f, 1.0f);
+	glDrawElements(GL_LINE_STRIP, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
+
+	sd.SetUniform4f("u_Color", 1.0f, 0.0f, 0.0f, 1.0f);
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }

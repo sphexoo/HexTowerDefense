@@ -1,4 +1,4 @@
-#include <GLFW/glfw3.h>
+
 #include <iostream>
 
 #include "Input.h"
@@ -10,7 +10,7 @@ bool Input::mouseLock;
 int Input::scroll;
 
 
-Input::Input(GLFWwindow* window)
+Input::Input()
 {
 	/* Intilalise key states and callback functions */
 	for (int i = 0; i < 10; i++)
@@ -22,7 +22,11 @@ Input::Input(GLFWwindow* window)
 	mouseY = 0;
 	mouseLock = false;
 	scroll = 0;
+}
 
+void Input::SetWindowCallback(GLFWwindow* window)
+{
+	/* setting up callback functions */
 	glfwSetCursorPosCallback(window, cursor_pos_callback);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_click_callback);

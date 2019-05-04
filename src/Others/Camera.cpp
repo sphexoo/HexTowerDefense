@@ -17,7 +17,7 @@ Camera::~Camera()
 
 }
 
-void Camera::Move()
+void Camera::Update()
 {
 	// left right movement (camera pans when cursor is close to window edge)
 	if (Input::mX < fWidth * 0.1f)
@@ -38,8 +38,8 @@ void Camera::Move()
 	{
 		pos.y -= fSpeed;
 	}
-	
-	// up down movement
+
+	// up down movement and tilt
 	if (Input::scroll != 0)
 	{
 		fZoom -= Input::scroll * 0.05f;
@@ -52,18 +52,10 @@ void Camera::Move()
 			fZoom = 0.1;
 		}
 		pos.z = fMaxHeight * fZoom;
+		dir = rotateX(glm::vec3(0.0f, 1.0f, 0.0f), -3.14159f * 0.5f * fZoom);
 		Input::scroll = 0;
 	}
-}
 
-void Camera::Rotate()
-{
-	dir = rotateX(glm::vec3(0.0f, 1.0f, 0.0f), -3.14159f * 0.5f * fZoom);
-}
-
-void Camera::Update()
-{
-	Move();
-	Rotate();
+	// updating view matrix
 	viewMatrix = glm::lookAt(pos, pos + dir, up);
 }

@@ -31,7 +31,5 @@ public:
 	Camera(glm::vec3 pos, glm::vec3 dir, glm::vec3 up, float fWidth, float fHeight);
 	~Camera();
 
-	void Move();
-	void Rotate();
 	void Update();
 };

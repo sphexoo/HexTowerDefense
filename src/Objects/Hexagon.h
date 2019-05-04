@@ -38,7 +38,7 @@ private:
 	Texture* texture;
 
 public:
-	Hexagon(float x, float y, float color);
+	Hexagon(float x, float y, float z, float color);
 	~Hexagon();
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);

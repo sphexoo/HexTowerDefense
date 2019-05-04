@@ -24,11 +24,11 @@ Playfield::Playfield()
 
 			if (x % 2 == 0)
 			{
-				tiles.emplace_back(x * posX, y * posY, color);
+				tiles.emplace_back(x * posX, y * posY, (x + y) * 0.1f, color);
 			}
 			else
 			{
-				tiles.emplace_back(x * posX, y * posY + cos((float)M_PI / 6.0f), color);
+				tiles.emplace_back(x * posX, y * posY + cos((float)M_PI / 6.0f), (x + y) * 0.1f, color);
 			}
 			
 		}

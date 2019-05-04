@@ -6,10 +6,10 @@
 #include "Shader.h"
 #include "Texture.h"
 
-Hexagon::Hexagon(float x, float y, float color)
+Hexagon::Hexagon(float x, float y, float z, float color)
 	: color(color)
 {
-	pos = glm::vec3(x, y, 0.0f);
+	pos = glm::vec3(x, y, z);
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 
 	vb = new VertexBuffer(vertices, sizeof(float) * 21);

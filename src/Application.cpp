@@ -109,7 +109,7 @@ int main()
 
 	Hexagon hex;
 
-	const double maxFps = 144;
+	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
 	double deltaTime, time;
 	double lastTime = 0;
@@ -117,17 +117,19 @@ int main()
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
-		time = glfwGetTime();
-		deltaTime = time - lastTime;
-		if (deltaTime > maxPeriod)
+		//time = glfwGetTime();
+		//deltaTime = time - lastTime;
+		//if (deltaTime > maxPeriod)
+		//{
+		//	lastTime = time;
+		//	/* Update game state */
+		//	
+		//}
+
+		camera.Update();
+		if (input.IsPressed(Input::KEY_SPACE))
 		{
-			lastTime = time;
-			/* Update game state */
-			camera.Update();
-			if (input.IsPressed(Input::KEY_SPACE))
-			{
-				hex.Rotate();
-			}
+			hex.Rotate();
 		}
 
 		renderer.Clear();

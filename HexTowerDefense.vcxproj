@@ -77,7 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;GLM_ENABLE_EXPERIMENTAL;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(projectdir)dep\GLFW\lib-vc2015;$(projectdir)dep\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
@@ -91,7 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;GLM_ENABLE_EXPERIMENTAL;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(projectdir)dep\GLFW\lib-vc2015;$(projectdir)dep\GLEW\lib\Release\Win32</AdditionalLibraryDirectories>
@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;RELEASE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;GLM_ENABLE_EXPERIMENTAL;RELEASE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -125,7 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(projectdir)\res\external\stb;$(projectdir)\res\external\imgui;$(projectdir)res\external\glm;$(projectdir)src\Objects;$(projectdir)src\Others;$(projectdir)src\Render;$(projectdir)src\GUI;$(projectdir)dep\GLFW\include;$(projectdir)dep\GLEW\include;$(projectdir)dep\ImGui</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;RELEASE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);GLEW_STATIC;GLM_ENABLE_EXPERIMENTAL;RELEASE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -164,6 +164,7 @@
     <ClInclude Include="dep\ImGui\stb_textedit.h" />
     <ClInclude Include="dep\ImGui\stb_truetype.h" />
     <ClInclude Include="res\external\glm\gtc\matrix_transform.hpp" />
+    <ClInclude Include="res\external\glm\gtx\rotate_vector.hpp" />
     <ClInclude Include="res\external\imgui\MyImGui.h" />
     <ClInclude Include="res\external\stb\stb_image.h" />
     <ClInclude Include="src\Others\Camera.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\Render\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\external\glm\gtx\rotate_vector.inl" />
     <None Include="res\shaders\basic_fragment.shader" />
     <None Include="res\shaders\basic_vertex.shader" />
     <None Include="res\shaders\texture_fragment.shader" />

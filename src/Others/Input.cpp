@@ -18,8 +18,6 @@ Input::Input()
 		keyPressed[i] = false;
 	}
 
-	mouseX = 0;
-	mouseY = 0;
 	mouseLock = false;
 	scroll = 0;
 }

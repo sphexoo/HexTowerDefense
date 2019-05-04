@@ -31,7 +31,6 @@ public:
 		KEY_T	  = 9
 	};
 
-
 	static float mouseX;
 	static float mouseY;
 	static int scroll;

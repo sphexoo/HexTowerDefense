@@ -100,7 +100,7 @@ int main()
 	//gui.AddImageBox(100.0f, 100.0f, 1.0f, "res/textures/texture.png");
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
-	Camera camera(glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	Camera camera(glm::vec3(0.0f, 10.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	/* Create Shader specified in Shader.h */
 	//Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");

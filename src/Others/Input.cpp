@@ -141,6 +141,7 @@ void Input::cursor_pos_callback(GLFWwindow* window, double x, double y)
 
 void Input::scroll_callback(GLFWwindow* window, double a, double b)
 {
+
 	scroll = (int)b;
 }
 

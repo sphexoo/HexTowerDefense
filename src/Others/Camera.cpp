@@ -1,11 +1,13 @@
+#include <iostream>
+
 #include "Camera.h"
 #include "Input.h"
 #include "gtx/rotate_vector.hpp"
 
 extern Input input;
 
-Camera::Camera(glm::vec3 pos, glm::vec3 dir, glm::vec3 up)
-	: pos(pos), dir(dir), up(up)
+Camera::Camera(glm::vec3 pos, glm::vec3 dir, glm::vec3 up, float fWidth, float fHeight)
+	: pos(pos), dir(dir), up(up), fWidth(fWidth), fHeight(fHeight)
 {
 	viewMatrix = glm::lookAt(pos, dir, up);
 }
@@ -17,32 +19,26 @@ Camera::~Camera()
 
 void Camera::Move()
 {
-	// forward backward movement
-	if (input.IsPressed(Input::KEY_W))
+	// left right movement (camera pans when cursor is close to window edge)
+	if (Input::mX < fWidth * 0.1f)
 	{
-		pos.x += dir.x * fSpeed;
-		pos.y += dir.y * fSpeed;
+		pos.x -= fSpeed;
 	}
-	else if (input.IsPressed(Input::KEY_S))
+	else if (Input::mX > fWidth * 0.9f)
 	{
-		pos.x -= dir.x * fSpeed;
-		pos.y -= dir.y * fSpeed;
+		pos.x += fSpeed;
 	}
 
-	// left right movement
-	if (input.IsPressed(Input::KEY_A))
+	// forward backward movement (camera pans when cursor is close to window edge)
+	if (Input::mY < fHeight * 0.1f)
 	{
-		glm::vec3 tmp_dir = glm::rotate(dir, 3.14159f * 0.5f, up);
-		pos.x += tmp_dir.x * fSpeed;
-		pos.y += tmp_dir.y * fSpeed;
+		pos.y += fSpeed;
 	}
-	else if (input.IsPressed(Input::KEY_D))
+	else if (Input::mY > fHeight * 0.9f)
 	{
-		glm::vec3 tmp_dir = glm::rotate(dir, -3.14159f * 0.5f, up);
-		pos.x += tmp_dir.x * fSpeed;
-		pos.y += tmp_dir.y * fSpeed;
+		pos.y -= fSpeed;
 	}
-
+	
 	// up down movement
 	if (Input::scroll != 0)
 	{
@@ -62,24 +58,12 @@ void Camera::Move()
 
 void Camera::Rotate()
 {
-	if (Input::mouseX != prevMouseX)
-	{
-		fAngle += (prevMouseX - Input::mouseX) * fAngSpeed;
-		if (abs(fAngle) > 360 * 3.1415926 / 180)
-		{
-			fAngle = 0.0f;
-		}
-		prevMouseX = Input::mouseX;
-	}
-
 	dir = rotateX(glm::vec3(0.0f, 1.0f, 0.0f), -3.14159f * 0.5f * fZoom);
-	dir = glm::rotateZ(dir, fAngle);
 }
 
 void Camera::Update()
 {
 	Move();
 	Rotate();
-	
 	viewMatrix = glm::lookAt(pos, pos + dir, up);
 }

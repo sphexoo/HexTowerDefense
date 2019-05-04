@@ -4,8 +4,8 @@
 #include "Input.h"
 
 bool Input::keyPressed[10];
-float Input::mouseX;
-float Input::mouseY;
+float Input::mX;
+float Input::mY;
 bool Input::mouseLock;
 int Input::scroll;
 
@@ -132,11 +132,8 @@ void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, 
 void Input::cursor_pos_callback(GLFWwindow* window, double x, double y)
 {
 	/* handles mouse cursor movement if mouse lock is enabled */
-	if (mouseLock)
-	{
-		mouseX = (float)x;
-		mouseY = (float)y;
-	}
+	mX = (float)x;
+	mY = (float)y;
 }
 
 void Input::scroll_callback(GLFWwindow* window, double a, double b)

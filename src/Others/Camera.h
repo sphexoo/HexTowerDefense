@@ -37,5 +37,5 @@ public:
 	~Camera();
 
 	void Animate();
-	void Update();
+	void Update(float cursorX, float cursorY);
 };

@@ -12,7 +12,9 @@ Playfield::Playfield()
 			float posX = 2.0f * cos((float)M_PI / 6.0f);
 			float posY = 3.0f * sin((float)M_PI / 6.0f);
 
-			glm::vec4 color = glm::vec4((double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX));
+			float c = (double)rand() / (RAND_MAX);
+
+			glm::vec4 color = glm::vec4(c, c, c, 1.0f);
 
 			if (y % 2 == 0)
 			{

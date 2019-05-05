@@ -18,8 +18,9 @@ Camera::~Camera()
 
 }
 
-void Camera::Update()
+void Camera::Update(float cursorX, float cursorY)
 {
+	/*
 	// left right movement (camera pans when cursor is close to window edge)
 	if (Input::mX < fWidth * 0.1f)
 	{
@@ -39,6 +40,26 @@ void Camera::Update()
 	{
 		pos.y -= fSpeed;
 	}
+	*/
+
+	if (cursorY < pos.y - 5.0f)
+	{
+		pos.y -= fSpeed;
+	}
+	else if (cursorY > pos.y + 25.0f)
+	{
+		pos.y += fSpeed;
+	}
+
+	if (cursorX < pos.x - 25.0f)
+	{
+		pos.x -= fSpeed;
+	}
+	else if (cursorX > pos.x + 25.0f)
+	{
+		pos.x += fSpeed;
+	}
+
 
 	// up down movement and tilt (Animated by setting a target value and changing fZoom towards that target every frame)
 	if (Input::scroll != 0)
@@ -63,6 +84,8 @@ void Camera::Update()
 	{
 		reset = true;
 		iZoomTarget = 50;
+		iPosXTarget = 0;
+		iPosYTarget = -25;
 	}
 
 	// updating view matrix

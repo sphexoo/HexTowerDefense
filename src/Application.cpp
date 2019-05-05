@@ -79,7 +79,7 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1); // vsync off --> 0
+	glfwSwapInterval(0); // vsync off --> 0
 
 	/* Log current OpenGL version */
 	logger.log((const char*)glGetString(GL_VERSION), logger.Info);
@@ -120,21 +120,22 @@ int main()
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
-		//time = glfwGetTime();
-		//deltaTime = time - lastTime;
-		//if (deltaTime > maxPeriod)
-		//{
-		//	lastTime = time;
-		//	/* Update game state */
-		//	
-		//}
+		time = glfwGetTime();
+		deltaTime = time - lastTime;
+		if (deltaTime > maxPeriod)
+		{
+			lastTime = time;
+			/* Update game state */
+			cursor.Update();
+			camera.Update(cursor.pos.x, cursor.pos.y);
+			
+		}
 		if (input.IsPressed(Input::KEY_SPACE))
 		{
 			playfield.Change();
 		}
 
-		//cursor.Update();
-		camera.Update();
+
 
 		renderer.Clear();
 

@@ -10,7 +10,7 @@ class Hexagon
 private:
 	glm::vec3 pos;
 
-	float color;
+	glm::vec4 color;
 
 	float fRadius;
 	float fHeight;
@@ -37,8 +37,9 @@ private:
 	VertexAttributes* va; 
 
 public:
-	Hexagon(float x, float y, float z, float color);
+	Hexagon(float x, float y, float z, glm::vec4 color);
 	~Hexagon();
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
+	void SetColor(float r, float g, float b, float a); 
 };

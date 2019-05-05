@@ -126,6 +126,10 @@ int main()
 		//	/* Update game state */
 		//	
 		//}
+		if (input.IsPressed(Input::KEY_SPACE))
+		{
+			playfield.Change();
+		}
 
 		camera.Update();
 

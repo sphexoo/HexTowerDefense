@@ -6,8 +6,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
-Hexagon::Hexagon(float x, float y, float z, float color)
-	: color(color)
+Hexagon::Hexagon(float x, float y, float z, glm::vec4 color)
+	:color(color)
 {
 	pos = glm::vec3(x, y, z);
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
@@ -26,6 +26,11 @@ Hexagon::~Hexagon()
 
 void Hexagon::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	shader.SetUniform4f("u_Color", color, color, color, 1.0f);
+	shader.SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
 	renderer.Draw3D(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
+}
+
+void Hexagon::SetColor(float r, float g, float b, float a)
+{
+	color = glm::vec4(r, g, b, a);
 }

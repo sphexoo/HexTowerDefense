@@ -19,4 +19,5 @@ public:
 	~Playfield();
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
+	void Change();
 };

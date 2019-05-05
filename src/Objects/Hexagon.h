@@ -35,7 +35,6 @@ private:
 	VertexBuffer* vb;
 	IndexBuffer* ib;
 	VertexAttributes* va; 
-	Texture* texture;
 
 public:
 	Hexagon(float x, float y, float z, float color);

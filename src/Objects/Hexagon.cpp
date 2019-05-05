@@ -15,8 +15,6 @@ Hexagon::Hexagon(float x, float y, float z, float color)
 	vb = new VertexBuffer(vertices, sizeof(float) * 21);
 	ib = new IndexBuffer(indices, 18);
 	va = new VertexAttributes(true, 3, false, 0);
-
-	texture = new Texture("res/textures/hex.png");
 }
 
 Hexagon::~Hexagon()
@@ -28,7 +26,6 @@ Hexagon::~Hexagon()
 
 void Hexagon::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	//texture->Bind();
 	shader.SetUniform4f("u_Color", color, color, color, 1.0f);
 	renderer.Draw3D(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
 }

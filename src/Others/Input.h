@@ -28,7 +28,7 @@ public:
 		KEY_S     = 6,
 		KEY_A	  = 7,
 		KEY_D	  = 8,
-		KEY_T	  = 9
+		KEY_R	  = 9
 	};
 
 	static float mX;

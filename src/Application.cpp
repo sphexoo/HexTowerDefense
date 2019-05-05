@@ -134,7 +134,7 @@ int main()
 		/* Render new frame */
 		playfield.Draw(renderer, shader, camera.viewMatrix);
 		//gui.Draw(renderer, shader);
-		debugWindow.Draw();
+		debugWindow.Draw(camera.fZoom, camera.fZoomTarget, camera.fAngle);
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

@@ -10,6 +10,8 @@ Camera::Camera(glm::vec3 pos, glm::vec3 dir, glm::vec3 up, float fWidth, float f
 	: pos(pos), dir(dir), up(up), fWidth(fWidth), fHeight(fHeight)
 {
 	viewMatrix = glm::lookAt(pos, dir, up);
+
+	ResetView();
 }
 
 Camera::~Camera()
@@ -42,20 +44,49 @@ void Camera::Update()
 	// up down movement and tilt
 	if (Input::scroll != 0)
 	{
-		fZoom -= Input::scroll * 0.05f;
-		if (fZoom > 0.9f)
+		fZoomTarget -= Input::scroll * 10;
+		if (fZoomTarget > 90)
 		{
-			fZoom = 0.9f;
+			fZoomTarget = 90;
 		}
-		else if (fZoom < 0.1)
+		else if (fZoomTarget < 10)
 		{
-			fZoom = 0.1;
+			fZoomTarget = 10;
 		}
-		pos.z = fMaxHeight * fZoom;
-		dir = rotateX(glm::vec3(0.0f, 1.0f, 0.0f), -3.14159f * 0.5f * fZoom);
 		Input::scroll = 0;
+	}
+
+	AnimateMovement();
+
+	// check for camera reset
+	if (input.IsPressed(Input::KEY_R))
+	{
+		ResetView();
 	}
 
 	// updating view matrix
 	viewMatrix = glm::lookAt(pos, pos + dir, up);
+}
+
+void Camera::ResetView()
+{
+	/* sets camera view to initial position */
+	fZoomTarget = 50;
+	dir = rotateX(glm::vec3(0.0f, 1.0f, 0.0f), -3.14159f * 0.5f * fZoom * 0.01f);
+	pos = glm::vec3(0.0f, -25.0f, fMaxHeight * fZoom * 0.01f);
+}
+
+void Camera::AnimateMovement()
+{
+	if ((int)fZoom > fZoomTarget)
+	{
+		fZoom -= 1.0f;
+	}
+	else if ((int)fZoom < fZoomTarget)
+	{
+		fZoom += 1.0f;
+	}
+
+	dir = rotateX(glm::vec3(0.0f, 1.0f, 0.0f), -3.14159f * 0.5f * fZoom * 0.01f);
+	pos.z = fMaxHeight * fZoom * 0.01f;
 }

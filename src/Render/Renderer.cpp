@@ -20,7 +20,7 @@ Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float 
 	MVP = glm::mat4(1.0f);
 
 	/* initial OpenGl settings */
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glClearColor(0.8f, 0.8f, 1.0f, 1.0f);
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_FRONT);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -14,5 +14,5 @@ public:
 public:
 	MyImGui(GLFWwindow* window);
 	~MyImGui();
-	void Draw();
+	void Draw(float fZoom, float fZoomTarget, float fAngle);
 };

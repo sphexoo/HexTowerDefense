@@ -116,16 +116,17 @@ void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		}
 		mouseLock = !mouseLock;
 	}
-	else if (key == GLFW_KEY_T && action == GLFW_PRESS)
+	else if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
-		if (keyPressed[KEY_T])
-		{
-			keyPressed[KEY_T] = false;
-		}
-		else
-		{
-			keyPressed[KEY_T] = true;
-		}
+
+		keyPressed[KEY_R] = true;
+
+	}
+	else if (key == GLFW_KEY_R && action == GLFW_RELEASE)
+	{
+
+		keyPressed[KEY_R] = false;
+
 	}
 }
 

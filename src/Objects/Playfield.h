@@ -8,10 +8,11 @@ class Hexagon;
 class Playfield
 {
 private:
-	int iTilesX = 25;
-	int iTilesY = 20;
-
 	std::vector<Hexagon> tiles;
+
+public:
+	int iTilesX = 20;
+	int iTilesY = 20;
 
 public:
 	Playfield();

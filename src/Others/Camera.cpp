@@ -20,28 +20,6 @@ Camera::~Camera()
 
 void Camera::Update(float cursorX, float cursorY)
 {
-	/*
-	// left right movement (camera pans when cursor is close to window edge)
-	if (Input::mX < fWidth * 0.1f)
-	{
-		pos.x -= fSpeed;
-	}
-	else if (Input::mX > fWidth * 0.9f)
-	{
-		pos.x += fSpeed;
-	}
-
-	// forward backward movement (camera pans when cursor is close to window edge)
-	if (Input::mY < fHeight * 0.1f)
-	{
-		pos.y += fSpeed;
-	}
-	else if (Input::mY > fHeight * 0.9f)
-	{
-		pos.y -= fSpeed;
-	}
-	*/
-
 	if (cursorY < pos.y - 5.0f)
 	{
 		pos.y -= fSpeed;

@@ -145,9 +145,9 @@
     <ClCompile Include="src\Objects\Playfield.cpp" />
     <ClCompile Include="src\Others\Camera.cpp" />
     <ClCompile Include="src\Objects\Hexagon.cpp" />
+    <ClCompile Include="src\Others\Cursor.cpp" />
     <ClCompile Include="src\Others\Input.cpp" />
     <ClCompile Include="src\Others\Logger.cpp" />
-    <ClCompile Include="src\Others\Raycast.cpp" />
     <ClCompile Include="src\Render\IndexBuffer.cpp" />
     <ClCompile Include="src\Render\Renderer.cpp" />
     <ClCompile Include="src\Render\Shader.cpp" />
@@ -172,9 +172,9 @@
     <ClInclude Include="src\Objects\Playfield.h" />
     <ClInclude Include="src\Others\Camera.h" />
     <ClInclude Include="src\Objects\Hexagon.h" />
+    <ClInclude Include="src\Others\Cursor.h" />
     <ClInclude Include="src\Others\Input.h" />
     <ClInclude Include="src\Others\Logger.h" />
-    <ClInclude Include="src\Others\Raycast.h" />
     <ClInclude Include="src\Render\IndexBuffer.h" />
     <ClInclude Include="src\Render\Renderer.h" />
     <ClInclude Include="src\Render\Shader.h" />

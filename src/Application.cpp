@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "Camera.h"
 #include "Playfield.h"
+#include "Cursor.h"
 //#include "Gui.h"
 
 #include "Hexagon.h"
@@ -104,11 +105,12 @@ int main()
 	Camera camera(glm::vec3(0.0f, -25.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
 
 	/* Create Shader specified in Shader.h */
-	//Shader shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
+	Shader shader_tex("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
 	Shader shader("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
 	shader.Bind();
 
 	Playfield playfield;
+	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
@@ -131,12 +133,14 @@ int main()
 			playfield.Change();
 		}
 
+		//cursor.Update();
 		camera.Update();
 
 		renderer.Clear();
 
 		/* Render new frame */
 		playfield.Draw(renderer, shader, camera.viewMatrix);
+		cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 		//gui.Draw(renderer, shader);
 		debugWindow.Draw();
 		

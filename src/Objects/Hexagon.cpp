@@ -26,8 +26,7 @@ Hexagon::~Hexagon()
 
 void Hexagon::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	shader.SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
-	renderer.Draw3D(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
+	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix, color);
 }
 
 void Hexagon::SetColor(float r, float g, float b, float a)

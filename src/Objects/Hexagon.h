@@ -17,13 +17,13 @@ private:
 
 	glm::mat4 modelMatrix;
 
-	float vertices[21] = {   0.0f,  0.0f,					 0.0f,
-							 1.0f,  0.0f,					 0.0f,
-							 0.5f,  cos((float)M_PI / 6.0f), 0.0f,
-							-0.5f,  cos((float)M_PI / 6.0f), 0.0f,
-							-1.0f,  0.0f,					 0.0f,
-							-0.5f, -cos((float)M_PI / 6.0f), 0.0f,
-							 0.5f, -cos((float)M_PI / 6.0f), 0.0f  };
+	float vertices[21] = {   0.0f,					   0.0f, 0.0f,
+							 cos((float)M_PI / 6.0f),  0.5f, 0.0f,
+					    	 0.0f,					   1.0f, 0.0f,
+					    	-cos((float)M_PI / 6.0f),  0.5f, 0.0f,
+							-cos((float)M_PI / 6.0f), -0.5f, 0.0f,
+							 0.0f,					  -1.0f, 0.0f,
+							 cos((float)M_PI / 6.0f), -0.5f, 0.0f };
 
 	unsigned int indices[18] = { 0, 1, 2,
 								 0, 2, 3,

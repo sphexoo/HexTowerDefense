@@ -2,6 +2,8 @@
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 
+class Cursor;
+
 class Camera
 {
 private:
@@ -9,7 +11,7 @@ private:
 	glm::vec3 dir;
 	glm::vec3 up;
 
-	float fSpeed = 0.25f;
+	float fSpeed = 0.2f;
 	float fMaxHeight = 40.0f;
 
 	float fZoom = 50.0f;
@@ -37,5 +39,5 @@ public:
 	~Camera();
 
 	void Animate();
-	void Update(float cursorX, float cursorY);
+	void Update(Cursor& cursor);
 };

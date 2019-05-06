@@ -8,9 +8,8 @@
 class Hexagon
 {
 private:
-	glm::vec3 pos;
-
 	glm::vec4 color;
+	glm::vec4 colorSelected = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 
 	float fRadius;
 	float fHeight;
@@ -35,6 +34,10 @@ private:
 	VertexBuffer* vb;
 	IndexBuffer* ib;
 	VertexAttributes* va; 
+
+public:
+	glm::vec3 pos;
+	bool selected = false;
 
 public:
 	Hexagon(float x, float y, float z, glm::vec4 color);

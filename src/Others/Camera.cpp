@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Input.h"
+#include "Cursor.h"
 #include "gtx/rotate_vector.hpp"
 
 extern Input input;
@@ -18,24 +19,28 @@ Camera::~Camera()
 
 }
 
-void Camera::Update(float cursorX, float cursorY)
+void Camera::Update(Cursor& cursor)
 {
-	if (cursorY < pos.y - 5.0f)
+	if (cursor.pos.y < pos.y)
 	{
 		pos.y -= fSpeed;
+		cursor.pos.y -= fSpeed;
 	}
-	else if (cursorY > pos.y + 25.0f)
+	else if (cursor.pos.y > pos.y + 30.0f)
 	{
 		pos.y += fSpeed;
+		cursor.pos.y += fSpeed;
 	}
 
-	if (cursorX < pos.x - 25.0f)
+	if (cursor.pos.x < pos.x - 25.0f)
 	{
 		pos.x -= fSpeed;
+		cursor.pos.x -= fSpeed;
 	}
-	else if (cursorX > pos.x + 25.0f)
+	else if (cursor.pos.x > pos.x + 25.0f)
 	{
 		pos.x += fSpeed;
+		cursor.pos.x += fSpeed;
 	}
 
 

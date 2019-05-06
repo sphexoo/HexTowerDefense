@@ -20,4 +20,6 @@ public:
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
 	void Change();
+	void Update(glm::vec3& pos);
+	Hexagon* GetTile(glm::vec3& pos);
 };

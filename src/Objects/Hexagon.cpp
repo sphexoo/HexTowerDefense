@@ -26,7 +26,14 @@ Hexagon::~Hexagon()
 
 void Hexagon::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix, color);
+	if (selected)
+	{
+		renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix, colorSelected);
+	}
+	else
+	{
+		renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix, color);
+	}
 }
 
 void Hexagon::SetColor(float r, float g, float b, float a)

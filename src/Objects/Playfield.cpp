@@ -48,3 +48,26 @@ void Playfield::Change()
 
 	tiles[x * iTilesX + y].SetColor((double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX));
 }
+
+void Playfield::Update(glm::vec3& pos)
+{
+	for (int i = 0; i < tiles.size(); i++)
+	{
+		tiles[i].selected = false;
+	}
+
+	GetTile(pos)->selected = true;
+}
+
+Hexagon* Playfield::GetTile(glm::vec3& pos)
+{
+	for (int i = 0; i < tiles.size(); i++)
+	{
+		float dist = glm::length(tiles[i].pos - pos);
+		tiles[i].selected = false;
+		if (dist < cos((float)M_PI / 6.0f))
+		{
+			return &tiles[i];
+		}
+	}
+}

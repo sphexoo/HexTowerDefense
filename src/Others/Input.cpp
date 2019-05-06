@@ -18,7 +18,7 @@ Input::Input()
 		keyPressed[i] = false;
 	}
 
-	mouseLock = false;
+	mouseLock = true;
 	scroll = 0;
 }
 
@@ -29,6 +29,8 @@ void Input::SetWindowCallback(GLFWwindow* window)
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_click_callback);
 	glfwSetScrollCallback(window, scroll_callback);
+
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void Input::mouse_click_callback(GLFWwindow* window, int button, int action, int mods)

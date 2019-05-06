@@ -7,7 +7,6 @@ class Input
 	Class handles input from mouse and keyboard
 	*/
 private:
-	static bool mouseLock;
 	static bool keyPressed[10];
 
 private:
@@ -34,6 +33,7 @@ public:
 	static float mX;
 	static float mY;
 	static int scroll;
+	static bool mouseLock;
 
 	Input();
 

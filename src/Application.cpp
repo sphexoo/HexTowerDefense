@@ -142,7 +142,7 @@ int main()
 		playfield.Draw(renderer, shader, camera.viewMatrix);
 		cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 		//gui.Draw(renderer, shader);
-		debugWindow.Draw();
+		debugWindow.Draw(cursor.pos);
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

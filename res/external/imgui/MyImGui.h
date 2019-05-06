@@ -14,5 +14,5 @@ public:
 public:
 	MyImGui(GLFWwindow* window);
 	~MyImGui();
-	void Draw();
+	void Draw(glm::vec3 pos);
 };

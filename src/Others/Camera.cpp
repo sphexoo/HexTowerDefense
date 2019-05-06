@@ -26,7 +26,7 @@ void Camera::Update(Cursor& cursor)
 		pos.y -= fSpeed;
 		cursor.pos.y -= fSpeed;
 	}
-	else if (cursor.pos.y > pos.y + 30.0f)
+	else if (cursor.pos.y > pos.y + 35.0f)
 	{
 		pos.y += fSpeed;
 		cursor.pos.y += fSpeed;

@@ -55,8 +55,11 @@ void Playfield::Update(glm::vec3& pos)
 	{
 		tiles[i].selected = false;
 	}
-
-	GetTile(pos)->selected = true;
+	Hexagon* tile = GetTile(pos);
+	if (tile != nullptr)
+	{
+		tile->selected = true;
+	}
 }
 
 Hexagon* Playfield::GetTile(glm::vec3& pos)
@@ -70,4 +73,5 @@ Hexagon* Playfield::GetTile(glm::vec3& pos)
 			return &tiles[i];
 		}
 	}
+	return nullptr; 
 }

@@ -14,6 +14,7 @@
 #include "Camera.h"
 #include "Playfield.h"
 #include "Cursor.h"
+#include "Model.h"
 //#include "Gui.h"
 
 #include "Hexagon.h"
@@ -112,6 +113,9 @@ int main()
 	Playfield playfield;
 	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
+	Model model;
+	model.Load("res/models/monkey.obj");
+
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
 	double deltaTime, time;
@@ -140,7 +144,9 @@ int main()
 
 		/* Render new frame */
 		playfield.Draw(renderer, shader, camera.viewMatrix);
+		model.Draw(renderer, shader, camera.viewMatrix);
 		cursor.Draw(renderer, shader_tex, camera.viewMatrix);
+		
 		//gui.Draw(renderer, shader);
 		debugWindow.Draw(cursor.pos);
 		

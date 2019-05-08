@@ -1,5 +1,8 @@
 #include "Playfield.h"
 #include "Hexagon.h"
+#include "VertexBuffer.h"
+#include "VertexAttributes.h"
+#include "IndexBuffer.h"
 
 Playfield::Playfield()
 {
@@ -18,19 +21,35 @@ Playfield::Playfield()
 
 			if (y % 2 == 0)
 			{
-				tiles.emplace_back(x * posX, y * posY, 0.0f, color);
+				//tiles.emplace_back(x * posX, y * posY, 0.0f, color);
+				std::vector<float> tile = GetVertexPositions(x * posX, y * posY, 0.0f);
+				vertices.insert(vertices.end(), tile.begin(), tile.end());
+
+				std::vector<unsigned int> ind = GetIndexValues(vertices.size() / 3);
+				indices.insert(indices.end(), ind.begin(), ind.end());
 			}
 			else
 			{
-				tiles.emplace_back(x * posX + cos((float)M_PI / 6.0f), y * posY, 0.0f, color);
+				//tiles.emplace_back(x * posX + cos((float)M_PI / 6.0f), y * posY, 0.0f, color);
+				std::vector<float> tile = GetVertexPositions(x * posX + cos((float)M_PI / 6.0f), y * posY, 0.0f);
+				vertices.insert(vertices.end(), tile.begin(), tile.end());
+
+				std::vector<unsigned int> ind = GetIndexValues(vertices.size() / 3);
+				indices.insert(indices.end(), ind.begin(), ind.end());
 			}
 		}
 	}
+
+	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
+	ib = new IndexBuffer(&indices[0], indices.size());
+	va = new VertexAttributes(true, 3, false, 0);
 }
 
 Playfield::~Playfield()
 {
-
+	delete vb;
+	delete va;
+	delete ib;
 }
 
 void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
@@ -41,12 +60,35 @@ void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 	}
 }
 
-void Playfield::Change()
+void Playfield::Draw2(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	int x = (int)((double)rand() / (RAND_MAX) * iTilesX);
-	int y = (int)((double)rand() / (RAND_MAX)* iTilesY);
+	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix, color);
+}
 
-	tiles[x * iTilesX + y].SetColor((double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX));
+std::vector<float> Playfield::GetVertexPositions(float x, float y, float z)
+{
+	std::vector<float> out = vertex;
+
+	for (int i = 0; i < vertex.size(); i = i + 3)
+	{
+		out[i]     += x;
+		out[i + 1] += y;
+		out[i + 2] += z;
+	}
+
+	return out;
+}
+
+std::vector<unsigned int> Playfield::GetIndexValues(int shift)
+{
+	std::vector<unsigned int> out = index;
+
+	for (int i = 0; i < index.size(); i++)
+	{
+		out[i] += shift;
+	}
+
+	return out;
 }
 
 void Playfield::Update(glm::vec3& pos)

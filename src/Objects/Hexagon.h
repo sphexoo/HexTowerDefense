@@ -16,20 +16,20 @@ private:
 
 	glm::mat4 modelMatrix;
 
-	float vertices[21] = {   0.0f,					   0.0f, 0.0f,
-							 cos((float)M_PI / 6.0f),  0.5f, 0.0f,
-					    	 0.0f,					   1.0f, 0.0f,
-					    	-cos((float)M_PI / 6.0f),  0.5f, 0.0f,
-							-cos((float)M_PI / 6.0f), -0.5f, 0.0f,
-							 0.0f,					  -1.0f, 0.0f,
-							 cos((float)M_PI / 6.0f), -0.5f, 0.0f };
+	std::vector<float> vertices = { 0.0f,					  0.0f, 0.0f,
+									cos((float)M_PI / 6.0f),  0.5f, 0.0f,
+					    			0.0f,					  1.0f, 0.0f,
+								   -cos((float)M_PI / 6.0f),  0.5f, 0.0f,
+								   -cos((float)M_PI / 6.0f), -0.5f, 0.0f,
+									0.0f,					 -1.0f, 0.0f,
+									cos((float)M_PI / 6.0f), -0.5f, 0.0f };
 
-	unsigned int indices[18] = { 0, 1, 2,
-								 0, 2, 3,
-								 0, 3, 4,
-								 0, 4, 5, 
-								 0, 5, 6,
-								 0, 6, 1 };
+	std::vector<unsigned int> indices = { 0, 1, 2,
+										  0, 2, 3,
+										  0, 3, 4,
+										  0, 4, 5, 
+										  0, 5, 6,
+										  0, 6, 1 };
 
 	VertexBuffer* vb;
 	IndexBuffer* ib;

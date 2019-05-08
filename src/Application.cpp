@@ -135,15 +135,11 @@ int main()
 			playfield.Update(cursor.pos);
 			
 		}
-		if (input.IsPressed(Input::KEY_SPACE))
-		{
-			playfield.Change();
-		}
 
 		renderer.Clear();
 
 		/* Render new frame */
-		playfield.Draw(renderer, shader, camera.viewMatrix);
+		playfield.Draw2(renderer, shader, camera.viewMatrix);
 		model.Draw(renderer, shader, camera.viewMatrix);
 		cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 		

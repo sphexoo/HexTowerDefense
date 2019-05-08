@@ -12,8 +12,8 @@ Hexagon::Hexagon(float x, float y, float z, glm::vec4 color)
 	pos = glm::vec3(x, y, z);
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 
-	vb = new VertexBuffer(vertices, sizeof(float) * 21);
-	ib = new IndexBuffer(indices, 18);
+	vb = new VertexBuffer(&vertices[0], sizeof(float) * 21);
+	ib = new IndexBuffer(&indices[0], 18);
 	va = new VertexAttributes(true, 3, false, 0);
 }
 

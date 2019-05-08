@@ -113,7 +113,7 @@ int main()
 	Playfield playfield;
 	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
-	Model model;
+	Model model(0.0f, 0.0f, 10.0f);
 	model.Load("res/models/monkey.obj");
 
 	const double maxFps = 200;

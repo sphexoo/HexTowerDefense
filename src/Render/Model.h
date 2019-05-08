@@ -19,7 +19,7 @@ private:
 	VertexAttributes* va;
 
 public:
-	Model();
+	Model(float x, float y, float z);
 	~Model();
 
 	void Load(std::string path);

@@ -7,9 +7,11 @@
 #include "IndexBuffer.h"
 #include "Model.h"
 
-Model::Model()
+Model::Model(float x, float y, float z)
 {
+	pos = glm::vec3(x, y, z);
 
+	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }
 
 Model::~Model()
@@ -34,7 +36,7 @@ void Model::Load(std::string path)
 			float x, y, z;
 			in >> x >> y >> z;
 
-			std::cout << x << ", " << y << ", " << z << std::endl;
+			//std::cout << x << ", " << y << ", " << z << std::endl;
 			
 			vertices.push_back(x * 1.0f);
 			vertices.push_back(y * 1.0f);
@@ -46,7 +48,7 @@ void Model::Load(std::string path)
 			unsigned int i1, i2, i3;
 			in >> i1 >> i2 >> i3;
 
-			std::cout << i1 << ", " << i2 << ", " << i3 << std::endl;
+			//std::cout << i1 << ", " << i2 << ", " << i3 << std::endl;
 
 			indices.push_back(i1);
 			indices.push_back(i2);

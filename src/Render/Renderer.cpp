@@ -52,6 +52,23 @@ void Renderer::Draw3Dbasic(const VertexBuffer& vb, const VertexAttributes& va, c
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
+void Renderer::Draw3Dlight(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix, const glm::vec4& color)
+{
+	/* render 3D object */
+	MVP = projMatrix3D * viewMatrix * modelMatrix;
+
+	sd.Bind();
+
+	//sd.SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
+	sd.SetUniformMatrix4f("u_MVP", MVP);
+
+	vb.Bind();
+	va.Bind();
+	ib.Bind();
+
+	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
+}
+
 void Renderer::Draw3Dtexture(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix, const Texture& texture)
 {
 	/* render 3D object */

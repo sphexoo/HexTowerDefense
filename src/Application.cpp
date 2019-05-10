@@ -80,7 +80,7 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1); // vsync off --> 0
+	glfwSwapInterval(0); // vsync off --> 0
 
 	/* Log current OpenGL version */
 	logger.log((const char*)glGetString(GL_VERSION), logger.Info);
@@ -107,14 +107,15 @@ int main()
 
 	/* Create Shader specified in Shader.h */
 	Shader shader_tex("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
-	Shader shader("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
-	shader.Bind();
+	Shader shader_bsc("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
+	Shader shader_lgt("res/shaders/light_vertex.shader", "res/shaders/light_fragment.shader");
+	shader_bsc.Bind();
 
 	Playfield playfield;
 	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
-	Model model(0.0f, 0.0f, 10.0f);
-	model.Load("res/models/monkey.obj");
+	Model model(0.0f, 0.0f, 2.0f);
+	model.Load("res/models/untitled.obj");
 
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
@@ -139,8 +140,8 @@ int main()
 		renderer.Clear();
 
 		/* Render new frame */
-		playfield.Draw2(renderer, shader, camera.viewMatrix);
-		model.Draw(renderer, shader, camera.viewMatrix);
+		playfield.Draw2(renderer, shader_bsc, camera.viewMatrix);
+		model.Draw(renderer, shader_lgt, camera.viewMatrix);
 		cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 		
 		//gui.Draw(renderer, shader);

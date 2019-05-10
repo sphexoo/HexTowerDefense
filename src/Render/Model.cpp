@@ -92,5 +92,5 @@ void Model::Load(std::string path)
 
 void Model::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	renderer.Draw3Dlight(*vb, *va, *ib, shader, viewMatrix, modelMatrix, glm::vec4(0.9f, 0.9f, 0.9f, 1.0f));
+	renderer.Draw3Dlight(*vb, *va, *ib, shader, viewMatrix, modelMatrix, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 }

@@ -59,7 +59,7 @@ void Renderer::Draw3Dlight(const VertexBuffer& vb, const VertexAttributes& va, c
 
 	sd.Bind();
 
-	//sd.SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
+	sd.SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
 	sd.SetUniformMatrix4f("u_MVP", MVP);
 
 	vb.Bind();

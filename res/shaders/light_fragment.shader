@@ -6,6 +6,8 @@ in vec3 v_Normal;
 
 void main()
 {
-	float val = (v_Normal.z + 1.0f) * 0.5f;
-	color = vec4(val, val, val, 1.0f);
+	float lightning_factor = (v_Normal.z + 1.0f) * 0.5f;
+	vec4 targetColor = u_Color;
+	targetColor.xyz = u_Color.xyz * lightning_factor;
+	color = targetColor;
 };

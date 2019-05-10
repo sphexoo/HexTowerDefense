@@ -92,5 +92,10 @@ void Model::Load(std::string path)
 
 void Model::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	renderer.Draw3Dlight(*vb, *va, *ib, shader, viewMatrix, modelMatrix, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	renderer.Draw3Dlight(*vb, *va, *ib, shader, viewMatrix, modelMatrix, color);
+}
+
+void Model::SetColor(float r, float g, float b, float a)
+{
+	color = glm::vec4(r, g, b, a);
 }

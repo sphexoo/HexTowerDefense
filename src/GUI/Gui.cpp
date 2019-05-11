@@ -1,5 +1,8 @@
 #include "Gui.h"
 
+/* Access the logger object globally created in Application.cpp */
+extern Logger logger;
+
 Gui::Gui(float fWidth, float fHeight)
 	: fWidth(fWidth), fHeight(fHeight)
 {
@@ -50,9 +53,10 @@ void Gui::SwitchScreen(std::string name)
 		if (screens[i]->name == name)
 		{
 			currentScreen = screens[i];
-			break;
+			return;
 		}
 	}
+	logger.log("Screen not found.", Logger::Warning);
 }
 
 void Gui::HandleMouseInput(bool& mouse1, double mouseX, double mouseY)

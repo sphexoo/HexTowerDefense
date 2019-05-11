@@ -154,6 +154,7 @@
     <ClCompile Include="src\Others\Cursor.cpp" />
     <ClCompile Include="src\Others\Input.cpp" />
     <ClCompile Include="src\Others\Logger.cpp" />
+    <ClCompile Include="src\Others\StateHandler.cpp" />
     <ClCompile Include="src\Render\IndexBuffer.cpp" />
     <ClCompile Include="src\Render\Model.cpp" />
     <ClCompile Include="src\Render\Renderer.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="src\Others\Cursor.h" />
     <ClInclude Include="src\Others\Input.h" />
     <ClInclude Include="src\Others\Logger.h" />
+    <ClInclude Include="src\Others\StateHandler.h" />
     <ClInclude Include="src\Render\IndexBuffer.h" />
     <ClInclude Include="src\Render\Model.h" />
     <ClInclude Include="src\Render\Renderer.h" />

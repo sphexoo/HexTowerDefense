@@ -16,6 +16,7 @@
 #include "Cursor.h"
 #include "Model.h"
 #include "Gui.h"
+#include "StateHandler.h"
 
 #include "Hexagon.h"
 
@@ -27,6 +28,7 @@
 	float fHeight = 720.0f;
 #endif
 
+typedef void(*fcnPtr)(int state);
 
 /* Creating instance of Logger class and setting its log level */
 Logger logger(Logger::Info);
@@ -94,13 +96,15 @@ int main()
 	/* Enable OpenGL Debugging */
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(MessageCallback, 0);
-
+	
+	StateHandler statehandler(window, nullptr, StateHandler::Startup);
 	Gui gui(fWidth, fHeight);
-	gui.CreateScreen("HUD");
 
-	void(*fcnPtr)(int state) = nullptr; 
+	gui.CreateScreen("MainMenue");
+	gui.AddButtonBox(100.0f, 100.0f, "res/textures/hex.png", StateHandler::SetState, StateHandler::Running);
 
-	gui.AddImageBox(100.0f, 100.0f, 1.0f, "res/textures/texture.png");
+	gui.CreateScreen("Pause");
+	gui.AddButtonBox(100.0f, 100.0f, "res/textures/hex.png", StateHandler::SetState, StateHandler::Running);
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
 	Camera camera(glm::vec3(0.0f, -25.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
@@ -122,30 +126,66 @@ int main()
 	double deltaTime, time;
 	double lastTime = 0;
 
-	/* Loop until the user closes the window */
+	/* main loop */
 	while (!glfwWindowShouldClose(window))
 	{
-		time = glfwGetTime();
-		deltaTime = time - lastTime;
-		if (deltaTime > maxPeriod)
-		{
-			lastTime = time;
-			/* Update game state */
-			cursor.Update();
-			camera.Update(cursor);
-			playfield.Update(cursor.pos);
-			
-		}
-
 		renderer.Clear();
 
-		/* Render new frame */
-		playfield.Draw2(renderer, shader_bsc, camera.viewMatrix);
-		model.Draw(renderer, shader_lgt, camera.viewMatrix);
-		cursor.Draw(renderer, shader_tex, camera.viewMatrix);
-		gui.Draw(renderer, shader_tex);
-		
-		//gui.Draw(renderer, shader);
+		// STATE RUNNING
+		if (statehandler.IsState(StateHandler::Running))
+		{
+			time = glfwGetTime();
+			deltaTime = time - lastTime;
+			if (deltaTime > maxPeriod)
+			{
+				lastTime = time;
+
+				/* Update game state */
+				cursor.Update();
+				camera.Update(cursor);
+				playfield.Update(cursor.pos);
+			}
+
+			playfield.Draw2(renderer, shader_bsc, camera.viewMatrix);
+			model.Draw(renderer, shader_lgt, camera.viewMatrix);
+			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
+			gui.Draw(renderer, shader_tex);
+
+			if (input.IsPressed(Input::KEY_ESC))
+			{
+				statehandler.SetState(StateHandler::Pause);
+			}
+		}
+		// STATE PAUSE
+		else if (statehandler.IsState(StateHandler::Pause))
+		{
+			gui.Draw(renderer, shader_tex);
+		}
+		// STATE MAINMENUE
+		else if (statehandler.IsState(StateHandler::MainMenue))
+		{
+			gui.Draw(renderer, shader_tex);
+
+			if (input.IsPressed(Input::KEY_ESC))
+			{
+				statehandler.SetState(StateHandler::Quit);
+			}
+		}
+		// STATE STARTUP
+		else if (statehandler.IsState(StateHandler::Startup))
+		{
+			if (input.IsPressed(Input::KEY_SPACE))
+			{
+				statehandler.SetState(StateHandler::Running);
+			}
+		}
+		// STATE QUIT
+		else if (statehandler.IsState(StateHandler::Quit))
+		{
+			break;
+		}
+
+		/* Draw debug window */
 		debugWindow.Draw(cursor.pos);
 		
 		/* Swap front and back buffers */

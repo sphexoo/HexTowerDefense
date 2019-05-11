@@ -3,7 +3,7 @@
 
 #include "Input.h"
 
-bool Input::keyPressed[10];
+bool Input::keyPressed[NUM_KEYS];
 float Input::mX;
 float Input::mY;
 bool Input::mouseLock;
@@ -13,7 +13,7 @@ int Input::scroll;
 Input::Input()
 {
 	/* Intilalise key states and callback functions */
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < NUM_KEYS; i++)
 	{
 		keyPressed[i] = false;
 	}
@@ -106,29 +106,21 @@ void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	{
 		keyPressed[KEY_SPACE] = false;
 	}
-	else if (key == GLFW_KEY_E && action == GLFW_PRESS)
-	{
-		if (!mouseLock)
-		{
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-		}
-		else
-		{
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		}
-		mouseLock = !mouseLock;
-	}
 	else if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
-
 		keyPressed[KEY_R] = true;
-
 	}
 	else if (key == GLFW_KEY_R && action == GLFW_RELEASE)
 	{
-
 		keyPressed[KEY_R] = false;
-
+	}
+	else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		keyPressed[KEY_ESC] = true;
+	}
+	else if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
+	{
+		keyPressed[KEY_ESC] = false;
 	}
 }
 

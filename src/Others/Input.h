@@ -1,13 +1,15 @@
 #pragma once
 #include <GLFW/glfw3.h>
 
+constexpr auto NUM_KEYS = 11;
+
 class Input
 {
 	/*
 	Class handles input from mouse and keyboard
 	*/
 private:
-	static bool keyPressed[10];
+	static bool keyPressed[NUM_KEYS];
 
 private:
 	static void cursor_pos_callback(GLFWwindow* window, double x, double y);
@@ -27,7 +29,8 @@ public:
 		KEY_S     = 6,
 		KEY_A	  = 7,
 		KEY_D	  = 8,
-		KEY_R	  = 9
+		KEY_R	  = 9,
+		KEY_ESC	  = 10
 	};
 
 	static float mX;

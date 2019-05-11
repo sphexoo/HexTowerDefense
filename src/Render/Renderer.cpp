@@ -17,7 +17,7 @@ Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float 
 {
 	/* initialize projection matrices */
 	projMatrix3D = glm::perspective(RAD(fFov), fWidth / fHeight, fZnear, fZfar);
-	projMatrix2D = glm::ortho(-fWidth * 0.5f, fWidth * 0.5f, -fHeight * 0.5f, fHeight * 0.5f, -0.5f, 0.5f);
+	projMatrix2D = glm::ortho(0.0f, fWidth, 0.0f, fHeight, -0.5f, 0.5f);
 	MVP = glm::mat4(1.0f);
 
 	/* initial OpenGl settings */
@@ -112,14 +112,12 @@ void Renderer::Draw2Dtexture(const VertexBuffer& vb, const VertexAttributes& va,
 	sd.Bind();
 	texture.Bind();
 
-	sd.SetUniformMatrix4f("u_MVP", MVP);
 	sd.SetUniform1i("u_Texture", 0);
+	sd.SetUniformMatrix4f("u_MVP", MVP);
 	
-
 	vb.Bind();
 	va.Bind();
 	ib.Bind();
 
-	sd.SetUniform4f("u_Color", 1.0f, 0.0f, 0.0f, 1.0f);
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }

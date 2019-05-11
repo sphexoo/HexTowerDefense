@@ -97,14 +97,18 @@ int main()
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(MessageCallback, 0);
 	
-	StateHandler statehandler(window, nullptr, StateHandler::Startup);
 	Gui gui(fWidth, fHeight);
 
+	StateHandler statehandler(window, &gui, StateHandler::Startup);
+	
 	gui.CreateScreen("MainMenue");
-	gui.AddButtonBox(100.0f, 100.0f, "res/textures/hex.png", StateHandler::SetState, StateHandler::Running);
-
-	gui.CreateScreen("Pause");
-	gui.AddButtonBox(100.0f, 100.0f, "res/textures/hex.png", StateHandler::SetState, StateHandler::Running);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Start.png", StateHandler::SetState, StateHandler::Running);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Quit.png", StateHandler::SetState, StateHandler::Quit);
+														   
+	gui.CreateScreen("Pause");							   
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", StateHandler::SetState, StateHandler::Running);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Restart.png", StateHandler::SetState, StateHandler::Running);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Quit.png", StateHandler::SetState, StateHandler::MainMenue);
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
 	Camera camera(glm::vec3(0.0f, -25.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
@@ -149,7 +153,6 @@ int main()
 			playfield.Draw2(renderer, shader_bsc, camera.viewMatrix);
 			model.Draw(renderer, shader_lgt, camera.viewMatrix);
 			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
-			gui.Draw(renderer, shader_tex);
 
 			if (input.IsPressed(Input::KEY_ESC))
 			{
@@ -159,25 +162,19 @@ int main()
 		// STATE PAUSE
 		else if (statehandler.IsState(StateHandler::Pause))
 		{
+			gui.HandleMouseInput();
 			gui.Draw(renderer, shader_tex);
 		}
 		// STATE MAINMENUE
 		else if (statehandler.IsState(StateHandler::MainMenue))
 		{
+			gui.HandleMouseInput();
 			gui.Draw(renderer, shader_tex);
-
-			if (input.IsPressed(Input::KEY_ESC))
-			{
-				statehandler.SetState(StateHandler::Quit);
-			}
 		}
 		// STATE STARTUP
 		else if (statehandler.IsState(StateHandler::Startup))
 		{
-			if (input.IsPressed(Input::KEY_SPACE))
-			{
-				statehandler.SetState(StateHandler::Running);
-			}
+			statehandler.SetState(StateHandler::MainMenue);
 		}
 		// STATE QUIT
 		else if (statehandler.IsState(StateHandler::Quit))

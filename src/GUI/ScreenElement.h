@@ -26,8 +26,8 @@ public:
 	std::vector<unsigned int> indices = { 0, 1, 2,
 									      2, 3, 0 }; // basic vector for indices of rectangular screen element
 
-	fcnPtr fcn = nullptr; // value at this memory adress is changed when element is pressed
-	int handleToValue = 0; // value which is written to memory adress specified above when element is pressed
+	fcnPtr fcn = nullptr; // this function is called when element is pressed
+	int handleToValue = 0; // value which is passed to function specfied above
 
 	VertexBuffer* vb; // Pointers to render objects of screen element
 	IndexBuffer* ib;

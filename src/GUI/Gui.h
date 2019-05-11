@@ -25,5 +25,5 @@ public:
 	void AddButtonBox(float fPosX, float fPosY, std::string path, fcnPtr handlerFcn, int handleToValue = 0);
 	void AddTextBox(float fPosX, float fPosY, float charSize, std::string text, int* handle = nullptr);
 	void SwitchScreen(std::string name);
-	void HandleMouseInput(bool& mouse1, double mouseX, double mouseY);
+	void HandleMouseInput();
 };

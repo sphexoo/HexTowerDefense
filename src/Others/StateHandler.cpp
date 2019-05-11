@@ -38,7 +38,7 @@ void StateHandler::SetState(int state)
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			gui->SwitchScreen("MainMenue");
 		}
-		else if (IsState(MainMenue))
+		else if (IsState(Pause))
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			gui->SwitchScreen("Pause");
@@ -53,6 +53,5 @@ void StateHandler::SetState(int state)
 bool StateHandler::IsState(State state)
 {
 	/* returns true if specified state matches current state */
-
 	return (StateHandler::state == state);
 }

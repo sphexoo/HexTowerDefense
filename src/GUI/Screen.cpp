@@ -1,7 +1,15 @@
+#include <iostream>
+
 #include "Screen.h"
+#include "Input.h"
+
+#include "ImageBox.h"
+#include "ButtonBox.h"
+#include "TextBox.h"
 
 /* Access the logger object globally created in Application.cpp */
 extern Logger logger;
+extern Input input;
 
 Screen::Screen(std::string name, float fWidth, float fHeight)
 	: name(name), fWidth(fWidth), fHeight(fHeight)
@@ -25,7 +33,8 @@ ScreenElement* Screen::AddImageBox(float fPosX, float fPosY, float fScale, std::
 
 void Screen::AddButtonBox(float fPosX, float fPosY, std::string path, fcnPtr handlerFcn, int handleToValue /*= 0*/)
 {
-	//elements.push_back(new ButtonBox(fPosX, fPosY, path, handlerFcn, handleToValue));
+	ScreenElement* tmp = new ButtonBox(fPosX, fPosY, path, handlerFcn, handleToValue);
+	elements.push_back(tmp);
 }
 
 void Screen::AddTextBox(float fPosX, float fPosY, float charSize, std::string text, int* handle /*=nullptr*/)
@@ -42,19 +51,20 @@ void Screen::Draw(Renderer& renderer, Shader& shader)
 	}
 }
 
-void Screen::CheckHover(bool& mouse1, double mouseX, double mouseY)
+void Screen::CheckHover()
 {
 	for (unsigned int i = 0; i < elements.size(); i++)
 	{
-		if (mouseX > elements[i]->pos.x - elements[i]->fWidth / 2.0f && mouseX < elements[i]->pos.x + elements[i]->fWidth / 2.0f &&
-			mouseY > elements[i]->pos.y - elements[i]->fHeight / 2.0f && mouseY < elements[i]->pos.y + elements[i]->fHeight / 2.0f)
+		if (Input::mX > elements[i]->pos.x - elements[i]->fWidth * 0.5f &&
+			Input::mX < elements[i]->pos.x + elements[i]->fWidth * 0.5f &&
+			(fHeight - Input::mY) > elements[i]->pos.y - elements[i]->fHeight * 0.5f && 
+			(fHeight - Input::mY) < elements[i]->pos.y + elements[i]->fHeight * 0.5f)
 		{
 			elements[i]->OnHover();
 
-			if (mouse1)
+			if (input.IsPressed(Input::MOUSE_1))
 			{
 				elements[i]->OnClick();
-				mouse1 = false;
 			}
 		}
 		else

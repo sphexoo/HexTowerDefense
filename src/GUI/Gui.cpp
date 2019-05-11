@@ -59,8 +59,8 @@ void Gui::SwitchScreen(std::string name)
 	logger.log("Screen not found.", Logger::Warning);
 }
 
-void Gui::HandleMouseInput(bool& mouse1, double mouseX, double mouseY)
+void Gui::HandleMouseInput()
 {
 	/*Passes mouse click event to currently selected screen*/
-	currentScreen->CheckHover(mouse1, mouseX, mouseY);
+	currentScreen->CheckHover();
 }

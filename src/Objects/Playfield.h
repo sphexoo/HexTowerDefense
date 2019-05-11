@@ -46,7 +46,6 @@ public:
 	~Playfield();
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
-	void Draw2(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
 	std::vector<float> GetVertexPositions(float x, float y, float z);
 	std::vector<unsigned int> GetIndexValues(int shift);
 	void Update(glm::vec3& pos);

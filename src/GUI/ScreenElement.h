@@ -9,6 +9,7 @@ class ScreenElement
 	/*Base class for elements which are drawn onto a screen.
 	Actual element implementations can inherit base functionality from this class*/
 public:
+	float fColorScale = 1.0f;
 	bool draw = true;
 	glm::vec3 pos;
 	float fWidth, fHeight; // size of screen element

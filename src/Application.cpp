@@ -150,7 +150,7 @@ int main()
 				playfield.Update(cursor.pos);
 			}
 
-			playfield.Draw2(renderer, shader_bsc, camera.viewMatrix);
+			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
 			model.Draw(renderer, shader_lgt, camera.viewMatrix);
 			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 

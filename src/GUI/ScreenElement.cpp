@@ -17,7 +17,7 @@ void ScreenElement::Draw(Renderer& renderer, Shader& shader)
 	if (draw)
 	{
 		texture->Bind();
-		renderer.Draw2Dtexture(*vb, *va, *ib, shader, modelMatrix, *texture);
+		renderer.Draw2Dtexture(*vb, *va, *ib, shader, modelMatrix, *texture, fColorScale);
 	}
 }
 
@@ -33,19 +33,15 @@ void ScreenElement::OnClick()
 void ScreenElement::OnHover()
 {
 	/*Performs actions if mouse cursor hovers over ScreenElement*/
-	if (scale.x < scaleMax)
-	{
-		scale += glm::vec3(0.01f, 0.01f, 0.0f);
-	}
+	fColorScale = 0.5f;
+
 }
 
 void ScreenElement::OnNoHover()
 {
 	/*Performs actions if mouse cursor hovers over ScreenElement*/
-	if (scale.x > scaleMin)
-	{
-		scale -= glm::vec3(0.01f, 0.01f, 0.0f);
-	}
+	fColorScale = 1.0f;
+
 }
 
 void ScreenElement::Move(float x, float y)

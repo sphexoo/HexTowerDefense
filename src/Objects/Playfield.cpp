@@ -15,7 +15,7 @@ Playfield::Playfield()
 			float posX = 2.0f * cos((float)M_PI / 6.0f);
 			float posY = 3.0f * sin((float)M_PI / 6.0f);
 
-			float c = (double)rand() / (RAND_MAX);
+			float c = (float)((double)rand() / (RAND_MAX));
 
 			glm::vec4 color = glm::vec4(c, c, c, 1.0f);
 
@@ -53,14 +53,6 @@ Playfield::~Playfield()
 }
 
 void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
-{
-	for (int i = 0; i < tiles.size(); i++)
-	{
-		tiles[i].Draw(renderer, shader, viewMatrix);
-	}
-}
-
-void Playfield::Draw2(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
 	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix, color);
 }

@@ -1,15 +1,14 @@
 #pragma once
+#include <vector>
 #include "Renderer.h"
 
-
+typedef void(*fcnPtr)(int state); // function pointer which holds function which is called when click event is registered
 
 class ScreenElement
 {
 	/*Base class for elements which are drawn onto a screen.
 	Actual element implementations can inherit base functionality from this class*/
 public:
-	typedef void(*fcnPtr)(int state); // function pointer which holds function which is called when click event is registered
-
 	bool draw = true;
 	glm::vec3 pos;
 	float fWidth, fHeight; // size of screen element

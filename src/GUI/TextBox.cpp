@@ -1,5 +1,10 @@
 #include "TextBox.h"
 
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "VertexAttributes.h"
+#include "Texture.h"
+
 TextBox::TextBox(float x, float y, float charSize, std::string text)
 {
 	texture = new Texture("res/textures/char_map.png");

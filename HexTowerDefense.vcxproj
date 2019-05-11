@@ -142,6 +142,12 @@
     <ClCompile Include="res\external\imgui\MyImGui.cpp" />
     <ClCompile Include="res\external\stb\stb_image.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\GUI\ButtonBox.cpp" />
+    <ClCompile Include="src\GUI\Gui.cpp" />
+    <ClCompile Include="src\GUI\ImageBox.cpp" />
+    <ClCompile Include="src\GUI\Screen.cpp" />
+    <ClCompile Include="src\GUI\ScreenElement.cpp" />
+    <ClCompile Include="src\GUI\TextBox.cpp" />
     <ClCompile Include="src\Objects\Playfield.cpp" />
     <ClCompile Include="src\Others\Camera.cpp" />
     <ClCompile Include="src\Objects\Hexagon.cpp" />
@@ -170,6 +176,12 @@
     <ClInclude Include="res\external\glm\gtx\rotate_vector.hpp" />
     <ClInclude Include="res\external\imgui\MyImGui.h" />
     <ClInclude Include="res\external\stb\stb_image.h" />
+    <ClInclude Include="src\GUI\ButtonBox.h" />
+    <ClInclude Include="src\GUI\Gui.h" />
+    <ClInclude Include="src\GUI\ImageBox.h" />
+    <ClInclude Include="src\GUI\Screen.h" />
+    <ClInclude Include="src\GUI\ScreenElement.h" />
+    <ClInclude Include="src\GUI\TextBox.h" />
     <ClInclude Include="src\Objects\Playfield.h" />
     <ClInclude Include="src\Others\Camera.h" />
     <ClInclude Include="src\Objects\Hexagon.h" />
@@ -186,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\external\glm\gtx\rotate_vector.inl" />
+    <None Include="res\shaders\basic_fragment.shader" />
     <None Include="res\shaders\light_fragment.shader" />
     <None Include="res\shaders\basic_vertex.shader" />
     <None Include="res\shaders\light_vertex.shader" />

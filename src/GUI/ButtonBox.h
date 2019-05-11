@@ -2,10 +2,10 @@
 #include "ScreenElement.h"
 #include "Renderer.h"
 
-class ImageBox : public ScreenElement
+class ButtonBox : public ScreenElement
 {
 	typedef void(*handlerFcn)(int state);
 public:
-	ImageBox(float x, float y, std::string path, handlerFcn handlerFcn, int handleToValue);
-	~ImageBox();
+	ButtonBox(float x, float y, std::string path, fcnPtr handlerFcn, int handleToValue);
+	~ButtonBox();
 };

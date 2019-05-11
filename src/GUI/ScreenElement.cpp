@@ -1,4 +1,5 @@
 #include "ScreenElement.h"
+#include "Texture.h"
 
 ScreenElement::ScreenElement()
 {
@@ -16,7 +17,7 @@ void ScreenElement::Draw(Renderer& renderer, Shader& shader)
 	if (draw)
 	{
 		texture->Bind();
-		renderer.Draw(*vb, *va, *ib, shader, glm::scale(modelMatrix, scale));
+		renderer.Draw2Dtexture(*vb, *va, *ib, shader, modelMatrix, *texture);
 	}
 }
 

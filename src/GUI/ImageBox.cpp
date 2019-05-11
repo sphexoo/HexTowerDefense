@@ -1,4 +1,8 @@
 #include "ImageBox.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "VertexAttributes.h"
+#include "Texture.h"
 
 ImageBox::ImageBox(float x, float y, float z, float scale, std::string path)
 {

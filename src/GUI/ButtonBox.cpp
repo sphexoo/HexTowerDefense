@@ -1,6 +1,10 @@
-#include "ImageBox.h"
+#include "ButtonBox.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "VertexAttributes.h"
+#include "Texture.h"
 
-ImageBox::ImageBox(float x, float y, std::string path, handlerFcn handlerFcn, int handleToValue)
+ButtonBox::ButtonBox(float x, float y, std::string path, fcnPtr handlerFcn, int handleToValue)
 {
 	texture = new Texture(path);
 	this->fWidth = (float)texture->GetWidth();
@@ -25,7 +29,7 @@ ImageBox::ImageBox(float x, float y, std::string path, handlerFcn handlerFcn, in
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }
 
-ImageBox::~ImageBox()
+ButtonBox::~ButtonBox()
 {
 	delete vb;
 	delete ib;

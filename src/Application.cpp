@@ -15,7 +15,7 @@
 #include "Playfield.h"
 #include "Cursor.h"
 #include "Model.h"
-//#include "Gui.h"
+#include "Gui.h"
 
 #include "Hexagon.h"
 
@@ -95,12 +95,12 @@ int main()
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(MessageCallback, 0);
 
-	//Gui gui(fWidth, fHeight);
-	//gui.CreateScreen("HUD");
+	Gui gui(fWidth, fHeight);
+	gui.CreateScreen("HUD");
 
 	void(*fcnPtr)(int state) = nullptr; 
 
-	//gui.AddImageBox(100.0f, 100.0f, 1.0f, "res/textures/texture.png");
+	gui.AddImageBox(100.0f, 100.0f, 1.0f, "res/textures/texture.png");
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
 	Camera camera(glm::vec3(0.0f, -25.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
@@ -143,6 +143,7 @@ int main()
 		playfield.Draw2(renderer, shader_bsc, camera.viewMatrix);
 		model.Draw(renderer, shader_lgt, camera.viewMatrix);
 		cursor.Draw(renderer, shader_tex, camera.viewMatrix);
+		gui.Draw(renderer, shader_tex);
 		
 		//gui.Draw(renderer, shader);
 		debugWindow.Draw(cursor.pos);

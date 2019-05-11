@@ -21,12 +21,13 @@ Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float 
 	MVP = glm::mat4(1.0f);
 
 	/* initial OpenGl settings */
-	glClearColor(0.8f, 0.8f, 1.0f, 1.0f);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	glClearColor(0.7f, 0.7f, 1.0f, 1.0f);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
+	glPointSize(5);
 }
 
 void Renderer::Clear()
@@ -35,14 +36,13 @@ void Renderer::Clear()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::Draw3Dbasic(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix, const glm::vec4& color)
+void Renderer::Draw3Dbasic(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix)
 {
 	/* render 3D object */
 	MVP = projMatrix3D * viewMatrix * modelMatrix;
 	
 	sd.Bind();
 
-	sd.SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
 	sd.SetUniformMatrix4f("u_MVP", MVP);
 
 	vb.Bind();

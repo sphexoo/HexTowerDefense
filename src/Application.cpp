@@ -151,7 +151,7 @@ int main()
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
-			model.Draw(renderer, shader_lgt, camera.viewMatrix);
+			//model.Draw(renderer, shader_lgt, camera.viewMatrix);
 			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))

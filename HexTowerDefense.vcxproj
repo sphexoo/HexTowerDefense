@@ -150,7 +150,6 @@
     <ClCompile Include="src\GUI\TextBox.cpp" />
     <ClCompile Include="src\Objects\Playfield.cpp" />
     <ClCompile Include="src\Others\Camera.cpp" />
-    <ClCompile Include="src\Objects\Hexagon.cpp" />
     <ClCompile Include="src\Others\Cursor.cpp" />
     <ClCompile Include="src\Others\Input.cpp" />
     <ClCompile Include="src\Others\Logger.cpp" />
@@ -185,7 +184,6 @@
     <ClInclude Include="src\GUI\TextBox.h" />
     <ClInclude Include="src\Objects\Playfield.h" />
     <ClInclude Include="src\Others\Camera.h" />
-    <ClInclude Include="src\Objects\Hexagon.h" />
     <ClInclude Include="src\Others\Cursor.h" />
     <ClInclude Include="src\Others\Input.h" />
     <ClInclude Include="src\Others\Logger.h" />

@@ -80,7 +80,7 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(0); // vsync off --> 0
+	glfwSwapInterval(1); // vsync off --> 0
 
 	/* Log current OpenGL version */
 	logger.log((const char*)glGetString(GL_VERSION), logger.Info);
@@ -114,8 +114,8 @@ int main()
 	Playfield playfield;
 	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
-	Model model(0.0f, 0.0f, 2.0f);
-	model.Load("res/models/untitled.obj");
+	Model model(0.0f, 0.0f, 0.0f);
+	model.Load("res/models/tower1.obj");
 
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;

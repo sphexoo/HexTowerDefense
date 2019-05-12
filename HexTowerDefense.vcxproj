@@ -148,6 +148,8 @@
     <ClCompile Include="src\GUI\Screen.cpp" />
     <ClCompile Include="src\GUI\ScreenElement.cpp" />
     <ClCompile Include="src\GUI\TextBox.cpp" />
+    <ClCompile Include="src\Objects\Enemy.cpp" />
+    <ClCompile Include="src\Objects\Entity.cpp" />
     <ClCompile Include="src\Objects\Playfield.cpp" />
     <ClCompile Include="src\Others\Camera.cpp" />
     <ClCompile Include="src\Others\Cursor.cpp" />
@@ -182,6 +184,8 @@
     <ClInclude Include="src\GUI\Screen.h" />
     <ClInclude Include="src\GUI\ScreenElement.h" />
     <ClInclude Include="src\GUI\TextBox.h" />
+    <ClInclude Include="src\Objects\Enemy.h" />
+    <ClInclude Include="src\Objects\Entity.h" />
     <ClInclude Include="src\Objects\Playfield.h" />
     <ClInclude Include="src\Others\Camera.h" />
     <ClInclude Include="src\Others\Cursor.h" />

@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 
 #include "Playfield.h"
-#include "Hexagon.h"
 #include "VertexBuffer.h"
 #include "VertexAttributes.h"
 #include "IndexBuffer.h"

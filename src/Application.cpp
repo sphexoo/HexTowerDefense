@@ -17,8 +17,7 @@
 #include "Model.h"
 #include "Gui.h"
 #include "StateHandler.h"
-
-#include "Hexagon.h"
+#include "Enemy.h"
 
 #ifdef RELEASE
 	float fWidth = 1920.0f;
@@ -128,8 +127,7 @@ int main()
 	Playfield playfield;
 	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
-	Model model(0.0f, 0.0f, 0.0f);
-	model.Load("res/models/tower1.obj");
+	Enemy enemy(5, 5);
 
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
@@ -156,7 +154,7 @@ int main()
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
-			model.Draw(renderer, shader_lgt, camera.viewMatrix);
+			enemy.Draw(renderer, shader_lgt, camera.viewMatrix);
 			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))

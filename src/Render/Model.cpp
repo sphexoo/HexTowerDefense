@@ -11,12 +11,9 @@
 #define _USE_MATH_DEFINES 
 #include <math.h>
 
-Model::Model(float x, float y, float z)
+Model::Model()
 {
-	pos = glm::vec3(x, y, z);
 
-	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
-	modelMatrix = glm::rotate(modelMatrix, (float)M_PI * 0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
 Model::~Model()
@@ -26,16 +23,16 @@ Model::~Model()
 	delete ib;
 }
 
-void Model::Load(std::string path)
+void Model::Load(std::string filepath)
 {	
-	this->path = path;
+	this->filepath = filepath;
 
 	std::vector<float> tmp_coords;
 	std::vector<float> tmp_normals;
 	std::vector<unsigned int> tmp_indices;
 	std::vector<unsigned int> tmp_faces;
 
-	std::ifstream source(path);
+	std::ifstream source(filepath);
 
 	for (std::string line; std::getline(source, line);) {
 		std::istringstream in(line);
@@ -90,7 +87,7 @@ void Model::Load(std::string path)
 	va = new VertexAttributes(true, 3, true, 3);
 }
 
-void Model::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
+void Model::Draw(Renderer& renderer, Shader& shader, glm::mat4& viewMatrix, glm::mat4& modelMatrix)
 {
 	renderer.Draw3Dlight(*vb, *va, *ib, shader, viewMatrix, modelMatrix, color);
 }

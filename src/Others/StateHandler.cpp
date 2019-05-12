@@ -1,4 +1,5 @@
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 #include "Gui.h"
 #include "StateHandler.h"
@@ -42,6 +43,22 @@ void StateHandler::SetState(int state)
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			gui->SwitchScreen("Pause");
+		}
+		else if (IsState(LevelEditor))
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+		else if (IsState(PauseLevelEditor))
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			gui->SwitchScreen("PauseLevelEditor");
+		}
+		else if (IsState(SaveLevel))
+		{
+			// saving created level (to be implemented)
+			std::cout << "Saving Level!" << std::endl;
+			
+			SetState(MainMenue);
 		}
 		else
 		{

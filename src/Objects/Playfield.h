@@ -58,8 +58,8 @@ private:
 	VertexAttributes* va;
 
 public:
-	int iTilesX = 25;
-	int iTilesY = 25;
+	int iTilesX = 11;
+	int iTilesY = 11;
 
 public:
 	Playfield();

@@ -69,7 +69,7 @@ void Renderer::Draw3Dlight(const VertexBuffer& vb, const VertexAttributes& va, c
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
-void Renderer::Draw3Dtexture(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix, const Texture& texture)
+void Renderer::Draw3Dtexture(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix, const Texture& texture, float fColorScale /* = 0.0f */)
 {
 	/* render 3D object */
 	MVP = projMatrix3D * viewMatrix * modelMatrix;
@@ -79,6 +79,7 @@ void Renderer::Draw3Dtexture(const VertexBuffer& vb, const VertexAttributes& va,
 
 	sd.SetUniformMatrix4f("u_MVP", MVP);
 	sd.SetUniform1i("u_Texture", 0);
+	sd.SetUniform1f("u_ColorScale", fColorScale);
 
 	vb.Bind();
 	va.Bind();

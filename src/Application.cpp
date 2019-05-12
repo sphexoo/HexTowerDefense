@@ -103,12 +103,18 @@ int main()
 	
 	gui.CreateScreen("MainMenue");
 	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Start.png", StateHandler::SetState, StateHandler::Running);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Quit.png", StateHandler::SetState, StateHandler::Quit);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Level_Editor.png", StateHandler::SetState, StateHandler::LevelEditor);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Quit.png", StateHandler::SetState, StateHandler::Quit);
 														   
 	gui.CreateScreen("Pause");							   
 	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", StateHandler::SetState, StateHandler::Running);
 	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Restart.png", StateHandler::SetState, StateHandler::Running);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Quit.png", StateHandler::SetState, StateHandler::MainMenue);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Back.png", StateHandler::SetState, StateHandler::MainMenue);
+
+	gui.CreateScreen("PauseLevelEditor");
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", StateHandler::SetState, StateHandler::LevelEditor);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Save_Map.png", StateHandler::SetState, StateHandler::SaveLevel);
+	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Back.png", StateHandler::SetState, StateHandler::MainMenue);
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
 	Camera camera(glm::vec3(0.0f, -25.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
@@ -147,11 +153,10 @@ int main()
 				/* Update game state */
 				cursor.Update();
 				camera.Update(cursor);
-				playfield.Update(cursor.pos);
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
-			//model.Draw(renderer, shader_lgt, camera.viewMatrix);
+			model.Draw(renderer, shader_lgt, camera.viewMatrix);
 			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))
@@ -159,8 +164,37 @@ int main()
 				statehandler.SetState(StateHandler::Pause);
 			}
 		}
+		// STATE LEVELEDITOR
+		if (statehandler.IsState(StateHandler::LevelEditor))
+		{
+			time = glfwGetTime();
+			deltaTime = time - lastTime;
+			if (deltaTime > maxPeriod)
+			{
+				lastTime = time;
+
+				/* Update game state */
+				cursor.Update();
+				camera.Update(cursor);
+				playfield.Update(cursor.pos);
+			}
+
+			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
+			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
+
+			if (input.IsPressed(Input::KEY_ESC))
+			{
+				statehandler.SetState(StateHandler::PauseLevelEditor);
+			}
+		}
 		// STATE PAUSE
 		else if (statehandler.IsState(StateHandler::Pause))
+		{
+			gui.HandleMouseInput();
+			gui.Draw(renderer, shader_tex);
+		}
+		// STATE PAUSE LEVELEDITOR
+		else if (statehandler.IsState(StateHandler::PauseLevelEditor))
 		{
 			gui.HandleMouseInput();
 			gui.Draw(renderer, shader_tex);

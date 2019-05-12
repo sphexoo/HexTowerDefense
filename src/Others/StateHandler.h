@@ -15,7 +15,10 @@ public:
 		Pause = 1,
 		MainMenue = 2,
 		Running = 3,
-		Quit = 4
+		Quit = 4,
+		LevelEditor = 5,
+		PauseLevelEditor = 6,
+		SaveLevel = 7
 	};
 
 public:

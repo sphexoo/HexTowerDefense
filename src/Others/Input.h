@@ -41,5 +41,6 @@ public:
 	Input();
 
 	bool IsPressed(KeyName key);
+	bool IsHold(KeyName key);
 	void SetWindowCallback(GLFWwindow* window);
 };

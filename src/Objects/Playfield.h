@@ -12,12 +12,24 @@ private:
 
 	struct Tile
 	{
+		enum TYPE
+		{
+			PATH = 0,
+			SPAWN = 1,
+			TARGET = 2,
+			BUILD = 3
+		};
 		int x, y;
 		glm::vec3 pos;
-		bool selected;
+		int type;
 
-		Tile(bool selected, int x, int y, glm::vec3 pos) : selected(selected), x(x), y(y), pos(pos) {}
+		Tile(int type, int x, int y, glm::vec3 pos) : type(type), x(x), y(y), pos(pos) {}
 	};
+
+	std::vector<float> fTileColors = {  0.0f, 0.8f, 0.0f, 1.0f,	    // Path
+										0.8f, 0.0f, 0.0f, 1.0f,	    // Spawn
+										1.0f, 0.8f, 0.0f, 1.0f,		// Target
+										0.5f, 0.5f, 0.5f, 1.0f, };	// Build
 
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 
@@ -26,13 +38,13 @@ private:
 	std::vector<float> vertices;
 	std::vector<unsigned int> indices;
 	
-	std::vector<float> vertex = { 0.0f,					  0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-								cos((float)M_PI / 6.0f),  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-								0.0f,					  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-							   -cos((float)M_PI / 6.0f),  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-							   -cos((float)M_PI / 6.0f), -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-								0.0f,					 -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-								cos((float)M_PI / 6.0f), -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f};
+	std::vector<float> vertex = { 0.0f,					  0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f,
+								cos((float)M_PI / 6.0f),  0.5f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f,
+								0.0f,					  1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f,
+							   -cos((float)M_PI / 6.0f),  0.5f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f,
+							   -cos((float)M_PI / 6.0f), -0.5f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f,
+								0.0f,					 -1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f,
+								cos((float)M_PI / 6.0f), -0.5f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f};
 
 	std::vector<unsigned int> index = { 0, 1, 2,
 										0, 2, 3,
@@ -58,6 +70,7 @@ public:
 	std::vector<unsigned int> GetIndexValues(int shift);
 	void GenerateMesh();
 	void SetColor(int x, int y, float r, float g, float b, float a);
+	void SetColor(int x, int y, int type);
 	void Update(glm::vec3& pos);
 	Tile* GetTile(glm::vec3& pos);
 };

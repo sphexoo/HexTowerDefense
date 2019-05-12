@@ -53,6 +53,15 @@ void Input::mouse_click_callback(GLFWwindow* window, int button, int action, int
 	{
 		keyPressed[MOUSE_2] = false;
 	}
+
+	if (button == 2 && action == 1)
+	{
+		keyPressed[MOUSE_3] = true;
+	}
+	else if (button == 2 && action == 0)
+	{
+		keyPressed[MOUSE_3] = false;
+	}
 }
 
 void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -138,6 +147,13 @@ void Input::scroll_callback(GLFWwindow* window, double a, double b)
 }
 
 bool Input::IsPressed(KeyName key)
+{
+	bool pressed = keyPressed[key];
+	keyPressed[key] = false;
+	return pressed;
+}
+
+bool Input::IsHold(KeyName key)
 {
 	return keyPressed[key];
 }

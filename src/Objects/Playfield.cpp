@@ -6,6 +6,10 @@
 #include "VertexAttributes.h"
 #include "IndexBuffer.h"
 
+#include "Input.h"
+
+extern Input input;
+
 Playfield::Playfield()
 {
 	GenerateMesh();
@@ -13,8 +17,6 @@ Playfield::Playfield()
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
 	va = new VertexAttributes(true, 3, true, 4);
-
-	SetColor(0, 0, 0.0f, 0.0f, 1.0f, 1.0f);
 }
 
 Playfield::~Playfield()
@@ -70,6 +72,21 @@ void Playfield::SetColor(int x, int y, float r, float g, float b, float a)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
 }
 
+void Playfield::SetColor(int x, int y, int type)
+{
+	int offset = x + y * iTilesY;
+
+	for (int i = 0; i < 49; i = i + 7)
+	{
+		vertices[i + 49 * offset + 3] = fTileColors[type * 4 + 0];
+		vertices[i + 49 * offset + 4] = fTileColors[type * 4 + 1];
+		vertices[i + 49 * offset + 5] = fTileColors[type * 4 + 2];
+		vertices[i + 49 * offset + 6] = fTileColors[type * 4 + 3];
+	}
+	vb->Bind();
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+}
+
 void Playfield::GenerateMesh()
 {
 	float distX = 2.0f * cos((float)M_PI / 6.0f);
@@ -89,7 +106,7 @@ void Playfield::GenerateMesh()
 				offset = cos((float)M_PI / 6.0f);
 			}
 
-			tiles.emplace_back(false, x, y, glm::vec3(x * distX + offset, y * distY, 0.0f));
+			tiles.emplace_back(3, x, y, glm::vec3(x * distX + offset, y * distY, 0.0f));
 
 			std::vector<float> tile = GetVertexPositions(x * distX + offset, y * distY, 0.0f);
 			vertices.insert(vertices.end(), tile.begin(), tile.end());
@@ -102,14 +119,27 @@ void Playfield::GenerateMesh()
 
 void Playfield::Update(glm::vec3& pos)
 {
-	for (int i = 0; i < tiles.size(); i++)
+	if (input.IsPressed(Input::MOUSE_1))
 	{
-		tiles[i].selected = false;
+		Tile* selected_tile = GetTile(pos);
+		if (selected_tile != nullptr)
+		{
+			selected_tile->type += 1;
+			if (selected_tile->type > 2)
+			{
+				selected_tile->type = 0;
+			}
+			SetColor(selected_tile->x, selected_tile->y, selected_tile->type);
+		}
 	}
-	Tile* selected_tile = GetTile(pos);
-	if (selected_tile != nullptr)
+	else if (input.IsHold(Input::MOUSE_2))
 	{
-		SetColor(selected_tile->x, selected_tile->y, 0.0f, 1.0f, 0.0f, 1.0f);
+		Tile* selected_tile = GetTile(pos);
+		if (selected_tile != nullptr)
+		{
+			selected_tile->type = Tile::BUILD;
+			SetColor(selected_tile->x, selected_tile->y, selected_tile->type);
+		}
 	}
 }
 

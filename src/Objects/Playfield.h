@@ -78,5 +78,5 @@ public:
 	void SetColor(int x, int y, int type);
 	void Update(glm::vec3& cursor_pos);
 	Tile* GetTile(glm::vec3& pos);
-	void GeneratePath();
+	bool GeneratePath();
 };

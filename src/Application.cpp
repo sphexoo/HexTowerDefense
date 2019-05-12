@@ -128,6 +128,8 @@ int main()
 	
 	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
+	statehandler.SetState(StateHandler::MainMenue);
+
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
 	double deltaTime, time;
@@ -196,6 +198,8 @@ int main()
 		// STATE PAUSE LEVELEDITOR
 		else if (statehandler.IsState(StateHandler::PauseLevelEditor))
 		{
+			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
+
 			gui.HandleMouseInput();
 			gui.Draw(renderer, shader_tex);
 		}
@@ -204,11 +208,6 @@ int main()
 		{
 			gui.HandleMouseInput();
 			gui.Draw(renderer, shader_tex);
-		}
-		// STATE STARTUP
-		else if (statehandler.IsState(StateHandler::Startup))
-		{
-			statehandler.SetState(StateHandler::MainMenue);
 		}
 		// STATE QUIT
 		else if (statehandler.IsState(StateHandler::Quit))

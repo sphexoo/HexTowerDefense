@@ -172,7 +172,7 @@ Playfield::Tile* Playfield::GetTile(glm::vec3& pos)
 	return nullptr;
 }
 
-void Playfield::GeneratePath()
+bool Playfield::GeneratePath()
 {
 	Tile* currentTile = nullptr;
 	Tile* lastTile = nullptr;
@@ -187,14 +187,22 @@ void Playfield::GeneratePath()
 		}
 	}
 
+	// check if spawn was found
+	if (currentTile == nullptr)
+	{
+		return false;
+	}
+
 	// find path from spawn to target
 	std::vector<Tile*> neighbors;
 	neighbors.reserve(6);
+	int cnt = 100; // max number of iterations and max length of path
 
-	while (currentTile->type != Tile::TARGET)
+	while (currentTile->type != Tile::TARGET && cnt > 0)
 	{
 		int x = currentTile->x;
 		int y = currentTile->y;
+		cnt--;
 
 		// left neighbor 
 		if (x > 0)
@@ -265,15 +273,10 @@ void Playfield::GeneratePath()
 		neighbors.clear();
 	}
 
-
-
-	// testing: generate enemy at spawn
-	if (path.size() > 0)
+	// check if path is valid (current tile is of type Tile::TARGET)
+	if (currentTile->type == Tile::TARGET)
 	{
-		for (int i = 0; i < path.size(); i++)
-		{
-			entities.push_back(new Enemy(path[i]->pos));
-		}
+		return true;
 	}
-	
+	return false;
 }

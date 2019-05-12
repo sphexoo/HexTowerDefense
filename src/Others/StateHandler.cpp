@@ -35,17 +35,16 @@ void StateHandler::SetState(int state)
 
 		if (IsState(Running))
 		{
-			if (playfield->path.size() == 0)
-			{
-				playfield->GeneratePath();
-			}
-
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 		else if (IsState(MainMenue))
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			gui->SwitchScreen("MainMenue");
+		}
+		else if (IsState(Startup))
+		{
+			SetState(MainMenue);
 		}
 		else if (IsState(Pause))
 		{
@@ -55,6 +54,7 @@ void StateHandler::SetState(int state)
 		else if (IsState(LevelEditor))
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			playfield->path.clear();
 		}
 		else if (IsState(PauseLevelEditor))
 		{
@@ -64,9 +64,19 @@ void StateHandler::SetState(int state)
 		else if (IsState(SaveLevel))
 		{
 			// saving created level (to be implemented)
-			std::cout << "Saving Level!" << std::endl;
+
+
+			bool validPath = playfield->GeneratePath();
 			
-			SetState(MainMenue);
+			if (validPath)
+			{
+				SetState(MainMenue);
+			}
+			else
+			{
+				SetState(LevelEditor);
+			}
+			
 		}
 		else
 		{

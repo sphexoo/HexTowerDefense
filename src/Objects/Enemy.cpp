@@ -1,9 +1,9 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int x, int y)
+Enemy::Enemy(glm::vec3 pos)
 {
 	model.Load("res/models/tower1.obj");
-	modelMatrix = glm::mat4(1.0f);
+	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }
 
 Enemy::~Enemy()

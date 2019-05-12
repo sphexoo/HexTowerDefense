@@ -4,8 +4,10 @@
 class Enemy : public Entity
 {
 private:
+	float fSpeed = 1.0f; 
+
 public:
-	Enemy(int x, int y);
+	Enemy(glm::vec3 pos);
 	~Enemy();
 	void Update() override;
 	void Move();

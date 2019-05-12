@@ -1,18 +1,21 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Playfield.h"
 #include "Gui.h"
 #include "StateHandler.h"
 
 GLFWwindow* StateHandler::window;
 Gui* StateHandler::gui;
+Playfield* StateHandler::playfield;
 int StateHandler::state;
 
-StateHandler::StateHandler(GLFWwindow* window, Gui* gui, State state)
+StateHandler::StateHandler(GLFWwindow* window, Gui* gui, Playfield* playfield, State state)
 {
 	/* creates an instance of the state handler. */
 	StateHandler::window = window;
 	StateHandler::gui = gui;
+	StateHandler::playfield = playfield;
 	StateHandler::state = state;
 }
 
@@ -32,6 +35,11 @@ void StateHandler::SetState(int state)
 
 		if (IsState(Running))
 		{
+			if (playfield->path.size() == 0)
+			{
+				playfield->GeneratePath();
+			}
+
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 		else if (IsState(MainMenue))

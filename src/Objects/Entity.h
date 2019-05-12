@@ -6,8 +6,10 @@ class Entity
 {
 public:
 	int x, y;
-	Model model;
+	glm::vec3 pos;
 	glm::mat4 modelMatrix;
+
+	Model model;
 
 public:
 	Entity();

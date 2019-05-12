@@ -5,6 +5,7 @@
 #include "Renderer.h"
 
 class Cursor;
+class Entity;
 
 class Playfield
 {
@@ -20,9 +21,9 @@ private:
 			BUILD = 3
 		};
 		int x, y;
-		glm::vec3 pos;
 		int type;
-
+		glm::vec3 pos;
+		
 		Tile(int type, int x, int y, glm::vec3 pos) : type(type), x(x), y(y), pos(pos) {}
 	};
 
@@ -34,6 +35,7 @@ private:
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 
 	std::vector<Tile> tiles;
+	std::vector<Entity*> entities;
 
 	std::vector<float> vertices;
 	std::vector<unsigned int> indices;
@@ -58,6 +60,8 @@ private:
 	VertexAttributes* va;
 
 public:
+	std::vector<Tile*> path;
+
 	int iTilesX = 11;
 	int iTilesY = 11;
 
@@ -66,11 +70,13 @@ public:
 	~Playfield();
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
+	void DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
 	std::vector<float> GetVertexPositions(float x, float y, float z);
 	std::vector<unsigned int> GetIndexValues(int shift);
 	void GenerateMesh();
 	void SetColor(int x, int y, float r, float g, float b, float a);
 	void SetColor(int x, int y, int type);
-	void Update(glm::vec3& pos);
+	void Update(glm::vec3& cursor_pos);
 	Tile* GetTile(glm::vec3& pos);
+	void GeneratePath();
 };

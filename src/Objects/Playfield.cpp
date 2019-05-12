@@ -4,6 +4,8 @@
 #include "VertexBuffer.h"
 #include "VertexAttributes.h"
 #include "IndexBuffer.h"
+#include "Entity.h"
+#include "Enemy.h"
 
 #include "Input.h"
 
@@ -23,11 +25,26 @@ Playfield::~Playfield()
 	delete vb;
 	delete va;
 	delete ib;
+
+	for (int i = 0; i < entities.size(); i++)
+	{
+		delete entities[i];
+	}
 }
 
 void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
+	// draw playfield
 	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
+}
+
+void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
+{
+	// draw entities
+	for (int i = 0; i < entities.size(); i++)
+	{
+		entities[i]->Draw(renderer, shader, viewMatrix);
+	}
 }
 
 std::vector<float> Playfield::GetVertexPositions(float x, float y, float z)
@@ -116,11 +133,11 @@ void Playfield::GenerateMesh()
 	}
 }
 
-void Playfield::Update(glm::vec3& pos)
+void Playfield::Update(glm::vec3& cursor_pos)
 {
 	if (input.IsPressed(Input::MOUSE_1))
 	{
-		Tile* selected_tile = GetTile(pos);
+		Tile* selected_tile = GetTile(cursor_pos);
 		if (selected_tile != nullptr)
 		{
 			selected_tile->type += 1;
@@ -133,7 +150,7 @@ void Playfield::Update(glm::vec3& pos)
 	}
 	else if (input.IsHold(Input::MOUSE_2))
 	{
-		Tile* selected_tile = GetTile(pos);
+		Tile* selected_tile = GetTile(cursor_pos);
 		if (selected_tile != nullptr)
 		{
 			selected_tile->type = Tile::BUILD;
@@ -153,4 +170,110 @@ Playfield::Tile* Playfield::GetTile(glm::vec3& pos)
 		}
 	}
 	return nullptr;
+}
+
+void Playfield::GeneratePath()
+{
+	Tile* currentTile = nullptr;
+	Tile* lastTile = nullptr;
+	// find spawn
+	for (int i = 0; i < tiles.size(); i++)
+	{
+		if (tiles[i].type == Tile::SPAWN)
+		{
+			currentTile = &tiles[i];
+			path.push_back(currentTile);
+			break;
+		}
+	}
+
+	// find path from spawn to target
+	std::vector<Tile*> neighbors;
+	neighbors.reserve(6);
+
+	while (currentTile->type != Tile::TARGET)
+	{
+		int x = currentTile->x;
+		int y = currentTile->y;
+
+		// left neighbor 
+		if (x > 0)
+		{
+			neighbors.push_back(&tiles[(x - 1) + y * iTilesY]);
+		}
+		// right neighbor 
+		if (x < iTilesX - 1)
+		{
+			neighbors.push_back(&tiles[(x + 1) + y * iTilesY]);
+		}
+		
+
+		if (currentTile->y % 2 != 0)
+		{	
+			// bottom neighbors (if current row is odd)
+			if (y > 0)
+			{
+				neighbors.push_back(&tiles[x + (y - 1) * iTilesY]);
+				if (x > 0)
+				{
+					neighbors.push_back(&tiles[(x - 1) + (y - 1) * iTilesY]);
+				}
+			}
+			// top neighbors (if current row is odd)
+			if (y < iTilesY - 1)
+			{
+				neighbors.push_back(&tiles[x + (y + 1) * iTilesY]);
+				if (x > 0)
+				{
+					neighbors.push_back(&tiles[(x - 1) + (y + 1) * iTilesY]);
+				}
+			}
+		}
+		else
+		{
+			// bottom neighbors (if current row is even)
+			if (y > 0)
+			{
+				neighbors.push_back(&tiles[x + (y - 1) * iTilesY]);
+				if (x < iTilesX - 1)
+				{
+					neighbors.push_back(&tiles[(x + 1) + (y - 1) * iTilesY]);
+				}
+			}
+			// top neighbors (if current row is even)
+			if (y < iTilesY - 1)
+			{
+				neighbors.push_back(&tiles[x + (y + 1) * iTilesY]);
+				if (x < iTilesX - 1)
+				{
+					neighbors.push_back(&tiles[(x + 1) + (y + 1) * iTilesY]);
+				}
+			}
+		}
+
+		// find next tile
+		for (int i = 0; i < neighbors.size(); i++)
+		{
+			if (neighbors[i] != lastTile && (neighbors[i]->type == Tile::PATH || neighbors[i]->type == Tile::TARGET))
+			{
+				lastTile = currentTile;
+				currentTile = neighbors[i]; 
+				path.push_back(currentTile);
+				break; 
+			}
+		}
+		neighbors.clear();
+	}
+
+
+
+	// testing: generate enemy at spawn
+	if (path.size() > 0)
+	{
+		for (int i = 0; i < path.size(); i++)
+		{
+			entities.push_back(new Enemy(path[i]->pos));
+		}
+	}
+	
 }

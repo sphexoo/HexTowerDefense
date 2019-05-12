@@ -97,8 +97,9 @@ int main()
 	glDebugMessageCallback(MessageCallback, 0);
 	
 	Gui gui(fWidth, fHeight);
+	Playfield playfield;
 
-	StateHandler statehandler(window, &gui, StateHandler::Startup);
+	StateHandler statehandler(window, &gui, &playfield, StateHandler::Startup);
 	
 	gui.CreateScreen("MainMenue");
 	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Start.png", StateHandler::SetState, StateHandler::Running);
@@ -124,10 +125,8 @@ int main()
 	Shader shader_lgt("res/shaders/light_vertex.shader", "res/shaders/light_fragment.shader");
 	shader_bsc.Bind();
 
-	Playfield playfield;
+	
 	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
-
-	Enemy enemy(5, 5);
 
 	const double maxFps = 200;
 	const double maxPeriod = 1 / maxFps;
@@ -154,7 +153,7 @@ int main()
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
-			enemy.Draw(renderer, shader_lgt, camera.viewMatrix);
+			playfield.DrawEntities(renderer, shader_lgt, camera.viewMatrix);
 			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))
@@ -188,6 +187,9 @@ int main()
 		// STATE PAUSE
 		else if (statehandler.IsState(StateHandler::Pause))
 		{
+			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
+			playfield.DrawEntities(renderer, shader_lgt, camera.viewMatrix);
+			
 			gui.HandleMouseInput();
 			gui.Draw(renderer, shader_tex);
 		}

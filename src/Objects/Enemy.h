@@ -1,13 +1,17 @@
 #pragma once
 #include "Entity.h"
 
+class Playfield;
+
 class Enemy : public Entity
 {
 private:
-	float fSpeed = 1.0f; 
+	Playfield* playfield;
+	float fSpeed = 0.01f; 
+	int currentTarget = 1;
 
 public:
-	Enemy(glm::vec3 pos);
+	Enemy(Playfield* playfield);
 	~Enemy();
 	void Update() override;
 	void Move();

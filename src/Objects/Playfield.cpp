@@ -159,6 +159,14 @@ void Playfield::Update(glm::vec3& cursor_pos)
 	}
 }
 
+void Playfield::UpdateEntities()
+{
+	for (int i = 0; i < entities.size(); i++)
+	{
+		entities[i]->Update();
+	}
+}
+
 Playfield::Tile* Playfield::GetTile(glm::vec3& pos)
 {
 	for (int i = 0; i < tiles.size(); i++)
@@ -276,7 +284,23 @@ bool Playfield::GeneratePath()
 	// check if path is valid (current tile is of type Tile::TARGET)
 	if (currentTile->type == Tile::TARGET)
 	{
+		entities.push_back(new Enemy(this));
 		return true;
 	}
 	return false;
+}
+
+Playfield::Tile* Playfield::GetPath(int n)
+{
+	/* returns nth tile in of path */
+	return path[n];
+}
+
+void Playfield::ClearEntities()
+{
+	for (int i = 0; i < entities.size(); i++)
+	{
+		delete entities[i];
+	}
+	entities.clear();
 }

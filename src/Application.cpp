@@ -152,6 +152,7 @@ int main()
 				/* Update game state */
 				cursor.Update();
 				camera.Update(cursor);
+				playfield.UpdateEntities();
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
@@ -176,6 +177,7 @@ int main()
 				cursor.Update();
 				camera.Update(cursor);
 				playfield.Update(cursor.pos);
+
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);

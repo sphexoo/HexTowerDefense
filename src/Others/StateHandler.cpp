@@ -59,6 +59,7 @@ void StateHandler::SetState(int state)
 		else if (IsState(PauseLevelEditor))
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			playfield->ClearEntities();
 			gui->SwitchScreen("PauseLevelEditor");
 		}
 		else if (IsState(SaveLevel))

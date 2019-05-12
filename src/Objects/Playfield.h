@@ -9,8 +9,7 @@ class Entity;
 
 class Playfield
 {
-private:
-
+public:
 	struct Tile
 	{
 		enum TYPE
@@ -23,10 +22,16 @@ private:
 		int x, y;
 		int type;
 		glm::vec3 pos;
-		
+
 		Tile(int type, int x, int y, glm::vec3 pos) : type(type), x(x), y(y), pos(pos) {}
 	};
 
+	std::vector<Tile*> path;
+
+	int iTilesX = 11;
+	int iTilesY = 11;
+
+private:
 	std::vector<float> fTileColors = {  0.0f, 0.8f, 0.0f, 1.0f,	    // Path
 										0.8f, 0.0f, 0.0f, 1.0f,	    // Spawn
 										1.0f, 0.8f, 0.0f, 1.0f,		// Target
@@ -60,23 +65,20 @@ private:
 	VertexAttributes* va;
 
 public:
-	std::vector<Tile*> path;
-
-	int iTilesX = 11;
-	int iTilesY = 11;
-
-public:
 	Playfield();
 	~Playfield();
 
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
 	void DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
+	void Update(glm::vec3& cursor_pos);
+	void UpdateEntities();
 	std::vector<float> GetVertexPositions(float x, float y, float z);
 	std::vector<unsigned int> GetIndexValues(int shift);
 	void GenerateMesh();
 	void SetColor(int x, int y, float r, float g, float b, float a);
 	void SetColor(int x, int y, int type);
-	void Update(glm::vec3& cursor_pos);
+	Tile* GetPath(int n);
+	void ClearEntities();
 	Tile* GetTile(glm::vec3& pos);
 	bool GeneratePath();
 };

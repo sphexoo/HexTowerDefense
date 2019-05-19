@@ -126,9 +126,6 @@ int main()
 	Shader shader_lgt("res/shaders/light_vertex.shader", "res/shaders/light_fragment.shader");
 	shader_bsc.Bind();
 
-	
-	
-
 	statehandler.SetState(StateHandler::MainMenue);
 
 	const double maxFps = 200;

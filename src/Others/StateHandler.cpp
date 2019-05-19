@@ -4,18 +4,24 @@
 #include "Playfield.h"
 #include "Gui.h"
 #include "StateHandler.h"
+#include "Cursor.h"
+#include "Input.h"
+
+extern Input input;
 
 GLFWwindow* StateHandler::window;
 Gui* StateHandler::gui;
 Playfield* StateHandler::playfield;
+Cursor* StateHandler::cursor;
 int StateHandler::state;
 
-StateHandler::StateHandler(GLFWwindow* window, Gui* gui, Playfield* playfield, State state)
+StateHandler::StateHandler(GLFWwindow* window, Gui* gui, Playfield* playfield, Cursor* cursor, State state)
 {
 	/* creates an instance of the state handler. */
 	StateHandler::window = window;
 	StateHandler::gui = gui;
 	StateHandler::playfield = playfield;
+	StateHandler::cursor = cursor;
 	StateHandler::state = state;
 }
 
@@ -36,6 +42,7 @@ void StateHandler::SetState(int state)
 		if (IsState(Running))
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			input.ResetMouse();
 		}
 		else if (IsState(MainMenue))
 		{
@@ -54,6 +61,7 @@ void StateHandler::SetState(int state)
 		else if (IsState(LevelEditor))
 		{
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			input.ResetMouse();
 			playfield->path.clear();
 		}
 		else if (IsState(PauseLevelEditor))

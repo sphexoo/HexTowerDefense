@@ -3,6 +3,8 @@
 #include "imgui_impl_glfw_gl3.h"
 #include "glm.hpp"
 
+class Cursor;
+
 class MyImGui
 {
 public:
@@ -14,5 +16,5 @@ public:
 public:
 	MyImGui(GLFWwindow* window);
 	~MyImGui();
-	void Draw(glm::vec3 pos);
+	void Draw(Cursor& cursor, float mx, float my);
 };

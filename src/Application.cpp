@@ -98,8 +98,9 @@ int main()
 	
 	Gui gui(fWidth, fHeight);
 	Playfield playfield;
+	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
-	StateHandler statehandler(window, &gui, &playfield, StateHandler::Startup);
+	StateHandler statehandler(window, &gui, &playfield, &cursor, StateHandler::Startup);
 	
 	gui.CreateScreen("MainMenue");
 	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Start.png", StateHandler::SetState, StateHandler::Running);
@@ -126,7 +127,7 @@ int main()
 	shader_bsc.Bind();
 
 	
-	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
+	
 
 	statehandler.SetState(StateHandler::MainMenue);
 
@@ -177,7 +178,6 @@ int main()
 				cursor.Update();
 				camera.Update(cursor);
 				playfield.Update(cursor.pos);
-
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
@@ -218,7 +218,7 @@ int main()
 		}
 
 		/* Draw debug window */
-		debugWindow.Draw(cursor.pos);
+		debugWindow.Draw(cursor, Input::mX, Input::mY);
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

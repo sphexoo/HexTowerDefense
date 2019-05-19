@@ -36,14 +36,12 @@ void Cursor::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 
 void Cursor::Update()
 {
-	if (Input::mouseLock)
-	{
-		pos.x += (Input::mX - prevmX) * fSpeed;
-		pos.y -= (Input::mY - prevmY) * fSpeed;
 
-		modelMatrix = glm::translate(glm::mat4(1.0f), pos);
-	}
+	pos.x += Input::dX * fSpeed;
+	pos.y -= Input::dY * fSpeed;
 
-	prevmX = Input::mX;
-	prevmY = Input::mY;
+	Input::dX = 0.0f;
+	Input::dY = 0.0f;
+
+	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }

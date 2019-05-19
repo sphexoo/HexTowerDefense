@@ -35,6 +35,10 @@ public:
 
 	static float mX;
 	static float mY;
+	static float prevmX;
+	static float prevmY;
+	static float dX;
+	static float dY;
 	static int scroll;
 	static bool mouseLock;
 
@@ -43,4 +47,5 @@ public:
 	bool IsPressed(KeyName key);
 	bool IsHold(KeyName key);
 	void SetWindowCallback(GLFWwindow* window);
+	void ResetMouse();
 };

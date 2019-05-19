@@ -6,6 +6,10 @@
 bool Input::keyPressed[NUM_KEYS];
 float Input::mX;
 float Input::mY;
+float Input::prevmX;
+float Input::prevmY;
+float Input::dX;
+float Input::dY;
 bool Input::mouseLock;
 int Input::scroll;
 
@@ -138,6 +142,10 @@ void Input::cursor_pos_callback(GLFWwindow* window, double x, double y)
 	/* handles mouse cursor movement if mouse lock is enabled */
 	mX = (float)x;
 	mY = (float)y;
+	dX = mX - prevmX;
+	dY = mY - prevmY;
+	prevmX = mX;
+	prevmY = mY;
 }
 
 void Input::scroll_callback(GLFWwindow* window, double a, double b)
@@ -156,4 +164,10 @@ bool Input::IsPressed(KeyName key)
 bool Input::IsHold(KeyName key)
 {
 	return keyPressed[key];
+}
+
+void Input::ResetMouse()
+{
+	dX = 0.0f;
+	dY = 0.0f;
 }

@@ -218,7 +218,7 @@ int main()
 		}
 
 		/* Draw debug window */
-		debugWindow.Draw(cursor, Input::mX, Input::mY);
+		debugWindow.Draw();
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

@@ -2,7 +2,6 @@
 
 #include "Camera.h"
 #include "Input.h"
-#include "Cursor.h"
 #include "gtx/rotate_vector.hpp"
 
 extern Input input;
@@ -19,30 +18,26 @@ Camera::~Camera()
 
 }
 
-void Camera::Update(Cursor& cursor)
+void Camera::Update()
 {
-	if (cursor.pos.y < pos.y)
-	{
-		pos.y -= fSpeed;
-		cursor.pos.y -= fSpeed;
-	}
-	else if (cursor.pos.y > pos.y + 35.0f)
-	{
-		pos.y += fSpeed;
-		cursor.pos.y += fSpeed;
-	}
-
-	if (cursor.pos.x < pos.x - 25.0f)
+	// front-back, left-right movement
+	if (Input::mX < 50.0f)
 	{
 		pos.x -= fSpeed;
-		cursor.pos.x -= fSpeed;
 	}
-	else if (cursor.pos.x > pos.x + 25.0f)
+	else if (Input::mX > fWidth - 50.0f)
 	{
 		pos.x += fSpeed;
-		cursor.pos.x += fSpeed;
 	}
 
+	if (Input::mY < 50.0f)
+	{
+		pos.y += fSpeed;
+	}
+	else if (Input::mY > fHeight - 50.0f)
+	{
+		pos.y -= fSpeed;
+	}
 
 	// up down movement and tilt (Animated by setting a target value and changing fZoom towards that target every frame)
 	if (Input::scroll != 0)

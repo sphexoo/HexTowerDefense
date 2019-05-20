@@ -1,4 +1,5 @@
 #include <GL/glew.h>
+#include <iostream>
 
 #include "Playfield.h"
 #include "VertexBuffer.h"
@@ -150,6 +151,34 @@ void Playfield::Update(glm::vec3& cursor_pos)
 	}
 	else if (input.IsHold(Input::MOUSE_2))
 	{
+		Tile* selected_tile = GetTile(cursor_pos);
+		if (selected_tile != nullptr)
+		{
+			selected_tile->type = Tile::BUILD;
+			SetColor(selected_tile->x, selected_tile->y, selected_tile->type);
+		}
+	}
+}
+
+void Playfield::Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight)
+{
+	if (input.IsPressed(Input::MOUSE_1))
+	{
+		glm::vec3 cursor_pos = Input::GetObjectSpaceCoords(viewMatrix, projMatrix, fWidth, fHeight);
+		Tile* selected_tile = GetTile(cursor_pos);
+		if (selected_tile != nullptr)
+		{
+			selected_tile->type += 1;
+			if (selected_tile->type > 2)
+			{
+				selected_tile->type = 0;
+			}
+			SetColor(selected_tile->x, selected_tile->y, selected_tile->type);
+		}
+	}
+	else if (input.IsHold(Input::MOUSE_2))
+	{
+		glm::vec3 cursor_pos = Input::GetObjectSpaceCoords(viewMatrix, projMatrix, fWidth, fHeight);
 		Tile* selected_tile = GetTile(cursor_pos);
 		if (selected_tile != nullptr)
 		{

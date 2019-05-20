@@ -13,7 +13,6 @@ float Input::dY;
 bool Input::mouseLock;
 int Input::scroll;
 
-
 Input::Input()
 {
 	/* Intilalise key states and callback functions */
@@ -34,7 +33,7 @@ void Input::SetWindowCallback(GLFWwindow* window)
 	glfwSetMouseButtonCallback(window, mouse_click_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 void Input::mouse_click_callback(GLFWwindow* window, int button, int action, int mods)
@@ -170,4 +169,17 @@ void Input::ResetMouse()
 {
 	dX = 0.0f;
 	dY = 0.0f;
+}
+
+glm::vec3 Input::GetObjectSpaceCoords(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight)
+{
+	/* returns vector to point in object space which has been clicked in window space */
+	GLfloat depth;
+	glReadPixels(Input::mX, fHeight - Input::mY - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+
+	glm::vec4 viewport = glm::vec4(0, 0, fWidth, fHeight);
+	glm::vec3 wincoord = glm::vec3(Input::mX, fHeight - Input::mY - 1, depth);
+	glm::vec3 objcoord = glm::unProject(wincoord, viewMatrix, projMatrix, viewport);
+
+	return objcoord;
 }

@@ -12,7 +12,7 @@ private:
 	glm::vec3 up;
 
 	float fSpeed = 0.2f;
-	float fMaxHeight = 40.0f;
+	float fMaxHeight = 30.0f;
 
 	float fZoom = 50.0f;
 	int iZoomTarget = 50;
@@ -39,5 +39,5 @@ public:
 	~Camera();
 
 	void Animate();
-	void Update(Cursor& cursor);
+	void Update();
 };

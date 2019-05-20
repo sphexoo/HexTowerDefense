@@ -71,6 +71,7 @@ public:
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
 	void DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix);
 	void Update(glm::vec3& cursor_pos);
+	void Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight);
 	void UpdateEntities();
 	std::vector<float> GetVertexPositions(float x, float y, float z);
 	std::vector<unsigned int> GetIndexValues(int shift);

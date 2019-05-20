@@ -7,7 +7,6 @@ private:
 	static GLFWwindow* window;
 	static Gui* gui;
 	static Playfield* playfield;
-	static Cursor* cursor;
 	static int state;
 
 public:
@@ -24,7 +23,7 @@ public:
 	};
 
 public:
-	StateHandler(GLFWwindow* window, Gui* gui, Playfield* playfield, Cursor* cursor, State state);
+	StateHandler(GLFWwindow* window, Gui* gui, Playfield* playfield, State state);
 	~StateHandler();
 	static void SetState(int state);
 	static bool IsState(State state);

@@ -1,5 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include "Renderer.h"
 
 constexpr auto NUM_KEYS = 11;
 
@@ -48,4 +49,5 @@ public:
 	bool IsHold(KeyName key);
 	void SetWindowCallback(GLFWwindow* window);
 	void ResetMouse();
+	static glm::vec3 GetObjectSpaceCoords(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight);
 };

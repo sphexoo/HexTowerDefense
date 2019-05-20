@@ -13,7 +13,6 @@
 #include "Input.h"
 #include "Camera.h"
 #include "Playfield.h"
-#include "Cursor.h"
 #include "Model.h"
 #include "Gui.h"
 #include "StateHandler.h"
@@ -98,9 +97,8 @@ int main()
 	
 	Gui gui(fWidth, fHeight);
 	Playfield playfield;
-	Cursor cursor(glm::vec3(0.0f, 0.0f, 0.0f));
 
-	StateHandler statehandler(window, &gui, &playfield, &cursor, StateHandler::Startup);
+	StateHandler statehandler(window, &gui, &playfield, StateHandler::Startup);
 	
 	gui.CreateScreen("MainMenue");
 	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Start.png", StateHandler::SetState, StateHandler::Running);
@@ -148,14 +146,12 @@ int main()
 				lastTime = time;
 
 				/* Update game state */
-				cursor.Update();
-				camera.Update(cursor);
+				camera.Update();
 				playfield.UpdateEntities();
 			}
 
 			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
 			playfield.DrawEntities(renderer, shader_lgt, camera.viewMatrix);
-			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))
 			{
@@ -165,6 +161,8 @@ int main()
 		// STATE LEVELEDITOR
 		if (statehandler.IsState(StateHandler::LevelEditor))
 		{
+			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
+
 			time = glfwGetTime();
 			deltaTime = time - lastTime;
 			if (deltaTime > maxPeriod)
@@ -172,13 +170,9 @@ int main()
 				lastTime = time;
 
 				/* Update game state */
-				cursor.Update();
-				camera.Update(cursor);
-				playfield.Update(cursor.pos);
+				camera.Update();
+				playfield.Update2(camera.viewMatrix, renderer.projMatrix3D, fWidth, fHeight);
 			}
-
-			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
-			cursor.Draw(renderer, shader_tex, camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))
 			{

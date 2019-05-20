@@ -9,8 +9,11 @@
 #include "VertexAttributes.h"
 #include "Texture.h"
 #include "Renderer.h"
+#include "Input.h"
 
 #define RAD(x) x * 3.14159f / 180.0f
+
+extern Input input;
 
 Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float fZfar)
 	:fFov(fFov), fWidth(fWidth), fHeight(fHeight), fZnear(fZnear), fZfar(fZfar)

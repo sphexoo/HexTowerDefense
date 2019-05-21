@@ -1,9 +1,10 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-#include "Playfield.h"
 #include "Gui.h"
+#include "Playfield.h"
 #include "StateHandler.h"
+
 #include "Input.h"
 
 extern Input input;

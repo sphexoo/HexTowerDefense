@@ -1,5 +1,9 @@
 #pragma once
 
+struct GLFWwindow;
+class Playfield;
+class Gui; 
+
 class StateHandler
 {
 	/* state handler class which manages current states and state transitions */

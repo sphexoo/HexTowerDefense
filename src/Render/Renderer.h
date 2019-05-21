@@ -2,6 +2,7 @@
 
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
+#include "Shader.h"
 
 class Shader;
 class VertexBuffer;
@@ -23,8 +24,13 @@ public:
 	glm::mat4 projMatrix2D;
 	glm::mat4 MVP;
 
+	Shader* shader_tex;
+	Shader* shader_bsc;
+	Shader* shader_lgt;
+
 public:
 	Renderer(float fFov, float fWidth, float fHeight, float fZnear, float fZfar);
+	~Renderer();
 	void Clear();
 	void Draw3Dbasic(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
 	void Draw3Dlight(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix, const glm::vec4& color);

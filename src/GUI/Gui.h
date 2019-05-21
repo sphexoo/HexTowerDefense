@@ -17,7 +17,7 @@ private:
 	std::vector<Screen*> screens; // stores all created screens
 
 public:
-	Gui(float fWidth, float fHeight);
+	Gui(float fWidth, float fHeight, fcnPtr handlerFcn);
 	~Gui();
 	void Draw(Renderer& renderer, Shader& shader);
 	void CreateScreen(std::string name);

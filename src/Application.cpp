@@ -95,34 +95,17 @@ int main()
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(MessageCallback, 0);
 	
-	Gui gui(fWidth, fHeight);
+	Gui gui(fWidth, fHeight, StateHandler::SetState);
 	Playfield playfield;
 
 	StateHandler statehandler(window, &gui, &playfield, StateHandler::Startup);
-	
-	gui.CreateScreen("MainMenue");
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Start.png", StateHandler::SetState, StateHandler::Running);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Level_Editor.png", StateHandler::SetState, StateHandler::LevelEditor);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Quit.png", StateHandler::SetState, StateHandler::Quit);
-														   
-	gui.CreateScreen("Pause");							   
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", StateHandler::SetState, StateHandler::Running);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Restart.png", StateHandler::SetState, StateHandler::Running);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Back.png", StateHandler::SetState, StateHandler::MainMenue);
-
-	gui.CreateScreen("PauseLevelEditor");
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", StateHandler::SetState, StateHandler::LevelEditor);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Save_Map.png", StateHandler::SetState, StateHandler::SaveLevel);
-	gui.AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Back.png", StateHandler::SetState, StateHandler::MainMenue);
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
 	Camera camera(glm::vec3(0.0f, -25.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
 
 	/* Create Shader specified in Shader.h */
-	Shader shader_tex("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
-	Shader shader_bsc("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
-	Shader shader_lgt("res/shaders/light_vertex.shader", "res/shaders/light_fragment.shader");
-	shader_bsc.Bind();
+
+	//shader_bsc.Bind();
 
 	statehandler.SetState(StateHandler::MainMenue);
 
@@ -150,8 +133,8 @@ int main()
 				playfield.UpdateEntities();
 			}
 
-			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
-			playfield.DrawEntities(renderer, shader_lgt, camera.viewMatrix);
+			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
+			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))
 			{
@@ -161,7 +144,7 @@ int main()
 		// STATE LEVELEDITOR
 		if (statehandler.IsState(StateHandler::LevelEditor))
 		{
-			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
+			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
 
 			time = glfwGetTime();
 			deltaTime = time - lastTime;
@@ -182,25 +165,25 @@ int main()
 		// STATE PAUSE
 		else if (statehandler.IsState(StateHandler::Pause))
 		{
-			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
-			playfield.DrawEntities(renderer, shader_lgt, camera.viewMatrix);
+			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
+			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
 			
 			gui.HandleMouseInput();
-			gui.Draw(renderer, shader_tex);
+			gui.Draw(renderer, *(renderer.shader_tex));
 		}
 		// STATE PAUSE LEVELEDITOR
 		else if (statehandler.IsState(StateHandler::PauseLevelEditor))
 		{
-			playfield.Draw(renderer, shader_bsc, camera.viewMatrix);
+			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
 
 			gui.HandleMouseInput();
-			gui.Draw(renderer, shader_tex);
+			gui.Draw(renderer, *(renderer.shader_tex));
 		}
 		// STATE MAINMENUE
 		else if (statehandler.IsState(StateHandler::MainMenue))
 		{
 			gui.HandleMouseInput();
-			gui.Draw(renderer, shader_tex);
+			gui.Draw(renderer, *(renderer.shader_tex));
 		}
 		// STATE QUIT
 		else if (statehandler.IsState(StateHandler::Quit))

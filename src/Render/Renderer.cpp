@@ -23,6 +23,11 @@ Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float 
 	projMatrix2D = glm::ortho(0.0f, fWidth, 0.0f, fHeight, -0.5f, 0.5f);
 	MVP = glm::mat4(1.0f);
 
+	/* create Shaders */
+	shader_tex = new Shader("res/shaders/texture_vertex.shader", "res/shaders/texture_fragment.shader");
+	shader_bsc = new Shader("res/shaders/basic_vertex.shader", "res/shaders/basic_fragment.shader");
+	shader_lgt = new Shader("res/shaders/light_vertex.shader", "res/shaders/light_fragment.shader");
+
 	/* initial OpenGl settings */
 	glClearColor(0.7f, 0.7f, 1.0f, 1.0f);
 	//glEnable(GL_CULL_FACE);
@@ -31,6 +36,13 @@ Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float 
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glPointSize(5);
+}
+
+Renderer::~Renderer()
+{
+	delete shader_tex;
+	delete shader_bsc;
+	delete shader_lgt;
 }
 
 void Renderer::Clear()

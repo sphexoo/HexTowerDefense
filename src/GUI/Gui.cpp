@@ -1,12 +1,30 @@
 #include "Gui.h"
+#include "StateHandler.h"
 
 /* Access the logger object globally created in Application.cpp */
 extern Logger logger;
 
-Gui::Gui(float fWidth, float fHeight)
+Gui::Gui(float fWidth, float fHeight, fcnPtr handlerFcn)
 	: fWidth(fWidth), fHeight(fHeight)
 {
 	/*Contructs new Gui object*/
+	CreateScreen("MainMenue");
+	AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Start.png", handlerFcn, StateHandler::Running);
+	AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Level_Editor.png", handlerFcn, StateHandler::LevelEditor);
+	AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Quit.png", handlerFcn, StateHandler::Quit);
+
+	CreateScreen("Pause");
+	AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", handlerFcn, StateHandler::Running);
+	AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Restart.png", handlerFcn, StateHandler::Running);
+	AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Back.png", handlerFcn, StateHandler::MainMenue);
+
+	CreateScreen("PauseLevelEditor");
+	AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", handlerFcn, StateHandler::LevelEditor);
+	AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Save_Map.png", handlerFcn, StateHandler::SaveLevel);
+	AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Back.png", handlerFcn, StateHandler::MainMenue);
+
+	//CreateScreen("HUD");
+
 }
 
 Gui::~Gui()

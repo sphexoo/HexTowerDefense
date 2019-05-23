@@ -4,7 +4,7 @@
 Enemy::Enemy(Playfield* playfield)
 	: playfield(playfield)
 {
-	model.Load("res/models/tower2.obj");
+	model.Load("res/models/tower1.obj");
 	pos = playfield->GetPath(0)->pos;
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }

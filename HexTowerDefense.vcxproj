@@ -151,6 +151,7 @@
     <ClCompile Include="src\Objects\Enemy.cpp" />
     <ClCompile Include="src\Objects\Entity.cpp" />
     <ClCompile Include="src\Objects\Playfield.cpp" />
+    <ClCompile Include="src\Objects\Tower.cpp" />
     <ClCompile Include="src\Others\Camera.cpp" />
     <ClCompile Include="src\Others\Input.cpp" />
     <ClCompile Include="src\Others\Logger.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="src\Objects\Enemy.h" />
     <ClInclude Include="src\Objects\Entity.h" />
     <ClInclude Include="src\Objects\Playfield.h" />
+    <ClInclude Include="src\Objects\Tower.h" />
     <ClInclude Include="src\Others\Camera.h" />
     <ClInclude Include="src\Others\Input.h" />
     <ClInclude Include="src\Others\Logger.h" />

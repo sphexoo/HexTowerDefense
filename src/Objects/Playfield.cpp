@@ -5,7 +5,7 @@
 #include "VertexBuffer.h"
 #include "VertexAttributes.h"
 #include "IndexBuffer.h"
-#include "Entity.h"
+#include "Tower.h"
 #include "Enemy.h"
 
 #include "Input.h"
@@ -27,9 +27,14 @@ Playfield::~Playfield()
 	delete va;
 	delete ib;
 
-	for (int i = 0; i < entities.size(); i++)
+	for (int i = 0; i < enemies.size(); i++)
 	{
-		delete entities[i];
+		delete enemies[i];
+	}
+
+	for (int i = 0; i < towers.size(); i++)
+	{
+		delete towers[i];
 	}
 }
 
@@ -41,10 +46,16 @@ void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 
 void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	// draw entities
-	for (int i = 0; i < entities.size(); i++)
+	// draw enemies
+	for (int i = 0; i < enemies.size(); i++)
 	{
-		entities[i]->Draw(renderer, shader, viewMatrix);
+		enemies[i]->Draw(renderer, shader, viewMatrix);
+	}
+
+	// draw towers
+	for (int i = 0; i < towers.size(); i++)
+	{
+		towers[i]->Draw(renderer, shader, viewMatrix);
 	}
 }
 
@@ -190,9 +201,14 @@ void Playfield::Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWid
 
 void Playfield::UpdateEntities()
 {
-	for (int i = 0; i < entities.size(); i++)
+	for (int i = 0; i < enemies.size(); i++)
 	{
-		entities[i]->Update();
+		enemies[i]->Update();
+	}
+
+	for (int i = 0; i < towers.size(); i++)
+	{
+		towers[i]->Update();
 	}
 }
 
@@ -313,7 +329,8 @@ bool Playfield::GeneratePath()
 	// check if path is valid (current tile is of type Tile::TARGET)
 	if (currentTile->type == Tile::TARGET)
 	{
-		entities.push_back(new Enemy(this));
+		enemies.push_back(new Enemy(this));
+		towers.push_back(new Tower(this, glm::vec3(0.0f, 0.0f, 0.0f)));
 		return true;
 	}
 	return false;
@@ -327,9 +344,20 @@ Playfield::Tile* Playfield::GetPath(int n)
 
 void Playfield::ClearEntities()
 {
-	for (int i = 0; i < entities.size(); i++)
+	for (int i = 0; i < enemies.size(); i++)
 	{
-		delete entities[i];
+		delete enemies[i];
 	}
-	entities.clear();
+	enemies.clear();
+
+	for (int i = 0; i < towers.size(); i++)
+	{
+		delete towers[i];
+	}
+	towers.clear();
+}
+
+Enemy* Playfield::GetEnemy(int num)
+{
+	return enemies[num];
 }

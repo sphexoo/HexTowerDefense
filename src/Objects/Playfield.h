@@ -5,7 +5,8 @@
 #include "Renderer.h"
 
 class Cursor;
-class Entity;
+class Enemy;
+class Tower;
 
 class Playfield
 {
@@ -40,7 +41,8 @@ private:
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 
 	std::vector<Tile> tiles;
-	std::vector<Entity*> entities;
+	std::vector<Enemy*> enemies;
+	std::vector<Tower*> towers;
 
 	std::vector<float> vertices;
 	std::vector<unsigned int> indices;
@@ -81,5 +83,6 @@ public:
 	Tile* GetPath(int n);
 	void ClearEntities();
 	Tile* GetTile(glm::vec3& pos);
+	Enemy* GetEnemy(int num);
 	bool GeneratePath();
 };

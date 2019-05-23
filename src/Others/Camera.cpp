@@ -21,20 +21,20 @@ Camera::~Camera()
 void Camera::Update()
 {
 	// front-back, left-right movement
-	if (Input::mX < 50.0f)
+	if (Input::mX < fBorder)
 	{
 		pos.x -= fSpeed;
 	}
-	else if (Input::mX > fWidth - 50.0f)
+	else if (Input::mX > fWidth - fBorder)
 	{
 		pos.x += fSpeed;
 	}
 
-	if (Input::mY < 50.0f)
+	if (Input::mY < fBorder)
 	{
 		pos.y += fSpeed;
 	}
-	else if (Input::mY > fHeight - 50.0f)
+	else if (Input::mY > fHeight - fBorder)
 	{
 		pos.y -= fSpeed;
 	}

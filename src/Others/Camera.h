@@ -21,8 +21,7 @@ private:
 	int iPosXTarget = 13;
 	int iPosYTarget = -13;
 
-	float prevMouseX = 0.0f;
-	float prevMouseY = 0.0f;
+	float fBorder = 75.0f;
 
 	float fWidth;
 	float fHeight;

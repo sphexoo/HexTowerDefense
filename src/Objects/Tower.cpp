@@ -7,9 +7,8 @@
 Tower::Tower(Playfield* playfield, glm::vec3 pos)
 	: playfield(playfield)
 {
-	model.Load("res/models/tower2.obj");
 	this->pos = pos;
-	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
+	model.Load("res/models/tower2.obj");
 }
 
 Tower::~Tower()
@@ -45,5 +44,6 @@ void Tower::Rotate(glm::vec3& posTarget)
 		angle = atan(dir.y / dir.x) + RAD(180.0f);
 	}
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
+	modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5f, 0.5f, 0.5f));
 	modelMatrix = glm::rotate(modelMatrix, angle, glm::vec3(0.0f, 0.0f, 1.0f));
 }

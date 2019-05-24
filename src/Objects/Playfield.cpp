@@ -27,12 +27,12 @@ Playfield::~Playfield()
 	delete va;
 	delete ib;
 
-	for (int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		delete enemies[i];
 	}
 
-	for (int i = 0; i < towers.size(); i++)
+	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		delete towers[i];
 	}
@@ -47,13 +47,13 @@ void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
 	// draw enemies
-	for (int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		enemies[i]->Draw(renderer, shader, viewMatrix);
 	}
 
 	// draw towers
-	for (int i = 0; i < towers.size(); i++)
+	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		towers[i]->Draw(renderer, shader, viewMatrix);
 	}
@@ -63,7 +63,7 @@ std::vector<float> Playfield::GetVertexPositions(float x, float y, float z)
 {
 	std::vector<float> out = vertex;
 
-	for (int i = 0; i < vertex.size(); i = i + 7)
+	for (unsigned int i = 0; i < vertex.size(); i = i + 7)
 	{
 		out[i]     += x;
 		out[i + 1] += y;
@@ -77,7 +77,7 @@ std::vector<unsigned int> Playfield::GetIndexValues(int shift)
 {
 	std::vector<unsigned int> out = index;
 
-	for (int i = 0; i < index.size(); i++)
+	for (unsigned int i = 0; i < index.size(); i++)
 	{
 		out[i] += shift;
 	}
@@ -182,19 +182,26 @@ void Playfield::Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWid
 		Tile* selected_tile = GetTile(cursor_pos);
 		if (selected_tile != nullptr)
 		{
-			towers.push_back(new Tower(this, selected_tile->pos));
+			if (selected_tile->tower == nullptr)
+			{
+				towers.push_back(new Tower(this, selected_tile->pos));
+			}
+			else
+			{
+				// destroy the tower
+			}
 		}
 	}
 }
 
 void Playfield::UpdateEntities()
 {
-	for (int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		enemies[i]->Update();
 	}
 
-	for (int i = 0; i < towers.size(); i++)
+	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		towers[i]->Update();
 	}
@@ -202,7 +209,7 @@ void Playfield::UpdateEntities()
 
 Playfield::Tile* Playfield::GetTile(glm::vec3& pos)
 {
-	for (int i = 0; i < tiles.size(); i++)
+	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
 		float dist = glm::length(tiles[i].pos - pos);
 		if (dist < cos((float)M_PI / 6.0f))
@@ -218,7 +225,7 @@ bool Playfield::GeneratePath()
 	Tile* currentTile = nullptr;
 	Tile* lastTile = nullptr;
 	// find spawn
-	for (int i = 0; i < tiles.size(); i++)
+	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
 		if (tiles[i].type == Tile::SPAWN)
 		{
@@ -301,7 +308,7 @@ bool Playfield::GeneratePath()
 		}
 
 		// find next tile
-		for (int i = 0; i < neighbors.size(); i++)
+		for (unsigned int i = 0; i < neighbors.size(); i++)
 		{
 			if (neighbors[i] != lastTile && (neighbors[i]->type == Tile::PATH || neighbors[i]->type == Tile::TARGET))
 			{
@@ -318,7 +325,6 @@ bool Playfield::GeneratePath()
 	if (currentTile->type == Tile::TARGET)
 	{
 		enemies.push_back(new Enemy(this));
-		towers.push_back(new Tower(this, glm::vec3(0.0f, 0.0f, 0.0f)));
 		return true;
 	}
 	return false;
@@ -332,20 +338,19 @@ Playfield::Tile* Playfield::GetPath(int n)
 
 void Playfield::ClearEntities()
 {
-	for (int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		delete enemies[i];
 	}
 	enemies.clear();
 
-	for (int i = 0; i < towers.size(); i++)
+	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		delete towers[i];
 	}
-	towers.clear();
 }
 
-Enemy* Playfield::GetEnemy(int num)
+Enemy* Playfield::GetEnemy(unsigned int num)
 {
 	if (enemies.size() > num)
 	{

@@ -123,7 +123,6 @@ int main()
 		if (statehandler.IsState(StateHandler::Running))
 		{
 			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
-			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
 
 			time = glfwGetTime();
 			deltaTime = time - lastTime;
@@ -136,6 +135,8 @@ int main()
 				playfield.UpdateEntities();
 				playfield.Update2(camera.viewMatrix, renderer.projMatrix3D, fWidth, fHeight);
 			}
+
+			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
 
 			if (input.IsPressed(Input::KEY_ESC))
 			{

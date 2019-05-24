@@ -23,6 +23,7 @@ public:
 		int x, y;
 		int type;
 		glm::vec3 pos;
+		Tower* tower = nullptr;
 
 		Tile(int type, int x, int y, glm::vec3 pos) : type(type), x(x), y(y), pos(pos) {}
 	};
@@ -83,6 +84,6 @@ public:
 	Tile* GetPath(int n);
 	void ClearEntities();
 	Tile* GetTile(glm::vec3& pos);
-	Enemy* GetEnemy(int num);
+	Enemy* GetEnemy(unsigned int num);
 	bool GeneratePath();
 };

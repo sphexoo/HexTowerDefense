@@ -19,13 +19,16 @@ Tower::~Tower()
 
 void Tower::Update()
 {
-	glm::vec3 posTarget = GetTarget();
-	Rotate(posTarget);
+	target = GetTarget();
+	if (target != nullptr)
+	{
+		Rotate(target->pos);
+	}
 }
 
-glm::vec3 Tower::GetTarget()
+Enemy* Tower::GetTarget()
 {
-	return playfield->GetEnemy(0)->pos;
+	return playfield->GetEnemy(0);
 }
 
 void Tower::Rotate(glm::vec3& posTarget)

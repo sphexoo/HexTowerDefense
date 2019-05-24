@@ -12,6 +12,8 @@ Using C++, OpenGl and GLFW.
    ### Level Editor:
     Mouse 1: Change Tile Type with multiple clicks onto the same tile (Green: Path, Red: Spawn, Gold: Target)
     Mouse 2: Remove Tile Type from clicked tile
+   ### Ingame:
+    Mouse 1: Place tower.
 
  ## Level Editor Readme:
   A valid path must have one Spawn and one Target connected by a variable number of path tiles. 

@@ -96,8 +96,8 @@ void Playfield::SetColor(int x, int y, float r, float g, float b, float a)
 		vertices[i + 49 * offset + 5] = b; 
 		vertices[i + 49 * offset + 6] = a; 
 	}
-	vb->Bind();
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+vb->Bind();
+glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
 }
 
 void Playfield::SetColor(int x, int y, int type)
@@ -180,15 +180,29 @@ void Playfield::Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWid
 	{
 		glm::vec3 cursor_pos = Input::GetObjectSpaceCoords(viewMatrix, projMatrix, fWidth, fHeight);
 		Tile* selected_tile = GetTile(cursor_pos);
-		if (selected_tile != nullptr)
+		if (selected_tile != nullptr && selected_tile->type == Tile::BUILD)
 		{
 			if (selected_tile->tower == nullptr)
 			{
+				// create tower
 				towers.push_back(new Tower(this, selected_tile->pos));
+				selected_tile->tower = towers.back();
 			}
 			else
 			{
-				// destroy the tower
+				// destroy tower
+				delete selected_tile->tower;
+
+				for (unsigned int i = 0; i < towers.size(); i++)
+				{
+					if (selected_tile->tower == towers[i])
+					{
+						towers.erase(towers.begin() + i);
+						break;
+					}
+				}
+
+				selected_tile->tower = nullptr;
 			}
 		}
 	}
@@ -348,6 +362,7 @@ void Playfield::ClearEntities()
 	{
 		delete towers[i];
 	}
+	towers.clear();
 }
 
 Enemy* Playfield::GetEnemy(unsigned int num)

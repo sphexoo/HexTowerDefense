@@ -33,6 +33,7 @@ public:
 	int iTilesX = 11;
 	int iTilesY = 11;
 
+
 private:
 	std::vector<float> fTileColors = {  0.0f, 0.8f, 0.0f, 1.0f,	    // Path
 										0.8f, 0.0f, 0.0f, 1.0f,	    // Spawn

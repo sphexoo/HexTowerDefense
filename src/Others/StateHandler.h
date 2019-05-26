@@ -23,7 +23,8 @@ public:
 		Quit = 4,
 		LevelEditor = 5,
 		PauseLevelEditor = 6,
-		SaveLevel = 7
+		SaveLevel = 7,
+		Restart = 8
 	};
 
 public:

@@ -84,6 +84,8 @@ public:
 	void SetColor(int x, int y, int type);
 	Tile* GetPath(int n);
 	void ClearEntities();
+	void ClearEnemies();
+	void ClearTowers();
 	Tile* GetTile(glm::vec3& pos);
 	Enemy* GetEnemy(unsigned int num);
 	bool GeneratePath();

@@ -15,7 +15,7 @@ Gui::Gui(float fWidth, float fHeight, fcnPtr handlerFcn)
 
 	CreateScreen("Pause");
 	AddButtonBox(fWidth * 0.5f, fHeight - 3.0f * 50.0f - 0.0f * 10.0f, "res/textures/b_Resume.png", handlerFcn, StateHandler::Running);
-	AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Restart.png", handlerFcn, StateHandler::Running);
+	AddButtonBox(fWidth * 0.5f, fHeight - 4.0f * 50.0f - 1.0f * 10.0f, "res/textures/b_Restart.png", handlerFcn, StateHandler::Restart);
 	AddButtonBox(fWidth * 0.5f, fHeight - 5.0f * 50.0f - 2.0f * 10.0f, "res/textures/b_Back.png", handlerFcn, StateHandler::MainMenue);
 
 	CreateScreen("PauseLevelEditor");

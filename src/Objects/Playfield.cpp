@@ -356,13 +356,47 @@ void Playfield::ClearEntities()
 	{
 		delete enemies[i];
 	}
+
 	enemies.clear();
 
 	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		delete towers[i];
 	}
+
 	towers.clear();
+
+	for (unsigned int i = 0; i < tiles.size(); i++)
+	{
+		tiles[i].tower = nullptr;
+	}
+}
+
+void Playfield::ClearEnemies()
+{
+	for (unsigned int i = 0; i < enemies.size(); i++)
+	{
+		delete enemies[i];
+	}
+
+	enemies.clear();
+
+	enemies.push_back(new Enemy(this));
+}
+
+void Playfield::ClearTowers()
+{
+	for (unsigned int i = 0; i < towers.size(); i++)
+	{
+		delete towers[i];
+	}
+
+	towers.clear();
+
+	for (unsigned int i = 0; i < tiles.size(); i++)
+	{
+		tiles[i].tower = nullptr;
+	}
 }
 
 Enemy* Playfield::GetEnemy(unsigned int num)

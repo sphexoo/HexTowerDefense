@@ -53,6 +53,11 @@ void StateHandler::SetState(int state)
 		{
 			gui->SwitchScreen("Pause");
 		}
+		else if (IsState(Restart))
+		{
+			playfield->ClearEnemies();
+			SetState(Running);
+		}
 		else if (IsState(LevelEditor))
 		{
 			playfield->path.clear();

@@ -7,7 +7,7 @@ class Enemy : public Entity
 {
 private:
 	Playfield* playfield;
-	float fSpeed = 0.01f; 
+	float fSpeed = 0.05f; 
 	int currentTarget = 1;
 
 public:

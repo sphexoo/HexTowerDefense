@@ -14,6 +14,7 @@ extern Input input;
 
 Playfield::Playfield()
 {
+	/* creates playfield mesh */
 	GenerateMesh();
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
@@ -23,6 +24,7 @@ Playfield::Playfield()
 
 Playfield::~Playfield()
 {
+	/* deletes all heap allocated objects */
 	delete vb;
 	delete va;
 	delete ib;
@@ -40,12 +42,13 @@ Playfield::~Playfield()
 
 void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
-	// draw playfield
+	/* draws playfield */
 	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
 }
 
 void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
+	/* draws entities */
 	// draw enemies
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
@@ -61,6 +64,7 @@ void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewM
 
 std::vector<float> Playfield::GetVertexPositions(float x, float y, float z)
 {
+	/* creates vertex positions for mesh building */
 	std::vector<float> out = vertex;
 
 	for (unsigned int i = 0; i < vertex.size(); i = i + 7)
@@ -75,6 +79,7 @@ std::vector<float> Playfield::GetVertexPositions(float x, float y, float z)
 
 std::vector<unsigned int> Playfield::GetIndexValues(int shift)
 {
+	/* creates indices for mesh building */
 	std::vector<unsigned int> out = index;
 
 	for (unsigned int i = 0; i < index.size(); i++)
@@ -87,6 +92,7 @@ std::vector<unsigned int> Playfield::GetIndexValues(int shift)
 
 void Playfield::SetColor(int x, int y, float r, float g, float b, float a)
 {
+	/* changes vertices color to custom color attribute of hexagon at position x, y */
 	int offset = x + y * iTilesY;
 
 	for (int i = 0; i < 49; i = i + 7)
@@ -96,12 +102,13 @@ void Playfield::SetColor(int x, int y, float r, float g, float b, float a)
 		vertices[i + 49 * offset + 5] = b; 
 		vertices[i + 49 * offset + 6] = a; 
 	}
-vb->Bind();
-glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+	vb->Bind();
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
 }
 
 void Playfield::SetColor(int x, int y, int type)
 {
+	/* changes vertices color tile color attribute of hexagon at position x, y */
 	int offset = x + y * iTilesY;
 
 	for (int i = 0; i < 49; i = i + 7)
@@ -117,6 +124,7 @@ void Playfield::SetColor(int x, int y, int type)
 
 void Playfield::GenerateMesh()
 {
+	/* generate playfield mesh */
 	float distX = 2.0f * cos((float)M_PI / 6.0f);
 	float distY = 3.0f * sin((float)M_PI / 6.0f);
 
@@ -148,6 +156,7 @@ void Playfield::GenerateMesh()
 
 void Playfield::Update(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight)
 {
+	/* updates playfield colors based in mouse input */
 	if (input.IsPressed(Input::MOUSE_1))
 	{
 		glm::vec3 cursor_pos = Input::GetObjectSpaceCoords(viewMatrix, projMatrix, fWidth, fHeight);
@@ -176,6 +185,7 @@ void Playfield::Update(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidt
 
 void Playfield::Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight)
 {
+	/* updates playfield entities based on mouse input */
 	if (input.IsPressed(Input::MOUSE_1))
 	{
 		glm::vec3 cursor_pos = Input::GetObjectSpaceCoords(viewMatrix, projMatrix, fWidth, fHeight);
@@ -210,6 +220,7 @@ void Playfield::Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWid
 
 void Playfield::UpdateEntities()
 {
+	/* call update method for all entites */
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		enemies[i]->Update();
@@ -223,6 +234,7 @@ void Playfield::UpdateEntities()
 
 Playfield::Tile* Playfield::GetTile(glm::vec3& pos)
 {
+	/* returns tile pointer if there is one within hexagon radius */
 	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
 		float dist = glm::length(tiles[i].pos - pos);
@@ -236,6 +248,8 @@ Playfield::Tile* Playfield::GetTile(glm::vec3& pos)
 
 bool Playfield::GeneratePath()
 {
+	/* generates path based on selected tile types.
+	   returns true if paths is valid. */
 	Tile* currentTile = nullptr;
 	Tile* lastTile = nullptr;
 	// find spawn
@@ -352,20 +366,23 @@ Playfield::Tile* Playfield::GetPath(int n)
 
 void Playfield::ClearEntities()
 {
+	/* clears all entities */
+
+	// clear enemies
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		delete enemies[i];
 	}
-
 	enemies.clear();
 
+	// clear towers
 	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		delete towers[i];
 	}
-
 	towers.clear();
 
+	// set tower pointers of all tiles to nullptr
 	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
 		tiles[i].tower = nullptr;
@@ -374,21 +391,21 @@ void Playfield::ClearEntities()
 
 void Playfield::ClearEnemies()
 {
+	/* clears only enemies */
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		delete enemies[i];
 	}
-
 	enemies.clear();
 }
 
 void Playfield::ClearTowers()
 {
+	/* clears only towers */
 	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		delete towers[i];
 	}
-
 	towers.clear();
 
 	for (unsigned int i = 0; i < tiles.size(); i++)
@@ -397,8 +414,10 @@ void Playfield::ClearTowers()
 	}
 }
 
+
 Enemy* Playfield::GetEnemy(unsigned int num)
 {
+	/* returns enemy pointer of nth enemy. returns nullptr if there are no enemies */
 	if (enemies.size() > num)
 	{
 		return enemies[num];
@@ -408,8 +427,9 @@ Enemy* Playfield::GetEnemy(unsigned int num)
 
 void Playfield::ClearEnemy(Enemy* enemy)
 {
+	/* deletes enemy pointed at */
 	delete enemy;
-	for (int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i] == enemy)
 		{
@@ -421,6 +441,7 @@ void Playfield::ClearEnemy(Enemy* enemy)
 
 void Playfield::SpawnEnemy()
 {
+	/* spawns a new enemy if there is a path specified */
 	if (path.size() > 0)
 	{
 		enemies.push_back(new Enemy(this));

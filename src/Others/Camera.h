@@ -12,14 +12,14 @@ private:
 	glm::vec3 up;
 
 	float fSpeed = 0.2f;
-	float fMaxHeight = 30.0f;
+	float fMaxHeight = 20.0f;
 
 	float fZoom = 50.0f;
 	int iZoomTarget = 50;
 	float fAngle = 0.0f;
 
-	int iPosXTarget = 13;
-	int iPosYTarget = -13;
+	int iPosXTarget = 0;
+	int iPosYTarget = -0;
 
 	float fBorder = 75.0f;
 

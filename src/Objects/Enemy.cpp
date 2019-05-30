@@ -26,8 +26,15 @@ void Enemy::Move()
 
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 
-	if (glm::length(playfield->GetPath(currentTarget)->pos - pos) < fSpeed && playfield->GetPath(currentTarget)->type != Playfield::Tile::TARGET)
+	if (glm::length(playfield->GetPath(currentTarget)->pos - pos) < fSpeed)
 	{
-		currentTarget++;
+		if (playfield->GetPath(currentTarget)->type != Playfield::Tile::TARGET)
+		{
+			currentTarget++;
+		}
+		else
+		{
+			playfield->ClearEnemy(this);
+		}
 	}
 }

@@ -62,8 +62,8 @@ void Camera::Update()
 	{
 		reset = true;
 		iZoomTarget = 50;
-		iPosXTarget = 6;
-		iPosYTarget = -10;
+		iPosXTarget = 8;
+		iPosYTarget = -5;
 	}
 
 	// updating view matrix

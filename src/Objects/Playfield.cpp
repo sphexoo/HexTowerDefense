@@ -380,8 +380,6 @@ void Playfield::ClearEnemies()
 	}
 
 	enemies.clear();
-
-	enemies.push_back(new Enemy(this));
 }
 
 void Playfield::ClearTowers()
@@ -406,4 +404,25 @@ Enemy* Playfield::GetEnemy(unsigned int num)
 		return enemies[num];
 	}
 	return nullptr;
+}
+
+void Playfield::ClearEnemy(Enemy* enemy)
+{
+	delete enemy;
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (enemies[i] == enemy)
+		{
+			enemies.erase(enemies.begin() + i);
+			break;
+		}
+	}
+}
+
+void Playfield::SpawnEnemy()
+{
+	if (path.size() > 0)
+	{
+		enemies.push_back(new Enemy(this));
+	}
 }

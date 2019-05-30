@@ -56,6 +56,7 @@ void StateHandler::SetState(int state)
 		else if (IsState(Restart))
 		{
 			playfield->ClearEnemies();
+			playfield->SpawnEnemy();
 			SetState(Running);
 		}
 		else if (IsState(LevelEditor))

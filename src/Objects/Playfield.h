@@ -85,8 +85,10 @@ public:
 	Tile* GetPath(int n);
 	void ClearEntities();
 	void ClearEnemies();
+	void ClearEnemy(Enemy* enemy);
 	void ClearTowers();
 	Tile* GetTile(glm::vec3& pos);
 	Enemy* GetEnemy(unsigned int num);
 	bool GeneratePath();
+	void SpawnEnemy();
 };

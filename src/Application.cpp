@@ -100,8 +100,6 @@ int main()
 	Gui gui(fWidth, fHeight, StateHandler::SetState);
 	Playfield playfield;
 
-	Tower tower(&playfield, glm::vec3(0.0f, 0.0f, 0.0f));
-
 	StateHandler statehandler(window, &gui, &playfield, StateHandler::Startup);
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);

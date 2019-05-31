@@ -7,6 +7,7 @@
 class Cursor;
 class Enemy;
 class Tower;
+class EnvObj;
 
 class Playfield
 {
@@ -45,6 +46,7 @@ private:
 	std::vector<Tile> tiles;
 	std::vector<Enemy*> enemies;
 	std::vector<Tower*> towers;
+	std::vector<EnvObj*> envobjects;
 
 	std::vector<float> vertices;
 	std::vector<unsigned int> indices;

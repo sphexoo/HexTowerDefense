@@ -7,6 +7,7 @@
 #include "IndexBuffer.h"
 #include "Tower.h"
 #include "Enemy.h"
+#include "EnvObj.h"
 
 #include "Input.h"
 
@@ -20,6 +21,8 @@ Playfield::Playfield()
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
 	va = new VertexAttributes(true, 3, true, 4, false, 0);
+
+	envobjects.push_back(new EnvObj(this, glm::vec3(5.0f, 2.0f, 0.0f)));
 }
 
 Playfield::~Playfield()
@@ -37,6 +40,11 @@ Playfield::~Playfield()
 	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		delete towers[i];
+	}
+
+	for (unsigned int i = 0; i < envobjects.size(); i++)
+	{
+		delete envobjects[i];
 	}
 }
 
@@ -59,6 +67,12 @@ void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewM
 	for (unsigned int i = 0; i < towers.size(); i++)
 	{
 		towers[i]->Draw(renderer, shader, viewMatrix);
+	}
+
+	// draw environmental objects
+	for (unsigned int i = 0; i < envobjects.size(); i++)
+	{
+		envobjects[i]->Draw(renderer, shader, viewMatrix);
 	}
 }
 
@@ -387,6 +401,15 @@ void Playfield::ClearEntities()
 	{
 		tiles[i].tower = nullptr;
 	}
+
+	/*
+	// clear environmental objects
+	for (unsigned int i = 0; i < envobjects.size(); i++)
+	{
+		delete envobjects[i];
+	}
+	envobjects.clear();
+	*/
 }
 
 void Playfield::ClearEnemies()

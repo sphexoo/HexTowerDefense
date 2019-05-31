@@ -23,7 +23,7 @@ Model::~Model()
 	delete ib;
 }
 
-void Model::Load(std::string filepath)
+void Model::LoadObj(std::string filepath)
 {	
 	this->filepath = filepath;
 
@@ -84,7 +84,100 @@ void Model::Load(std::string filepath)
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(true, 3, true, 3);
+	va = new VertexAttributes(true, 3, true, 3, false, 0);
+}
+
+void Model::LoadPly(std::string filepath)
+{
+	/* loads model data from .ply file */
+	this->filepath = filepath;
+
+	std::ifstream source(filepath);
+	// number of vertices and faces left to parse (based on header information)
+	int iVerticesLeft, iFacesLeft;
+	// number of data per vertex (based on header information)
+	int iDataPerVertex = 0;
+	bool isHeader = true;
+	std::string sTemp;
+
+	for (std::string line; std::getline(source, line);)
+	{
+		std::istringstream linestream(line);
+		
+		// parsing header line
+		if (isHeader)
+		{
+			linestream >> sTemp;
+
+			if (sTemp == "element")
+			{
+				linestream >> sTemp;
+
+				if (sTemp == "vertex")
+				{
+					linestream >> iVerticesLeft;
+				}
+				else if (sTemp == "face")
+				{
+					linestream >> iFacesLeft;
+				}
+			}
+			else if (sTemp == "property")
+			{	
+				linestream >> sTemp;
+				// check if property describes vertices
+				if (sTemp != "list")
+				{
+					iDataPerVertex++;
+				}
+			}
+			else if (sTemp == "end_header")
+			{
+				// following lines are no header information but actual vertices. 
+				isHeader = false;
+				// reserve space for vertices and indices array (for indices it is assumed that there is 3 indices per face)
+				vertices.reserve(iVerticesLeft * iDataPerVertex);
+				indices.reserve(iFacesLeft * 3);
+			}
+		}
+		// parsing vertex line
+		else
+		{
+			if (iVerticesLeft > 0)
+			{
+				// loop through one single vertex
+				for (int i = 0; i < iDataPerVertex; i++)
+				{
+					float fVertexData;
+					linestream >> fVertexData;
+					// normalize color data of parsed vertex
+					if (i > 5)
+					{
+						fVertexData = fVertexData / 255.0f;
+					}
+					vertices.push_back(fVertexData);
+				}
+				iVerticesLeft--;
+			}
+			else if (iFacesLeft > 0)
+			{
+				// get actual number of indices per face
+				unsigned int uiIndicesPerFace;
+				linestream >> uiIndicesPerFace;
+				for (unsigned int i = 0; i < uiIndicesPerFace; i++)
+				{
+					unsigned int uiIndexData;
+					linestream >> uiIndexData;
+					indices.push_back(uiIndexData);
+				}
+				iFacesLeft--;
+			}
+		}
+	}
+
+	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
+	ib = new IndexBuffer(&indices[0], indices.size());
+	va = new VertexAttributes(true, 3, true, 3, true, 3);
 }
 
 void Model::Draw(Renderer& renderer, Shader& shader, glm::mat4& viewMatrix, glm::mat4& modelMatrix)

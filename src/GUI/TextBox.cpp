@@ -22,7 +22,7 @@ TextBox::TextBox(float x, float y, float charSize, std::string text)
 	
 	vb = new VertexBuffer(&verticesList[0], sizeof(float) * 20 * text.size());
 	ib = new IndexBuffer(&indicesList[0], 6 * text.size());
-	va = new VertexAttributes(true, 3, true, 2);
+	va = new VertexAttributes(true, 3, true, 2, false, 0);
 
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }

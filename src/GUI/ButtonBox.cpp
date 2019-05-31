@@ -24,7 +24,7 @@ ButtonBox::ButtonBox(float x, float y, std::string path, fcnPtr handlerFcn, int 
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * 20);
 	ib = new IndexBuffer(&indices[0], 6);
-	va = new VertexAttributes(true, 3, true, 2);
+	va = new VertexAttributes(true, 3, true, 2, false, 0);
 
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }

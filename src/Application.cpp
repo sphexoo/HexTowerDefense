@@ -18,6 +18,8 @@
 #include "StateHandler.h"
 #include "Enemy.h"
 
+#include "Tower.h"
+
 #ifdef RELEASE
 	float fWidth = 1920.0f;
 	float fHeight = 1080.0f;
@@ -97,6 +99,8 @@ int main()
 	
 	Gui gui(fWidth, fHeight, StateHandler::SetState);
 	Playfield playfield;
+
+	Tower tower(&playfield, glm::vec3(0.0f, 0.0f, 0.0f));
 
 	StateHandler statehandler(window, &gui, &playfield, StateHandler::Startup);
 

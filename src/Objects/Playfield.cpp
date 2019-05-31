@@ -19,7 +19,7 @@ Playfield::Playfield()
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(true, 3, true, 4);
+	va = new VertexAttributes(true, 3, true, 4, false, 0);
 }
 
 Playfield::~Playfield()

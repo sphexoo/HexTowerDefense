@@ -21,7 +21,8 @@ public:
 	Model();
 	~Model();
 
-	void Load(std::string filepath);
+	void LoadObj(std::string filepath);
+	void LoadPly(std::string filepath);
 	void Draw(Renderer& renderer, Shader& shader, glm::mat4& viewMatrix, glm::mat4& modelMatrix);
 	void SetColor(float r, float g, float b, float a); 
 };

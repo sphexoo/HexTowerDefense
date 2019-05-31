@@ -3,12 +3,14 @@
 class VertexAttributes
 {
 private:
-	unsigned int vPos;
-	unsigned int vTexPos;
-	bool enablePos;
-	bool enableTexPos;
+	unsigned int uiSlot1;
+	unsigned int uiSlot2;
+	unsigned int uiSlot3;
+	bool bSlot1;
+	bool bSlot2;
+	bool bSlot3;
 
 public:
-	VertexAttributes(bool enablePos, unsigned int vPos, bool enableTexPos /* = false*/, unsigned int vTexPos /* = 0*/);
+	VertexAttributes(bool bSlot1, unsigned int uiSlot1, bool bSlot2 /*= false*/, unsigned int uiSlot2 /*= 0*/, bool bSlot3 /*= false*/, unsigned int uiSlot3 /*= 0*/);
 	void Bind() const;
 };

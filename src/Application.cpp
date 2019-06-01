@@ -171,7 +171,7 @@ int main()
 		{
 			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
 			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
-			
+
 			gui.HandleMouseInput();
 			gui.Draw(renderer, *(renderer.shader_tex));
 		}
@@ -197,7 +197,7 @@ int main()
 
 		/* Draw debug window */
 		debugWindow.Draw();
-		
+
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 

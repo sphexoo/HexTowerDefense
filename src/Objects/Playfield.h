@@ -19,7 +19,8 @@ public:
 			PATH = 0,
 			SPAWN = 1,
 			TARGET = 2,
-			BUILD = 3
+			BUILD = 3,
+			ENVOBJ = 4
 		};
 		int x, y;
 		int type;
@@ -70,6 +71,8 @@ private:
 	IndexBuffer* ib;
 	VertexAttributes* va;
 
+	float fMinDistBetwObj = 1.0f;
+
 public:
 	Playfield();
 	~Playfield();
@@ -87,10 +90,12 @@ public:
 	Tile* GetPath(int n);
 	void ClearEntities();
 	void ClearEnemies();
+	void ClearEnvObjects();
 	void ClearEnemy(Enemy* enemy);
 	void ClearTowers();
 	Tile* GetTile(glm::vec3& pos);
 	Enemy* GetEnemy(unsigned int num);
 	bool GeneratePath();
 	void SpawnEnemy();
+	void GenerateEnvironment(int type1, int type2, int type3);
 };

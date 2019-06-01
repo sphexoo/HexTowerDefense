@@ -22,7 +22,7 @@ Playfield::Playfield()
 	ib = new IndexBuffer(&indices[0], indices.size());
 	va = new VertexAttributes(true, 3, true, 4, false, 0);
 
-	envobjects.push_back(new EnvObj(this, glm::vec3(5.0f, 2.0f, 0.0f)));
+	//GenerateEnvironment(6, 0, 0);
 }
 
 Playfield::~Playfield()
@@ -437,6 +437,16 @@ void Playfield::ClearTowers()
 	}
 }
 
+void Playfield::ClearEnvObjects()
+{
+	/* clears only enemies */
+	for (unsigned int i = 0; i < envobjects.size(); i++)
+	{
+		delete envobjects[i];
+	}
+	envobjects.clear();
+}
+
 
 Enemy* Playfield::GetEnemy(unsigned int num)
 {
@@ -469,4 +479,54 @@ void Playfield::SpawnEnemy()
 	{
 		enemies.push_back(new Enemy(this));
 	}
+}
+
+void Playfield::GenerateEnvironment(int type1, int type2, int type3)
+{
+	// create vector to store all envobject positions
+	std::vector<glm::vec2> objectPositions;
+	objectPositions.reserve(type1 + type2 + type3);
+
+	// fill positions vector with positions (with min distance to eachother)
+	for (int i = 0; i < (type1 + type2 + type3); i++)
+	{
+		// create new position and add it to end of positions vector
+		float fRandX = ((double)rand() / (RAND_MAX)) * iTilesX;
+		float fRandY = ((double)rand() / (RAND_MAX)) * iTilesY;
+		objectPositions.emplace_back(fRandX, fRandY);
+
+		// check distance between last (new) element to any other element of the vector is smaller than threshold
+		for (unsigned int j = 0; j < objectPositions.size() - 1; j++)
+		{
+			// if it is erase last element and decrement i to repeat current iteration with new position
+			if (glm::length(objectPositions[j] - objectPositions[objectPositions.size() - 1]) < fMinDistBetwObj)
+			{
+				objectPositions.pop_back();
+				i--;
+			}
+		}
+	}
+
+	// Add enviromental objects
+	for (unsigned int i = 0; i < objectPositions.size(); i++)
+	{
+		if (type1 > 0)
+		{
+			envobjects.push_back(new EnvObj(this, EnvObj::TREE, glm::vec3(objectPositions[i].x, objectPositions[i].y, 0.0f)));
+			type1--;
+		}
+		else if (type2 > 0)
+		{
+			envobjects.push_back(new EnvObj(this, EnvObj::GRASS, glm::vec3(objectPositions[i].x, objectPositions[i].y, 0.0f)));
+			type2--;
+		}
+		else if (type3 > 0)
+		{
+			envobjects.push_back(new EnvObj(this, EnvObj::STONE, glm::vec3(objectPositions[i].x, objectPositions[i].y, 0.0f)));
+			type3--;
+		}
+	}	
+
+	objectPositions.clear();
+	
 }

@@ -1,10 +1,14 @@
 #include "EnvObj.h"
 #include "Playfield.h"
 
-EnvObj::EnvObj(Playfield* playfield, glm::vec3 pos)
+EnvObj::EnvObj(Playfield* playfield, Type type, glm::vec3 pos)
 	: playfield(playfield)
 {
-	model.LoadPly("res/models/tree.ply");
+	if (type == TREE)
+	{
+		model.LoadPly("res/models/tree.ply");
+	}
+	
 	this->pos = pos;
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }

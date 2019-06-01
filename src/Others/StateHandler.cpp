@@ -57,6 +57,9 @@ void StateHandler::SetState(int state)
 		{
 			playfield->ClearEnemies();
 			playfield->SpawnEnemy();
+
+			//playfield->ClearEnvObjects();
+			//playfield->GenerateEnvironment(6, 0, 0);
 			SetState(Running);
 		}
 		else if (IsState(LevelEditor))

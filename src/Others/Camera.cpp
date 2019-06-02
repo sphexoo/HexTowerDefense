@@ -98,8 +98,10 @@ void Camera::Update()
 	// check for camera reset
 	if (input.IsPressed(Input::KEY_R))
 	{
+		// reset camera height values for zoom animation without reset
 		iCameraHeightTarget = (int)lookFromDefault.z;
 		fCameraHeight = lookFromDefault.z;
+		// create vectors to change lookFrom and lookAt every frame to generate reset animation
 		iResetSteps = 50;
 		lookFromReset = (lookFromDefault - lookFrom) * 0.02f;
 		lookToReset = (lookToDefault - lookTo) * 0.02f;
@@ -111,19 +113,19 @@ void Camera::Update()
 
 void Camera::Animate()
 {
-	// automated animation of zoom factor is happening every frame
+	// automated animation of position only happens during reset of camera view
 	if (iResetSteps > 0)
 	{
 		lookFrom += lookFromReset;
 		lookTo += lookToReset;
 		iResetSteps--;
 	}
+	// automated animation of zoom factor is happening every frame
 	else if ((int)fCameraHeight < iCameraHeightTarget)
 	{
 		fCameraHeight += 0.25f;
 		lookFrom.z = fCameraHeight;
 	}
-	// automated animation of position only happens during reset of camera view
 	else if ((int)fCameraHeight > iCameraHeightTarget)
 	{
 		fCameraHeight -= 0.25f;

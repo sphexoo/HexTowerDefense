@@ -500,8 +500,8 @@ void Playfield::GenerateEnvironment(int type1, int type2, int type3)
 	for (int i = 0; i < (type1 + type2 + type3); i++)
 	{
 		// randomize tile
-		int iPosX = ((double)rand() / RAND_MAX) * iTilesX;
-		int iPosY = ((double)rand() / RAND_MAX) * iTilesY;
+		int iPosX = (int)((double)rand() / RAND_MAX) * iTilesX;
+		int iPosY = (int)((double)rand() / RAND_MAX) * iTilesY;
 
 		// check if random tile is free to build
 		if (tiles[iPosX + iTilesY * iPosY].type == Tile::BUILD)
@@ -521,8 +521,8 @@ void Playfield::GenerateEnvironment(int type1, int type2, int type3)
 	for (unsigned int i = 0; i < tmpTiles.size(); i++)
 	{
 		// generating random offset from center of target tile (max distance from center is specified with parameter )
-		float fOffset = ((double)rand() / RAND_MAX) * fMaxRadius;
-		float fAngle = ((double)rand() / RAND_MAX) * 2.0f * (float)M_PI;
+		float fOffset = (float)((double)rand() / RAND_MAX) * fMaxRadius;
+		float fAngle = (float)((double)rand() / RAND_MAX) * 2.0f * (float)M_PI;
 
 		glm::vec3 offset = glm::rotateZ(glm::vec3(fOffset, 0.0f, 0.0f), fAngle);
 		glm::vec3 finalPos = glm::vec3(tmpTiles[i]->pos.x, tmpTiles[i]->pos.y, 0.0f) + offset;

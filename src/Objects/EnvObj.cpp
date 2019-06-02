@@ -6,7 +6,11 @@ EnvObj::EnvObj(Playfield* playfield, Type type, glm::vec3 pos)
 {
 	if (type == TREE)
 	{
-		model.LoadPly("res/models/tree.ply");
+		model.LoadPly("res/models/tree1.ply");
+	}
+	else if (type == STONE)
+	{
+		model.LoadPly("res/models/stones1.ply");
 	}
 	
 	this->pos = pos;

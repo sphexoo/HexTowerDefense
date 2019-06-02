@@ -8,7 +8,7 @@ Tower::Tower(Playfield* playfield, glm::vec3 pos)
 	: playfield(playfield)
 {
 	this->pos = pos;
-	model.LoadPly("res/models/block.ply");
+	model.LoadPly("res/models/tower1.ply");
 }
 
 Tower::~Tower()

@@ -22,7 +22,7 @@ Playfield::Playfield()
 	ib = new IndexBuffer(&indices[0], indices.size());
 	va = new VertexAttributes(true, 3, true, 4, false, 0);
 
-	GenerateEnvironment(5, 0, 3);
+	GenerateEnvironment(5, 0, 12);
 }
 
 Playfield::~Playfield()
@@ -491,8 +491,8 @@ void Playfield::GenerateEnvironment(int type1, int type2, int type3)
 	for (int i = 0; i < (type1 + type2 + type3); i++)
 	{
 		// create new position and add it to end of positions vector
-		float fRandX = ((double)rand() / (RAND_MAX)) * iTilesX;
-		float fRandY = ((double)rand() / (RAND_MAX)) * iTilesY;
+		float fRandX = ((double)rand() / (RAND_MAX)) * iTilesX * 2.0f * cos((float)M_PI / 6.0f) - cos((float)M_PI / 6.0f);
+		float fRandY = ((double)rand() / (RAND_MAX)) * iTilesY * 3.0f * sin((float)M_PI / 6.0f);
 		objectPositions.emplace_back(fRandX, fRandY);
 
 		// check distance between last (new) element to any other element of the vector is smaller than threshold

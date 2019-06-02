@@ -15,6 +15,9 @@ EnvObj::EnvObj(Playfield* playfield, Type type, glm::vec3 pos)
 	
 	this->pos = pos;
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
+
+	float angle = ((double)rand() / (RAND_MAX)) * 2.0f * (float)M_PI;
+	modelMatrix = glm::rotate(modelMatrix, angle, glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
 EnvObj::~EnvObj()

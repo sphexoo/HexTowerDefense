@@ -59,7 +59,7 @@ void StateHandler::SetState(int state)
 			playfield->SpawnEnemy();
 
 			playfield->ClearEnvObjects();
-			playfield->GenerateEnvironment(6, 0, 0);
+			playfield->GenerateEnvironment(5, 0, 12);
 
 			SetState(Running);
 		}

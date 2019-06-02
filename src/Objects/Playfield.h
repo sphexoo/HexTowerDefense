@@ -71,7 +71,7 @@ private:
 	IndexBuffer* ib;
 	VertexAttributes* va;
 
-	float fMaxRadius = 0.1f;
+	float fMaxRadius = 0.25f;
 
 public:
 	Playfield();

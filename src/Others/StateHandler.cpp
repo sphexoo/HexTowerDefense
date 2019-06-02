@@ -63,7 +63,7 @@ void StateHandler::SetState(int state)
 		else if (IsState(LevelEditor))
 		{
 			playfield->ClearEnvObjects();
-			playfield->GenerateEnvironment(5, 0, 12);
+			playfield->GenerateEnvironment(5, 8, 7);
 			
 			playfield->path.clear();
 		}

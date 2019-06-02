@@ -12,6 +12,10 @@ EnvObj::EnvObj(Playfield* playfield, Type type, glm::vec3 pos)
 	{
 		model.LoadPly("res/models/stones1.ply");
 	}
+	else if (type == GRASS)
+	{
+		model.LoadPly("res/models/flower1.ply");
+	}
 	
 	this->pos = pos;
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);

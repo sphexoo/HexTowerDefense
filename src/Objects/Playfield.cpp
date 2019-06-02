@@ -23,7 +23,7 @@ Playfield::Playfield()
 	ib = new IndexBuffer(&indices[0], indices.size());
 	va = new VertexAttributes(true, 3, true, 4, false, 0);
 
-	GenerateEnvironment(5, 0, 12);
+	GenerateEnvironment(5, 8, 7);
 }
 
 Playfield::~Playfield()

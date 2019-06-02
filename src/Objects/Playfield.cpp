@@ -500,8 +500,8 @@ void Playfield::GenerateEnvironment(int type1, int type2, int type3)
 	for (int i = 0; i < (type1 + type2 + type3); i++)
 	{
 		// randomize tile
-		int iPosX = (int)((double)rand() / RAND_MAX) * iTilesX;
-		int iPosY = (int)((double)rand() / RAND_MAX) * iTilesY;
+		int iPosX = (int)(((double)rand() / RAND_MAX) * iTilesX);
+		int iPosY = (int)(((double)rand() / RAND_MAX) * iTilesY);
 
 		// check if random tile is free to build
 		if (tiles[iPosX + iTilesY * iPosY].type == Tile::BUILD)

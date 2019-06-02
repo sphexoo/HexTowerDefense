@@ -58,13 +58,13 @@ void StateHandler::SetState(int state)
 			playfield->ClearEnemies();
 			playfield->SpawnEnemy();
 
-			playfield->ClearEnvObjects();
-			playfield->GenerateEnvironment(5, 0, 12);
-
 			SetState(Running);
 		}
 		else if (IsState(LevelEditor))
 		{
+			playfield->ClearEnvObjects();
+			playfield->GenerateEnvironment(5, 0, 12);
+			
 			playfield->path.clear();
 		}
 		else if (IsState(PauseLevelEditor))

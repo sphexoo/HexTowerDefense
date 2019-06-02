@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <iostream>
+#include <gtx/rotate_vector.hpp>
 
 #include "Playfield.h"
 #include "VertexBuffer.h"
@@ -175,7 +176,7 @@ void Playfield::Update(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidt
 	{
 		glm::vec3 cursor_pos = Input::GetObjectSpaceCoords(viewMatrix, projMatrix, fWidth, fHeight);
 		Tile* selected_tile = GetTile(cursor_pos);
-		if (selected_tile != nullptr)
+		if (selected_tile != nullptr && selected_tile->type != Tile::ENVOBJ)
 		{
 			selected_tile->type += 1;
 			if (selected_tile->type > 2)
@@ -483,6 +484,68 @@ void Playfield::SpawnEnemy()
 
 void Playfield::GenerateEnvironment(int type1, int type2, int type3)
 {
+	// reset all tiles with current type ENVOBJ to BUILD
+	for (unsigned int i = 0; i < tiles.size(); i++)
+	{
+		if (tiles[i].type == Tile::ENVOBJ)
+		{
+			tiles[i].type = Tile::BUILD;
+		}
+	}
+
+	// create vector to store tile pointers to tiles which get env objects
+	std::vector<Tile*> tmpTiles;
+	tmpTiles.reserve(type1 + type2 + type3);
+
+	for (int i = 0; i < (type1 + type2 + type3); i++)
+	{
+		// randomize tile
+		int iPosX = ((double)rand() / RAND_MAX) * iTilesX;
+		int iPosY = ((double)rand() / RAND_MAX) * iTilesY;
+
+		// check if random tile is free to build
+		if (tiles[iPosX + iTilesY * iPosY].type == Tile::BUILD)
+		{
+			// add tile to tmp list and change type to ENVOBJ
+			tmpTiles.push_back(&tiles[iPosX + iTilesY * iPosY]);
+			tiles[iPosX + iTilesY * iPosY].type = Tile::ENVOBJ;
+		}
+		else
+		{
+			// repeat iteration of for loop
+			i--;
+		}
+	}
+
+	// Add enviromental objects
+	for (unsigned int i = 0; i < tmpTiles.size(); i++)
+	{
+		// generating random offset from center of target tile (max distance from center is specified with parameter )
+		float fOffset = ((double)rand() / RAND_MAX) * fMaxRadius;
+		float fAngle = ((double)rand() / RAND_MAX) * 2.0f * (float)M_PI;
+
+		glm::vec3 offset = glm::rotateZ(glm::vec3(fOffset, 0.0f, 0.0f), fAngle);
+		glm::vec3 finalPos = glm::vec3(tmpTiles[i]->pos.x, tmpTiles[i]->pos.y, 0.0f) + offset;
+
+		if (type1 > 0)
+		{
+			envobjects.push_back(new EnvObj(this, EnvObj::TREE, finalPos));
+			type1--;
+		}
+		else if (type2 > 0)
+		{
+			envobjects.push_back(new EnvObj(this, EnvObj::GRASS, finalPos));
+			type2--;
+		}
+		else if (type3 > 0)
+		{
+			envobjects.push_back(new EnvObj(this, EnvObj::STONE, finalPos));
+			type3--;
+		}
+	}
+}
+/*
+{
 	// create vector to store all envobject positions
 	std::vector<glm::vec2> objectPositions;
 	objectPositions.reserve(type1 + type2 + type3);
@@ -530,3 +593,4 @@ void Playfield::GenerateEnvironment(int type1, int type2, int type3)
 	objectPositions.clear();
 	
 }
+*/

@@ -85,6 +85,9 @@ void Model::LoadObj(std::string filepath)
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
 	va = new VertexAttributes(true, 3, true, 3, false, 0);
+
+	vertices.clear();
+	indices.clear();
 }
 
 void Model::LoadPly(std::string filepath)

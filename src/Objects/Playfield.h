@@ -71,7 +71,7 @@ private:
 	IndexBuffer* ib;
 	VertexAttributes* va;
 
-	float fMinDistBetwObj = 0.5f;
+	float fMaxRadius = 0.1f;
 
 public:
 	Playfield();

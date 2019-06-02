@@ -161,6 +161,8 @@ int main()
 				playfield.Update(camera.viewMatrix, renderer.projMatrix3D, fWidth, fHeight);
 			}
 
+			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
+
 			if (input.IsPressed(Input::KEY_ESC))
 			{
 				statehandler.SetState(StateHandler::PauseLevelEditor);

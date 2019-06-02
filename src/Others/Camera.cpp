@@ -6,11 +6,14 @@
 
 extern Input input;
 
-Camera::Camera(glm::vec3 pos, glm::vec3 dir, glm::vec3 up, float fWidth, float fHeight)
-	: pos(pos), dir(dir), up(up), fWidth(fWidth), fHeight(fHeight)
+Camera::Camera(glm::vec3 lookFromDefault, glm::vec3 lookToDefault, glm::vec3 lookUp, float fWidth, float fHeight)
+	: lookFromDefault(lookFromDefault), lookToDefault(lookToDefault), lookUp(lookUp), fWidth(fWidth), fHeight(fHeight)
 {
 	/* initial creaton of camera object. view matrix is initialized */
-	viewMatrix = glm::lookAt(pos, dir, up);
+	lookFrom = lookFromDefault;
+	lookTo = lookToDefault;
+
+	viewMatrix = glm::lookAt(lookFrom, lookTo, lookUp);
 }
 
 Camera::~Camera()
@@ -20,37 +23,72 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	// front-back, left-right movement
+	// left-right movement
 	if (Input::mX < fBorder)
 	{
-		pos.x -= fSpeed;
+		glm::vec3 vel = lookTo - lookFrom;
+		vel.z = 0.0f;
+		vel = glm::normalize(vel);
+		vel = glm::rotateZ(vel, 0.5f * 3.14159f);
+
+		lookFrom += vel * fSpeed;
+		lookTo += vel * fSpeed;
 	}
 	else if (Input::mX > fWidth - fBorder)
 	{
-		pos.x += fSpeed;
+		glm::vec3 vel = lookTo - lookFrom;
+		vel.z = 0.0f;
+		vel = glm::normalize(vel);
+		vel = glm::rotateZ(vel, -0.5f * 3.14159f);
+
+		lookFrom += vel * fSpeed;
+		lookTo += vel * fSpeed;
 	}
 
+	// forward / backward movement
 	if (Input::mY < fBorder)
 	{
-		pos.y += fSpeed;
+		glm::vec3 vel = lookTo - lookFrom;
+		vel.z = 0.0f;
+		vel = glm::normalize(vel);
+		
+		lookFrom += vel * fSpeed;
+		lookTo += vel * fSpeed;
 	}
 	else if (Input::mY > fHeight - fBorder)
 	{
-		pos.y -= fSpeed;
+		glm::vec3 vel = lookTo - lookFrom;
+		vel.z = 0.0f;
+		vel = glm::normalize(vel);
+		
+		lookFrom -= vel * fSpeed;
+		lookTo -= vel * fSpeed;
+	}
+
+	// rotate around current lookTo
+	if (input.IsHold(Input::MOUSE_3))
+	{
+		lookFrom = lookFrom - lookTo;
+		lookFrom = glm::rotateZ(lookFrom, -Input::dX *fAngSpeed);
+		lookFrom = lookFrom + lookTo;
+
+		Input::dX = 0.0f;
 	}
 
 	// up down movement and tilt (Animated by setting a target value and changing fZoom towards that target every frame)
 	if (Input::scroll != 0)
 	{
-		iZoomTarget -= Input::scroll * 10;
-		if (iZoomTarget > 90)
+		iCameraHeightTarget -= Input::scroll * 2;
+
+		if (iCameraHeightTarget > 50)
 		{
-			iZoomTarget = 90;
+			iCameraHeightTarget = 50;
 		}
-		else if (iZoomTarget < 10)
+		else if (iCameraHeightTarget < 0)
 		{
-			iZoomTarget = 10;
+			iCameraHeightTarget = 0;
 		}
+
 		Input::scroll = 0;
 	}
 
@@ -60,71 +98,35 @@ void Camera::Update()
 	// check for camera reset
 	if (input.IsPressed(Input::KEY_R))
 	{
-		reset = true;
-		iZoomTarget = 50;
-		iPosXTarget = 8;
-		iPosYTarget = -5;
+		iCameraHeightTarget = (int)lookFromDefault.z;
+		fCameraHeight = lookFromDefault.z;
+		iResetSteps = 50;
+		lookFromReset = (lookFromDefault - lookFrom) * 0.02f;
+		lookToReset = (lookToDefault - lookTo) * 0.02f;
 	}
 
 	// updating view matrix
-	viewMatrix = glm::lookAt(pos, pos + dir, up);
+	viewMatrix = glm::lookAt(lookFrom, lookTo, lookUp);
 }
 
 void Camera::Animate()
 {
 	// automated animation of zoom factor is happening every frame
-	if ((int)fZoom > iZoomTarget)
+	if (iResetSteps > 0)
 	{
-		fZoom -= 1.0f;
+		lookFrom += lookFromReset;
+		lookTo += lookToReset;
+		iResetSteps--;
 	}
-	else if ((int)fZoom < iZoomTarget)
+	else if ((int)fCameraHeight < iCameraHeightTarget)
 	{
-		fZoom += 1.0f;
+		fCameraHeight += 0.25f;
+		lookFrom.z = fCameraHeight;
 	}
-
 	// automated animation of position only happens during reset of camera view
-	if (reset)
+	else if ((int)fCameraHeight > iCameraHeightTarget)
 	{
-		pos.z = fMaxHeight * fZoom * 0.01f;
-
-		// vatiables wich keep track if x and y resets are finished
-		bool x_reset = false;
-		bool y_reset = false;
-
-		if ((int)pos.x > iPosXTarget)
-		{
-			pos.x -= fSpeed;
-		}
-		else if ((int)pos.x < iPosXTarget)
-		{
-			pos.x += fSpeed;
-		}
-		else
-		{
-			x_reset = true;
-		}
-
-		if ((int)pos.y > iPosYTarget)
-		{
-			pos.y -= fSpeed;
-		}
-		else if ((int)pos.y < iPosYTarget)
-		{
-			pos.y += fSpeed;
-		}
-		else
-		{
-			y_reset = true;
-		}
-
-		// if x and y reset are finished, reset is set to false (it is not performed until next reset event)
-		if (x_reset && y_reset)
-		{
-			reset = false;
-		}
+		fCameraHeight -= 0.25f;
+		lookFrom.z = fCameraHeight;
 	}
-
-	// setting animated dir and pos values
-	dir = rotateX(glm::vec3(0.0f, 1.0f, 0.0f), -3.14159f * 0.5f * fZoom * 0.01f);
-	pos.z = fMaxHeight * fZoom * 0.01f;
 }

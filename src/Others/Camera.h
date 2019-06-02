@@ -7,11 +7,18 @@ class Cursor;
 class Camera
 {
 private:
-	glm::vec3 pos;
-	glm::vec3 dir;
-	glm::vec3 up;
+	glm::vec3 lookFrom;
+	glm::vec3 lookTo;
+	glm::vec3 lookUp;
+
+	glm::vec3 lookFromDefault;
+	glm::vec3 lookToDefault;
+
+	int iCameraHeightTarget = 20;
+	float fCameraHeight = 20.0f;
 
 	float fSpeed = 0.2f;
+	float fAngSpeed = 0.01f;
 	float fMaxHeight = 20.0f;
 
 	float fZoom = 50.0f;
@@ -28,7 +35,9 @@ private:
 	float iTilesX;
 	float iTilesY;
 
-	bool reset = false;
+	int iResetSteps = 0;
+	glm::vec3 lookFromReset;
+	glm::vec3 lookToReset;
 
 public: 
 	glm::mat4 viewMatrix;

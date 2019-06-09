@@ -169,8 +169,9 @@ int main()
 		// STATE PAUSE
 		else if (statehandler.IsState(StateHandler::Pause))
 		{
-			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
-			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
+			renderer.Draw3Dscene(camera, playfield);
+			//playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
+			//playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
 
 			gui.HandleMouseInput();
 			gui.Draw(renderer, *(renderer.shader_tex));

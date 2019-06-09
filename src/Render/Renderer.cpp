@@ -13,6 +13,9 @@
 
 #include "Playfield.h"
 #include "Camera.h"
+#include "Tower.h"
+#include "Enemy.h"
+#include "EnvObj.h"
 
 #define RAD(x) x * 3.14159f / 180.0f
 
@@ -49,7 +52,7 @@ Renderer::Renderer(float fFov, float fWidth, float fHeight, float fZnear, float 
 	glActiveTexture(GL_TEXTURE1);
 	glGenTextures(1, &depthMap);
 	glBindTexture(GL_TEXTURE_2D, depthMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, (unsigned int)fWidth, (unsigned int)fHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -84,8 +87,10 @@ void Renderer::Clear()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::Draw3Dscene(const Camera& camera, const Playfield& playfield)
+void Renderer::Draw3Dscene(Camera& camera, const Playfield& playfield)
 {
+	/* Generate depth map */
+	glCullFace(GL_FRONT);
 	shader_dpt->Bind();
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -95,28 +100,56 @@ void Renderer::Draw3Dscene(const Camera& camera, const Playfield& playfield)
 	shader_dpt->SetUniformMatrix4f("u_model", playfield.modelMatrix);
 	playfield.Draw(*this, *shader_dpt, camera.viewMatrix);
 
-	/*
 	for (unsigned int i = 0; i < playfield.towers.size(); i++)
 	{
-		shader_dpt->SetUniformMatrix4f("u_model", playfield.towers);
-		playfield.towers[i]).Draw(*this, *shader_dpt, viewMatrix);
+		shader_dpt->SetUniformMatrix4f("u_model", playfield.towers[i]->modelMatrix);
+		playfield.towers[i]->Draw(*this, *shader_dpt, camera.viewMatrix);
 	}
-	playfield.DrawEntities(*this, *shader_lgt, viewMatrix);
-	*/
-	
+
+	for (unsigned int i = 0; i < playfield.enemies.size(); i++)
+	{
+		shader_dpt->SetUniformMatrix4f("u_model", playfield.enemies[i]->modelMatrix);
+		playfield.enemies[i]->Draw(*this, *shader_dpt, camera.viewMatrix);
+	}
+
+	for (unsigned int i = 0; i < playfield.envobjects.size(); i++)
+	{
+		shader_dpt->SetUniformMatrix4f("u_model", playfield.envobjects[i]->modelMatrix);
+		playfield.envobjects[i]->Draw(*this, *shader_dpt, camera.viewMatrix);
+	}
+	glCullFace(GL_BACK);
+
+	/* Draw scene */
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	Clear();
 	shader_sdw->Bind();
+	shader_sdw->SetUniformMatrix4f("lightSpaceMatrix", lightSpaceMatrix);
+	shader_sdw->SetUniform3f("lightPos", lightPos);
+	shader_sdw->SetUniform3f("viewPos", camera.lookFrom);
 	shader_sdw->SetUniformMatrix4f("projection", projMatrix3D);
 	shader_sdw->SetUniformMatrix4f("view", camera.viewMatrix);
+	
 	shader_sdw->SetUniformMatrix4f("model", playfield.modelMatrix);
-	shader_sdw->SetUniformMatrix4f("lightSpaceMatrix", lightSpaceMatrix);
-	shader_sdw->SetUniform3f("lightPos", glm::vec3(10.0f, 10.0f, 10.0f));
-	shader_sdw->SetUniform3f("viewPos", camera.lookFrom);
-
 	playfield.Draw(*this, *shader_sdw, camera.viewMatrix);
 
-	playfield.DrawEntities(*this, *shader_lgt, camera.viewMatrix);
+	
+	for (unsigned int i = 0; i < playfield.towers.size(); i++)
+	{
+		shader_sdw->SetUniformMatrix4f("model", playfield.towers[i]->modelMatrix);
+		playfield.towers[i]->Draw(*this, *shader_sdw, camera.viewMatrix);
+	}
+
+	for (unsigned int i = 0; i < playfield.enemies.size(); i++)
+	{
+		shader_sdw->SetUniformMatrix4f("model", playfield.enemies[i]->modelMatrix);
+		playfield.enemies[i]->Draw(*this, *shader_sdw, camera.viewMatrix);
+	}
+
+	for (unsigned int i = 0; i < playfield.envobjects.size(); i++)
+	{
+		shader_sdw->SetUniformMatrix4f("model", playfield.envobjects[i]->modelMatrix);
+		playfield.envobjects[i]->Draw(*this, *shader_sdw, camera.viewMatrix);
+	}
 }
 
 void Renderer::Draw3Dbasic(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix)
@@ -143,6 +176,22 @@ void Renderer::Draw3Dlight(const VertexBuffer& vb, const VertexAttributes& va, c
 	sd.Bind();
 
 	sd.SetUniformMatrix4f("u_MVP", MVP);
+
+	vb.Bind();
+	va.Bind();
+	ib.Bind();
+
+	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
+}
+
+void Renderer::Draw3Dlight2(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix)
+{
+	/* render 3D object */
+	//MVP = projMatrix3D * viewMatrix * modelMatrix;
+
+	//sd.Bind();
+
+	//sd.SetUniformMatrix4f("u_MVP", MVP);
 
 	vb.Bind();
 	va.Bind();

@@ -21,7 +21,7 @@ Playfield::Playfield()
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(true, 3, true, 4, false, 0);
+	va = new VertexAttributes(true, 3, true, 3, true, 3);
 
 	GenerateEnvironment(5, 8, 7);
 }
@@ -49,13 +49,13 @@ Playfield::~Playfield()
 	}
 }
 
-void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
+void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const
 {
 	/* draws playfield */
 	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
 }
 
-void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
+void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const
 {
 	/* draws entities */
 	// draw enemies
@@ -82,7 +82,7 @@ std::vector<float> Playfield::GetVertexPositions(float x, float y, float z)
 	/* creates vertex positions for mesh building */
 	std::vector<float> out = vertex;
 
-	for (unsigned int i = 0; i < vertex.size(); i = i + 7)
+	for (unsigned int i = 0; i < vertex.size(); i = i + 9)
 	{
 		out[i]     += x;
 		out[i + 1] += y;
@@ -105,33 +105,18 @@ std::vector<unsigned int> Playfield::GetIndexValues(int shift)
 	return out;
 }
 
-void Playfield::SetColor(int x, int y, float r, float g, float b, float a)
-{
-	/* changes vertices color to custom color attribute of hexagon at position x, y */
-	int offset = x + y * iTilesY;
 
-	for (int i = 0; i < 49; i = i + 7)
-	{
-		vertices[i + 49 * offset + 3] = r;
-		vertices[i + 49 * offset + 4] = g;
-		vertices[i + 49 * offset + 5] = b; 
-		vertices[i + 49 * offset + 6] = a; 
-	}
-	vb->Bind();
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
-}
 
 void Playfield::SetColor(int x, int y, int type)
 {
 	/* changes vertices color tile color attribute of hexagon at position x, y */
 	int offset = x + y * iTilesY;
 
-	for (int i = 0; i < 49; i = i + 7)
+	for (int i = 0; i < 63; i = i + 9)
 	{
-		vertices[i + 49 * offset + 3] = fTileColors[type * 4 + 0];
-		vertices[i + 49 * offset + 4] = fTileColors[type * 4 + 1];
-		vertices[i + 49 * offset + 5] = fTileColors[type * 4 + 2];
-		vertices[i + 49 * offset + 6] = fTileColors[type * 4 + 3];
+		vertices[i + 63 * offset + 6] = fTileColors[type * 3 + 0];
+		vertices[i + 63 * offset + 7] = fTileColors[type * 3 + 1];
+		vertices[i + 63 * offset + 8] = fTileColors[type * 3 + 2];
 	}
 	vb->Bind();
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
@@ -162,7 +147,7 @@ void Playfield::GenerateMesh()
 			std::vector<float> tile = GetVertexPositions(x * distX + offset, y * distY, 0.0f);
 			vertices.insert(vertices.end(), tile.begin(), tile.end());
 
-			std::vector<unsigned int> ind = GetIndexValues(vertices.size() / 7 - 7);
+			std::vector<unsigned int> ind = GetIndexValues(vertices.size() / 9 - 7);
 			indices.insert(indices.end(), ind.begin(), ind.end());
 		}
 	}

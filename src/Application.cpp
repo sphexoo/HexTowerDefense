@@ -124,7 +124,7 @@ int main()
 		// STATE RUNNING
 		if (statehandler.IsState(StateHandler::Running))
 		{
-			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
+			//playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
 
 			time = glfwGetTime();
 			deltaTime = time - lastTime;
@@ -138,7 +138,8 @@ int main()
 				playfield.Update2(camera.viewMatrix, renderer.projMatrix3D, fWidth, fHeight);
 			}
 
-			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
+			//playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
+			renderer.Draw3Dscene(camera, playfield);
 
 			if (input.IsPressed(Input::KEY_ESC))
 			{

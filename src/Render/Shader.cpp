@@ -159,3 +159,9 @@ void Shader::SetUniformMatrix4f(const std::string& name, const glm::mat4& matrix
 	int location = GetUniformLocation(name);
 	glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
 }
+
+void Shader::SetUniform3f(const std::string& name, const glm::vec3& vec)
+{
+	int location = GetUniformLocation(name);
+	glUniform3f(location, vec.x, vec.y, vec.z);
+}

@@ -7,7 +7,6 @@ class Cursor;
 class Camera
 {
 private:
-	glm::vec3 lookFrom;
 	glm::vec3 lookTo;
 	glm::vec3 lookUp;
 
@@ -40,6 +39,7 @@ private:
 	glm::vec3 lookToReset;
 
 public: 
+	glm::vec3 lookFrom;
 	glm::mat4 viewMatrix;
 
 public: 

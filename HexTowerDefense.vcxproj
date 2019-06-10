@@ -204,12 +204,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\external\glm\gtx\rotate_vector.inl" />
-    <None Include="res\shaders\basic_fragment.shader" />
     <None Include="res\shaders\depth_fragment.shader" />
     <None Include="res\shaders\depth_vertex.shader" />
-    <None Include="res\shaders\light_fragment.shader" />
-    <None Include="res\shaders\basic_vertex.shader" />
-    <None Include="res\shaders\light_vertex.shader" />
     <None Include="res\shaders\shadow_light_fragment.shader" />
     <None Include="res\shaders\shadow_light_vertex.shader" />
     <None Include="res\shaders\texture_fragment.shader" />

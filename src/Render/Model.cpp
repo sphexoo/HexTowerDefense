@@ -192,9 +192,14 @@ void Model::LoadVertices(std::vector<float>& vertices, std::vector<unsigned int>
 	va = new VertexAttributes(true, 3, true, 3, true, 3);
 }
 
-void Model::Draw(Renderer& renderer, Shader& shader, glm::mat4& viewMatrix, glm::mat4& modelMatrix)
+void Model::Draw(Renderer& renderer, glm::mat4& viewMatrix, glm::mat4& modelMatrix)
 {
-	renderer.Draw3Dobject(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
+	renderer.Draw3Dobject(*vb, *va, *ib, viewMatrix, modelMatrix);
+}
+
+void Model::DrawDepth(Renderer& renderer, glm::mat4& viewMatrix, glm::mat4& modelMatrix)
+{
+	renderer.Draw3Ddepth(*vb, *va, *ib, viewMatrix, modelMatrix);
 }
 
 

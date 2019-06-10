@@ -86,31 +86,28 @@ void Renderer::Draw3Dscene(Camera& camera, Playfield& playfield)
 {
 	/* Generate depth map */
 	glCullFace(GL_FRONT);
+
 	shader_depth->Bind();
+	shader_depth->SetUniformMatrix4f("u_lightSpaceMatrix", lightSpaceMatrix);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	shader_depth->SetUniformMatrix4f("u_lightSpaceMatrix", lightSpaceMatrix);
-
-	shader_depth->SetUniformMatrix4f("u_model", playfield.modelMatrix);
-	playfield.model.Draw(*this, *shader_depth, camera.viewMatrix, playfield.modelMatrix);
+	playfield.model.DrawDepth(*this, camera.viewMatrix, playfield.modelMatrix);
 
 	for (unsigned int i = 0; i < playfield.towers.size(); i++)
 	{
-		shader_depth->SetUniformMatrix4f("u_model", playfield.towers[i]->modelMatrix);
-		playfield.towers[i]->Draw(*this, *shader_depth, camera.viewMatrix);
+		playfield.towers[i]->DrawDepth(*this, camera.viewMatrix);
 	}
 
 	for (unsigned int i = 0; i < playfield.enemies.size(); i++)
 	{
-		shader_depth->SetUniformMatrix4f("u_model", playfield.enemies[i]->modelMatrix);
-		playfield.enemies[i]->Draw(*this, *shader_depth, camera.viewMatrix);
+		playfield.enemies[i]->DrawDepth(*this, camera.viewMatrix);
 	}
 
 	for (unsigned int i = 0; i < playfield.envobjects.size(); i++)
 	{
-		shader_depth->SetUniformMatrix4f("u_model", playfield.envobjects[i]->modelMatrix);
-		playfield.envobjects[i]->Draw(*this, *shader_depth, camera.viewMatrix);
+		playfield.envobjects[i]->DrawDepth(*this, camera.viewMatrix);
 	}
 	glCullFace(GL_BACK);
 
@@ -124,38 +121,49 @@ void Renderer::Draw3Dscene(Camera& camera, Playfield& playfield)
 	shader_shadow->SetUniformMatrix4f("projection", projMatrix3D);
 	shader_shadow->SetUniformMatrix4f("view", camera.viewMatrix);
 	
-	shader_shadow->SetUniformMatrix4f("model", playfield.modelMatrix);
-	playfield.Draw(*this, *shader_shadow, camera.viewMatrix);
+	//shader_shadow->SetUniformMatrix4f("model", playfield.modelMatrix);
+	playfield.Draw(*this, camera.viewMatrix);
 
 	
 	for (unsigned int i = 0; i < playfield.towers.size(); i++)
 	{
-		shader_shadow->SetUniformMatrix4f("model", playfield.towers[i]->modelMatrix);
-		playfield.towers[i]->Draw(*this, *shader_shadow, camera.viewMatrix);
+		playfield.towers[i]->Draw(*this, camera.viewMatrix);
 	}
 
 	for (unsigned int i = 0; i < playfield.enemies.size(); i++)
 	{
-		shader_shadow->SetUniformMatrix4f("model", playfield.enemies[i]->modelMatrix);
-		playfield.enemies[i]->Draw(*this, *shader_shadow, camera.viewMatrix);
+		playfield.enemies[i]->Draw(*this, camera.viewMatrix);
 	}
 
 	for (unsigned int i = 0; i < playfield.envobjects.size(); i++)
 	{
-		shader_shadow->SetUniformMatrix4f("model", playfield.envobjects[i]->modelMatrix);
-		playfield.envobjects[i]->Draw(*this, *shader_shadow, camera.viewMatrix);
+		playfield.envobjects[i]->Draw(*this, camera.viewMatrix);
 	}
 }
 
 
-void Renderer::Draw3Dobject(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix)
+void Renderer::Draw3Dobject(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix)
+{
+	/* render 3D object */
+	//MVP = projMatrix3D * viewMatrix * modelMatrix;
+
+	shader_shadow->Bind();
+	shader_shadow->SetUniformMatrix4f("model", modelMatrix);
+
+	vb.Bind();
+	va.Bind();
+	ib.Bind();
+
+	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
+}
+
+void Renderer::Draw3Ddepth(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix)
 {
 	/* render 3D object */
 	MVP = projMatrix3D * viewMatrix * modelMatrix;
 
-	sd.Bind();
-
-	sd.SetUniformMatrix4f("u_MVP", MVP);
+	shader_depth->Bind();
+	shader_depth->SetUniformMatrix4f("u_model", modelMatrix);
 
 	vb.Bind();
 	va.Bind();

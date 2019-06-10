@@ -74,7 +74,7 @@ public:
 	Playfield();
 	~Playfield();
 
-	void Draw(Renderer& renderer, Shader& shader, const glm::mat4 viewMatrix);
+	void Draw(Renderer& renderer, const glm::mat4 viewMatrix);
 	void DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const;
 	void Update() override;
 	void Update(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight);

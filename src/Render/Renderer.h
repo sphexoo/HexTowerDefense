@@ -50,7 +50,8 @@ public:
 	~Renderer();
 	void Clear();
 	void Draw3Dscene(Camera& camera, Playfield& playfield);
-	void Draw3Dobject(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
+	void Draw3Dobject(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
+	void Draw3Ddepth(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
 	void Draw2Dtexture(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, const glm::mat4& modelMatrix, const Texture& texture, float fColorScale = 1.0f);
 	
 };

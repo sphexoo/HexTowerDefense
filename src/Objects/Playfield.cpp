@@ -52,10 +52,10 @@ Playfield::~Playfield()
 	}
 }
 
-void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
+void Playfield::Draw(Renderer& renderer, glm::mat4 viewMatrix)
 {
 	/* draws playfield */
-	model.Draw(renderer, shader, viewMatrix, modelMatrix);
+	model.Draw(renderer, viewMatrix, modelMatrix);
 	//renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
 }
 
@@ -65,19 +65,19 @@ void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewM
 	// draw enemies
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
-		enemies[i]->Draw(renderer, shader, viewMatrix);
+		enemies[i]->Draw(renderer, viewMatrix);
 	}
 
 	// draw towers
 	for (unsigned int i = 0; i < towers.size(); i++)
 	{
-		towers[i]->Draw(renderer, shader, viewMatrix);
+		towers[i]->Draw(renderer, viewMatrix);
 	}
 
 	// draw environmental objects
 	for (unsigned int i = 0; i < envobjects.size(); i++)
 	{
-		envobjects[i]->Draw(renderer, shader, viewMatrix);
+		envobjects[i]->Draw(renderer, viewMatrix);
 	}
 }
 

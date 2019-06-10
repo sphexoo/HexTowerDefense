@@ -15,6 +15,7 @@ public:
 public:
 	Entity();
 	~Entity();
-	void Draw(Renderer& renderer, Shader& shader, glm::mat4& viewMatrix);
+	void Draw(Renderer& renderer, glm::mat4& viewMatrix);
+	void DrawDepth(Renderer& renderer, glm::mat4& viewMatrix);
 	virtual void Update() = 0;
 };

@@ -86,7 +86,7 @@ void Model::LoadObj(std::string filepath)
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(true, 3, true, 3, false, 0);
+	va = new VertexAttributes(3, 2);
 
 	vertices.clear();
 	indices.clear();
@@ -182,14 +182,14 @@ void Model::LoadPly(std::string filepath)
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(true, 3, true, 3, true, 3);
+	va = new VertexAttributes(3, 3, 3);
 }
 
 void Model::LoadVertices(std::vector<float>& vertices, std::vector<unsigned int> indices)
 {
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(true, 3, true, 3, true, 3);
+	va = new VertexAttributes(3, 3, 3);
 }
 
 void Model::Draw(Renderer& renderer, glm::mat4& viewMatrix, glm::mat4& modelMatrix)

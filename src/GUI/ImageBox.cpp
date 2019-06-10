@@ -22,7 +22,7 @@ ImageBox::ImageBox(float x, float y, float z, float scale, std::string path)
 
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * 20);
 	ib = new IndexBuffer(&indices[0], 6);
-	va = new VertexAttributes(true, 3, true, 2, false, 0);
+	va = new VertexAttributes(3, 2);
 
 	modelMatrix = glm::translate(glm::mat4(1.0f), pos);
 }

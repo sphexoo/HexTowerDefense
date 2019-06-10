@@ -13,6 +13,11 @@ Camera::Camera(glm::vec3 lookFromDefault, glm::vec3 lookToDefault, glm::vec3 loo
 	lookFrom = lookFromDefault;
 	lookTo = lookToDefault;
 
+	// setting initial camera height depending on specified camera position
+	fCameraHeight = lookFromDefault.z;
+	iCameraHeightTarget = (int)fCameraHeight;
+	
+	// creating view matrix from camera position and direction
 	viewMatrix = glm::lookAt(lookFrom, lookTo, lookUp);
 }
 

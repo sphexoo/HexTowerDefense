@@ -14,7 +14,7 @@ void VertexAttributes::Bind() const
 	glEnableVertexAttribArray(0);
 	// Specifies the Attributes for buffer data (start at, number of vertices, data type, normalize e.g. 0 - 255 --> 0.0f - 1.0f, length of one vertice in memory, position of different data inside one vertice)
 	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
-	glVertexAttribPointer(0, uiSlot1, GL_FLOAT, GL_FALSE, sizeof(float) * (uiSlot1 + uiSlot2 + uiSlot3), 0);
+	glVertexAttribPointer(0, uiSlot1, GL_FLOAT, GL_FALSE, sizeof(float) * (uiSlot1 + uiSlot2 + uiSlot3), nullptr);
 	//glVertexAttribPointer(index of vertex type, count of vertex type to specify, data type, normalize, length of one vertice in bytes, of specified vertice type from beginning of vertex);
 
 	if (bSlot2)

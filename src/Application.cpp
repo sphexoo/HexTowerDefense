@@ -103,7 +103,7 @@ int main()
 	StateHandler statehandler(window, &gui, &playfield, StateHandler::Startup);
 
 	Renderer renderer(70.0f, fWidth, fHeight, 0.01f, 1000.0f);
-	Camera camera(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(10.0f, 10.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
+	Camera camera(glm::vec3(-2.0f, -2.0f, 8.0f), glm::vec3(8.0f, 8.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f), fWidth, fHeight);
 
 	statehandler.SetState(StateHandler::MainMenue);
 

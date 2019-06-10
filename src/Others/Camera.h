@@ -13,8 +13,8 @@ private:
 	glm::vec3 lookFromDefault;
 	glm::vec3 lookToDefault;
 
-	int iCameraHeightTarget = 20;
-	float fCameraHeight = 20.0f;
+	int iCameraHeightTarget;
+	float fCameraHeight;
 
 	float fSpeed = 0.2f;
 	float fAngSpeed = 0.01f;

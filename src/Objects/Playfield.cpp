@@ -20,22 +20,13 @@ Playfield::Playfield()
 	GenerateMesh();
 
 	model.LoadVertices(vertices, indices, 3, 3, 3);
-	/*
-	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
-	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(true, 3, true, 3, true, 3);
-	*/
+
 	GenerateEnvironment(5, 8, 7);
 }
 
 Playfield::~Playfield()
 {
 	/* deletes all heap allocated objects */
-	/*
-	delete vb;
-	delete va;
-	delete ib;
-	*/
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		delete enemies[i];
@@ -56,7 +47,6 @@ void Playfield::Draw(Renderer& renderer, glm::mat4 viewMatrix)
 {
 	/* draws playfield */
 	model.Draw(renderer, viewMatrix, modelMatrix);
-	//renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
 }
 
 void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const

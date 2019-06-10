@@ -32,10 +32,10 @@ Gui::~Gui()
 	/*Destructs existing Gui object*/
 }
 
-void Gui::Draw(Renderer& renderer, Shader& shader)
+void Gui::Draw(Renderer& renderer)
 {
 	/*Calls draw function of currently selected screen*/
-	currentScreen->Draw(renderer, shader);
+	currentScreen->Draw(renderer);
 }
 
 void Gui::CreateScreen(std::string name)

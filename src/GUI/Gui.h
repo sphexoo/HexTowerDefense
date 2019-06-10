@@ -19,7 +19,7 @@ private:
 public:
 	Gui(float fWidth, float fHeight, fcnPtr handlerFcn);
 	~Gui();
-	void Draw(Renderer& renderer, Shader& shader);
+	void Draw(Renderer& renderer);
 	void CreateScreen(std::string name);
 	ScreenElement* AddImageBox(float fPosX, float fPosY, float fScale, std::string path);
 	void AddButtonBox(float fPosX, float fPosY, std::string path, fcnPtr handlerFcn, int handleToValue = 0);

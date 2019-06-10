@@ -3,13 +3,14 @@
 #define _USE_MATH_DEFINES 
 #include <math.h>
 #include "Renderer.h"
+#include "Entity.h"
 
 class Cursor;
 class Enemy;
 class Tower;
 class EnvObj;
 
-class Playfield
+class Playfield : public Entity
 {
 public:
 	struct Tile
@@ -66,10 +67,6 @@ private:
 										0, 4, 5,
 										0, 5, 6,
 										0, 6, 1 };
-	
-	VertexBuffer* vb;
-	IndexBuffer* ib;
-	VertexAttributes* va;
 
 	float fMaxRadius = 0.25f;
 
@@ -77,8 +74,9 @@ public:
 	Playfield();
 	~Playfield();
 
-	void Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const;
+	void Draw(Renderer& renderer, Shader& shader, const glm::mat4 viewMatrix);
 	void DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const;
+	void Update() override;
 	void Update(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight);
 	void Update2(glm::mat4& viewMatrix, glm::mat4& projMatrix, float fWidth, float fHeight);
 	void UpdateEntities();

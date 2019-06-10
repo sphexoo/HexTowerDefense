@@ -27,13 +27,11 @@ public:
 	glm::mat4 projMatrix2D;
 	glm::mat4 MVP;
 
-	Shader* shader_tex;
-	Shader* shader_bsc;
-	Shader* shader_lgt;
-	Shader* shader_dpt;
+	Shader* shader_texture;
+	Shader* shader_depth;
+	Shader* shader_shadow;
 
 	/* Shadow mapping */
-	Shader* shader_sdw;
 	unsigned int depthMapFBO;
 	// creating 2d texture
 	unsigned int depthMap;
@@ -51,12 +49,8 @@ public:
 	Renderer(float fFov, float fWidth, float fHeight, float fZnear, float fZfar);
 	~Renderer();
 	void Clear();
-	void Draw3Dscene(Camera& camera, const Playfield& playfield);
-	void Draw3Dbasic(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
-	void Draw3Dlight(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
-	void Draw3Dlight2(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
-	void Draw3Dtexture(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix, const Texture& texture, float fColorScale = 1.0f);
-	void Draw2Dbasic(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& modelMatrix, const glm::vec4& color);
-	void Draw2Dtexture(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& modelMatrix, const Texture& texture, float fColorScale = 1.0f);
+	void Draw3Dscene(Camera& camera, Playfield& playfield);
+	void Draw3Dobject(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, Shader& sd, const glm::mat4& viewMatrix, const glm::mat4& modelMatrix);
+	void Draw2Dtexture(const VertexBuffer& vb, const VertexAttributes& va, const IndexBuffer& ib, const glm::mat4& modelMatrix, const Texture& texture, float fColorScale = 1.0f);
 	
 };

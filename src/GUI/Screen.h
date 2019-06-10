@@ -23,7 +23,7 @@ public:
 	ScreenElement* AddImageBox(float fPosX, float fPosY, float fScale, std::string path);
 	void AddButtonBox(float fPosX, float fPosY, std::string path, fcnPtr handlerFcn, int handleToValue = 0);
 	void AddTextBox(float fPosX, float fPosY, float charSize, std::string text, int* handle = nullptr);
-	void Draw(Renderer& renderer, Shader& shader);
+	void Draw(Renderer& renderer);
 	void CheckHover();
 	void Update();
 };

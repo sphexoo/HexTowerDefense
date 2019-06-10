@@ -3,6 +3,8 @@
 #include <iostream>
 #include <algorithm>
 
+#include "GL/glew.h"
+
 #include "VertexBuffer.h"
 #include "VertexAttributes.h"
 #include "IndexBuffer.h"
@@ -183,7 +185,21 @@ void Model::LoadPly(std::string filepath)
 	va = new VertexAttributes(true, 3, true, 3, true, 3);
 }
 
+void Model::LoadVertices(std::vector<float>& vertices, std::vector<unsigned int> indices)
+{
+	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
+	ib = new IndexBuffer(&indices[0], indices.size());
+	va = new VertexAttributes(true, 3, true, 3, true, 3);
+}
+
 void Model::Draw(Renderer& renderer, Shader& shader, glm::mat4& viewMatrix, glm::mat4& modelMatrix)
 {
-	renderer.Draw3Dlight(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
+	renderer.Draw3Dobject(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
+}
+
+
+void Model::ModifyVB(std::vector<float>& vertices)
+{
+	vb->Bind();
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
 }

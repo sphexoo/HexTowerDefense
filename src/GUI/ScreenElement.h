@@ -39,7 +39,7 @@ public:
 public:
 	ScreenElement();
 	~ScreenElement();
-	void Draw(Renderer& renderer, Shader& shader);
+	void Draw(Renderer& renderer);
 	void OnClick();
 	void OnHover();
 	void OnNoHover();

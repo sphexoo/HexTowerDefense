@@ -11,13 +11,13 @@ ScreenElement::~ScreenElement()
 	/*Destructs existing ScreenElement object*/
 }
 
-void ScreenElement::Draw(Renderer& renderer, Shader& shader)
+void ScreenElement::Draw(Renderer& renderer)
 {
 	/*Calls DrawGui function of renderer for this ScreenElement object*/
 	if (draw)
 	{
 		texture->Bind();
-		renderer.Draw2Dtexture(*vb, *va, *ib, shader, modelMatrix, *texture, fColorScale);
+		renderer.Draw2Dtexture(*vb, *va, *ib, modelMatrix, *texture, fColorScale);
 	}
 }
 

@@ -119,8 +119,6 @@ int main()
 	/* main loop */
 	while (!glfwWindowShouldClose(window))
 	{
-		renderer.Clear();
-
 		// STATE RUNNING
 		if (statehandler.IsState(StateHandler::Running))
 		{
@@ -146,7 +144,7 @@ int main()
 		// STATE LEVELEDITOR
 		if (statehandler.IsState(StateHandler::LevelEditor))
 		{
-			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
+			renderer.Draw3Dscene(camera, playfield);
 
 			time = glfwGetTime();
 			deltaTime = time - lastTime;
@@ -159,8 +157,6 @@ int main()
 				playfield.Update(camera.viewMatrix, renderer.projMatrix3D, fWidth, fHeight);
 			}
 
-			playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
-
 			if (input.IsPressed(Input::KEY_ESC))
 			{
 				statehandler.SetState(StateHandler::PauseLevelEditor);
@@ -170,25 +166,22 @@ int main()
 		else if (statehandler.IsState(StateHandler::Pause))
 		{
 			renderer.Draw3Dscene(camera, playfield);
-			//playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
-			//playfield.DrawEntities(renderer, *(renderer.shader_lgt), camera.viewMatrix);
-
 			gui.HandleMouseInput();
-			gui.Draw(renderer, *(renderer.shader_tex));
+			gui.Draw(renderer);
 		}
 		// STATE PAUSE LEVELEDITOR
 		else if (statehandler.IsState(StateHandler::PauseLevelEditor))
 		{
-			playfield.Draw(renderer, *(renderer.shader_bsc), camera.viewMatrix);
-
+			renderer.Draw3Dscene(camera, playfield);
 			gui.HandleMouseInput();
-			gui.Draw(renderer, *(renderer.shader_tex));
+			gui.Draw(renderer);
 		}
 		// STATE MAINMENUE
 		else if (statehandler.IsState(StateHandler::MainMenue))
 		{
+			renderer.Draw3Dscene(camera, playfield);
 			gui.HandleMouseInput();
-			gui.Draw(renderer, *(renderer.shader_tex));
+			gui.Draw(renderer);
 		}
 		// STATE QUIT
 		else if (statehandler.IsState(StateHandler::Quit))

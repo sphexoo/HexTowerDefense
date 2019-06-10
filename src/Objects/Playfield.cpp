@@ -19,20 +19,23 @@ Playfield::Playfield()
 	/* creates playfield mesh */
 	GenerateMesh();
 
+	model.LoadVertices(vertices, indices);
+	/*
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
 	va = new VertexAttributes(true, 3, true, 3, true, 3);
-
+	*/
 	GenerateEnvironment(5, 8, 7);
 }
 
 Playfield::~Playfield()
 {
 	/* deletes all heap allocated objects */
+	/*
 	delete vb;
 	delete va;
 	delete ib;
-
+	*/
 	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
 		delete enemies[i];
@@ -49,10 +52,11 @@ Playfield::~Playfield()
 	}
 }
 
-void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const
+void Playfield::Draw(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix)
 {
 	/* draws playfield */
-	renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
+	model.Draw(renderer, shader, viewMatrix, modelMatrix);
+	//renderer.Draw3Dbasic(*vb, *va, *ib, shader, viewMatrix, modelMatrix);
 }
 
 void Playfield::DrawEntities(Renderer& renderer, Shader& shader, glm::mat4 viewMatrix) const
@@ -118,8 +122,8 @@ void Playfield::SetColor(int x, int y, int type)
 		vertices[i + 63 * offset + 7] = fTileColors[type * 3 + 1];
 		vertices[i + 63 * offset + 8] = fTileColors[type * 3 + 2];
 	}
-	vb->Bind();
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+	
+	model.ModifyVB(vertices);
 }
 
 void Playfield::GenerateMesh()
@@ -151,6 +155,11 @@ void Playfield::GenerateMesh()
 			indices.insert(indices.end(), ind.begin(), ind.end());
 		}
 	}
+}
+
+void Playfield::Update()
+{
+	/* empty override for pure virtual base class update function because this update needs arguments */
 }
 
 

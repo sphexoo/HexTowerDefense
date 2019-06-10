@@ -43,11 +43,11 @@ void Screen::AddTextBox(float fPosX, float fPosY, float charSize, std::string te
 
 }
 
-void Screen::Draw(Renderer& renderer, Shader& shader)
+void Screen::Draw(Renderer& renderer)
 {
 	for (auto element : elements)
 	{
-		element->Draw(renderer, shader);
+		element->Draw(renderer);
 	}
 }
 

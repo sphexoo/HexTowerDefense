@@ -19,7 +19,7 @@ Playfield::Playfield()
 	/* creates playfield mesh */
 	GenerateMesh();
 
-	model.LoadVertices(vertices, indices);
+	model.LoadVertices(vertices, indices, 3, 3, 3);
 	/*
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());

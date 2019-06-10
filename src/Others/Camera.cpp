@@ -108,8 +108,8 @@ void Camera::Update()
 		fCameraHeight = lookFromDefault.z;
 		// create vectors to change lookFrom and lookAt every frame to generate reset animation
 		iResetSteps = 50;
-		lookFromReset = (lookFromDefault - lookFrom) * 0.02f;
-		lookToReset = (lookToDefault - lookTo) * 0.02f;
+		lookFromReset = (lookFromDefault - lookFrom) * 1.0f / (float)iResetSteps;
+		lookToReset = (lookToDefault - lookTo) * 1.0f / (float)iResetSteps;
 	}
 
 	// updating view matrix

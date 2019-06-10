@@ -27,6 +27,7 @@ Model::~Model()
 
 void Model::LoadObj(std::string filepath)
 {	
+	/* loads model data from .obj file */
 	this->filepath = filepath;
 
 	std::vector<float> tmp_coords;
@@ -185,26 +186,30 @@ void Model::LoadPly(std::string filepath)
 	va = new VertexAttributes(3, 3, 3);
 }
 
-void Model::LoadVertices(std::vector<float>& vertices, std::vector<unsigned int> indices)
+void Model::LoadVertices(std::vector<float>& vertices, std::vector<unsigned int> indices, unsigned int iuSlot0, unsigned int iuSlot1, unsigned int iuSlot2)
 {
+	/* generates vbo, ibo and vao from vertices and indices specified within the program itself */
 	vb = new VertexBuffer(&vertices[0], sizeof(float) * vertices.size());
 	ib = new IndexBuffer(&indices[0], indices.size());
-	va = new VertexAttributes(3, 3, 3);
+	va = new VertexAttributes(iuSlot0, iuSlot1, iuSlot2);
 }
 
 void Model::Draw(Renderer& renderer, glm::mat4& viewMatrix, glm::mat4& modelMatrix)
 {
+	/* draw model as 3d object */
 	renderer.Draw3Dobject(*vb, *va, *ib, viewMatrix, modelMatrix);
 }
 
 void Model::DrawDepth(Renderer& renderer, glm::mat4& viewMatrix, glm::mat4& modelMatrix)
 {
+	/* draw model to depth buffer for shadow mapping */
 	renderer.Draw3Ddepth(*vb, *va, *ib, viewMatrix, modelMatrix);
 }
 
 
 void Model::ModifyVB(std::vector<float>& vertices)
 {
+	/* modify vbo */
 	vb->Bind();
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
 }

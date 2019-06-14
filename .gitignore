@@ -1,5 +1,5 @@
 # Visual Studio files
-Release/
+/Release/
 Debug/
 *.blend
 *.ini
